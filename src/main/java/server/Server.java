@@ -1,38 +1,35 @@
 package server;
 
-import javax.net.ServerSocketFactory;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import message.NewWBRequest;
+import whiteboard.User;
+import whiteboard.WhiteboardMgr;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Server extends Thread {
 
+    private HashMap<String,WhiteboardMgr> whiteboards;
 
-    private int serverPort;
-    private Whiteboard whiteboard;
-
-    public Server(int serverPort) {
-
-        this.serverPort = serverPort;
-
+    public Server() {
+        whiteboards = new HashMap<String,WhiteboardMgr>();
     }
 
-    public void run() {
+    public boolean addWhiteboard(NewWBRequest wbr){
 
-        this.whiteboard = new Whiteboard();
-        System.out.println("Created new whiteboard.");
+        String mgrName = wbr.getMgrName();
+        String wbName = wbr.getWbName();
+        String wbPassword = wbr.getWbPassword();
+        User manager = new User(mgrName, true);
+        ArrayList<User> userList = new ArrayList<User>();
+        userList.add(manager);
+        WhiteboardMgr whiteboardMgr = new WhiteboardMgr(userList, wbName, wbPassword);
 
-        ServerSocketFactory factory = ServerSocketFactory.getDefault();
-        try(ServerSocket server = factory.createServerSocket(serverPort)){
-            System.out.println("Listening for users on port " + serverPort);
-            while(!isInterrupted()){
-                Socket socket = server.accept();
-                Session session =  new Session(socket, whiteboard);
-                session.start();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (whiteboards.containsKey(wbName)) {
+            return false;
+        } else {
+            whiteboards.put(wbName,whiteboardMgr);
+            return true;
         }
 
     }

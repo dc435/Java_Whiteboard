@@ -4,20 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/canvas/Canvas.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/Session.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/WBSrv.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/Whiteboard.java" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Preliminary structure set-up (WIP).">
+      <change afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientProcessMsg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientSendMsg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/ConnectionRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/NewWBRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/ServerListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/ServerProcessMsg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/ServerSendMsg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/whiteboard/WhiteboardMgr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/canvas/Canvas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Session.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/WBSrv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Whiteboard.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,16 +53,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.WBClient">
+    <configuration name="WBClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="WBClient" />
+      <module name="whiteboard" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WBServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="WBServer" />
+      <module name="whiteboard" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.WBClient" />
+        <item itemvalue="Application.WBServer" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -64,6 +99,14 @@
       <option name="presentableId" value="Default" />
       <updated>1665704708086</updated>
     </task>
+    <task id="LOCAL-00001" summary="Preliminary structure set-up (WIP).">
+      <created>1665711459937</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665711459937</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -76,5 +119,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Preliminary structure set-up (WIP)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Preliminary structure set-up (WIP)." />
   </component>
 </project>
