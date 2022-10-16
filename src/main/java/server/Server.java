@@ -15,7 +15,7 @@ public class Server extends Thread {
         whiteboards = new HashMap<String,WhiteboardMgr>();
     }
 
-    public boolean addWhiteboard(NewWBRequest wbr){
+    public boolean addWhiteboardMgr(NewWBRequest wbr){
 
         String mgrName = wbr.getMgrName();
         String wbName = wbr.getWbName();

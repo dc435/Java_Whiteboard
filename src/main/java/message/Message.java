@@ -20,4 +20,8 @@ public class Message {
         return json.toJSONString();
     }
 
+    public String getType() {
+        return (String) json.get("_type");
+    }
+
 }

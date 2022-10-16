@@ -20,7 +20,7 @@ public class ClientGUI extends JFrame {
     //DC: For Testing:
     public void guiTester() {
         NewWBRequest wbr = new NewWBRequest("Dylan","My Whiteboard", "password1");
-        ClientSendMsg sender = new ClientSendMsg(wbr, serverAddress);
+        ClientSendMsg sender = new ClientSendMsg(wbr, serverAddress, this);
         sender.start();
 
     }

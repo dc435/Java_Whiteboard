@@ -54,7 +54,7 @@ public class ServerProcessMsg extends Thread {
     }
 
     private void processNewWBRequest(NewWBRequest wbr) {
-        boolean added = server.addWhiteboard(wbr);
+        boolean added = server.addWhiteboardMgr(wbr);
         NewWBReply newWBReply = new NewWBReply(added);
         try {
             out.writeUTF(newWBReply.toString());
