@@ -1,8 +1,11 @@
 import client.ClientGUI;
-import client.ClientListener;
+import client.ClientMsgProcessor;
 
+import javax.net.ServerSocketFactory;
+import java.io.IOException;
 import java.net.InetSocketAddress;
-
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class WBClient {
 
@@ -21,28 +24,29 @@ public class WBClient {
         System.out.println(WELCOME_MSG);
         ClientGUI gui = new ClientGUI(serverAddress);
         gui.setVisible(true);
-        ClientListener listener = new ClientListener(gui);
-        listener.start();
+
+        Thread t = new Thread(() -> startListening(gui));
+        t.start();
 
         //For testing:
         gui.guiTester();
 
+    }
 
-        //Testing:
-//        ConnectionRequest cr = new ConnectionRequest();
-//        cr.setUsername("Anna");
-//        ClientSendMsg sender = new ClientSendMsg(cr, serverAddress);
-//        sender.start();
+    private static void startListening(ClientGUI gui) {
 
-//        ArrayList<User> userList = new ArrayList<>();
-//        User user = new User();
-//        user.username = "braile";
-//        user.manager = true;
-//        userList.add(user);
-//        String asString = userList.toString();
-//        System.out.println("as string: " + asString);
-//        System.out.println("as string: " + asString);
-//        ArrayList<User> userList2 = (ArrayList<User>)asString;
+            ServerSocketFactory factory = ServerSocketFactory.getDefault();
+            try(
+                ServerSocket server = factory.createServerSocket(clientPort)){
+                System.out.println("Listening for messages on port " + clientPort);
+                while(true){
+                    Socket socket = server.accept();
+                    ClientMsgProcessor processor =  new ClientMsgProcessor(socket, gui);
+                    processor.start();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
     }
 

@@ -26,9 +26,11 @@ public class Server extends Thread {
         WhiteboardMgr whiteboardMgr = new WhiteboardMgr(userList, wbName, wbPassword);
 
         if (whiteboards.containsKey(wbName)) {
+            System.out.println("WB Name already in use.");
             return false;
         } else {
             whiteboards.put(wbName,whiteboardMgr);
+            System.out.println("Added new whiteboard " + wbName);
             return true;
         }
 

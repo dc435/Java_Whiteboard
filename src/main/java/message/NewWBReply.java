@@ -13,8 +13,11 @@ public class NewWBReply extends Message {
         super(json);
     }
 
-    public String getAdded() {
-        return (String)json.get("_added");
+    public boolean getAdded() {
+        return (boolean) json.get("_added");
+//        System.out.println(json.get("_added"));
+//        String added = (String) json.get("_added");
+//        return Boolean.parseBoolean(added);
     }
 
 }

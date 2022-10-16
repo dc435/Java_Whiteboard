@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-public class ServerSendMsg extends Thread {
+public class ServerMsgSender extends Thread {
 
     Message message;
     InetSocketAddress target;
 
-    public ServerSendMsg(Message message, InetSocketAddress target) {
+    public ServerMsgSender(Message message, InetSocketAddress target) {
         this.message = message;
         this.target = target;
 

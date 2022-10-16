@@ -12,14 +12,14 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ServerProcessMsg extends Thread {
+public class ServerMsgProcessor extends Thread {
 
     Socket socket;
     Server server;
     DataInputStream in;
     DataOutputStream out;
 
-    public ServerProcessMsg(Socket socket, Server server) {
+    public ServerMsgProcessor(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
     }
