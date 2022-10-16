@@ -1,5 +1,6 @@
 package client;
 
+import message.CanvasUpdateReply;
 import message.Message;
 import message.NewWBReply;
 import message.NewWBRequest;
@@ -47,8 +48,8 @@ public class ClientMsgSender extends Thread {
             case "NewWBRequest":
                 ListenForNewWBReply();
                 break;
-            case "ConnectionRequest":
-                //NewConnectionRequest();
+            case "CanvasUpdate":
+                ListenForCanvasUpdateReply();
                 break;
         }
     }
@@ -58,16 +59,27 @@ public class ClientMsgSender extends Thread {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             NewWBReply wbr = new NewWBReply(js);
             if (wbr.getAdded()) {
-                System.out.println("New Whiteboard added by server.");
+                gui.updateStatus("New Whiteboard added by server.");
             } else {
-                System.out.println("Server failed to add whiteboard.");
+                gui.updateStatus("Server failed to add whiteboard.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            gui.updateStatus("Did not receive confirmation from server (IOException).");
         } catch (ParseException e) {
-            e.printStackTrace();
+            gui.updateStatus("Could not parse response from server (ParseException).");
         }
     }
 
+    private void ListenForCanvasUpdateReply() {
+        try {
+            JSONObject js = (JSONObject) parser.parse(in.readUTF());
+            CanvasUpdateReply cur = new CanvasUpdateReply(js);
+            gui.updateStatus(cur.getMessage());
+        } catch (IOException e) {
+            gui.updateStatus("Did not receive confirmation from server (IOException).");
+        } catch (ParseException e) {
+            gui.updateStatus("Could not parse response from server (ParseException).");
+        }
+    }
 
 }

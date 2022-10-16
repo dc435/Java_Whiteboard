@@ -1,5 +1,6 @@
 package client;
 
+import message.CanvasUpdateRequest;
 import message.NewWBRequest;
 
 import javax.swing.*;
@@ -16,11 +17,20 @@ import java.net.InetSocketAddress;
 
 public class ClientGUI extends JFrame {
 
-    InetSocketAddress serverAddress;
+    private final String DEFAULT_WB_NAME = "My New Whiteboard";
+    private final String DEFAULT_USER_NAME = "New User";
+    private InetSocketAddress serverAddress;
+    private int clientPort;
+    private String wbName;
+    private String userName;
 
-    public ClientGUI(InetSocketAddress serverAddress) {
+    public ClientGUI(InetSocketAddress serverAddress, int clientPort) {
         this.serverAddress = serverAddress;
+        this.clientPort = clientPort;
+        this.wbName = DEFAULT_WB_NAME;
+        this.userName = DEFAULT_USER_NAME;
     }
+
     private JPanel panel1;
     private JPanel canvas;
     private JButton lineButton;
@@ -179,9 +189,30 @@ public class ClientGUI extends JFrame {
 
     //DC: For Testing:
     public void guiTester() {
-        NewWBRequest wbr = new NewWBRequest("Dylan","My Whiteboard", "password1");
+//        sendNewWBRequest("Bob", "My Whiteboard1");
+        sendCanvasUpdate((float)1.345,(float)2.3339, "Line", "Black");
+    }
+
+    //DC: Example public method for making new whiteboard request to server:
+    private void sendNewWBRequest(String mgrName, String wbName) {
+        NewWBRequest wbr = new NewWBRequest(mgrName, wbName, clientPort);
         ClientMsgSender sender = new ClientMsgSender(wbr, serverAddress, this);
         sender.start();
+    }
+
+    private void sendCanvasUpdate(float x, float y, String brushType, String color) {
+        CanvasUpdateRequest cup = new CanvasUpdateRequest(wbName, userName, x, y, brushType, color);
+        ClientMsgSender sender = new ClientMsgSender(cup, serverAddress, this);
+        sender.start();
+    }
+
+    public void updateCanvas(float x, float y, String brushType, String color) {
+
+    }
+
+    public void updateStatus(String update) {
+        //TODO: Change so that this updates GUI (rather than command line):
+        System.out.println("UPDATE: " + update);
 
     }
 

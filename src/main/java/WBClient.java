@@ -22,7 +22,7 @@ public class WBClient {
         serverAddress = DEFAULT_SERVER_ADDRESS;
 
         System.out.println(WELCOME_MSG);
-        ClientGUI gui = new ClientGUI(serverAddress);
+        ClientGUI gui = new ClientGUI(serverAddress, clientPort);
         gui.setVisible(true);
 
         Thread t = new Thread(() -> startListening(gui));

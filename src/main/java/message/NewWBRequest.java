@@ -8,11 +8,11 @@ public class NewWBRequest extends Message {
         super();
     }
 
-    public NewWBRequest(String mgrName, String wbName, String wbPassword) {
+    public NewWBRequest(String mgrName, String wbName, int port) {
         super();
         json.put("_mgrName", mgrName);
         json.put("_wbName", wbName);
-        json.put("_wbPassword", wbPassword);
+        json.put("_port", port);
     }
 
     public NewWBRequest(JSONObject json) {
@@ -25,8 +25,9 @@ public class NewWBRequest extends Message {
     public String getWbName() {
         return (String)json.get("_wbName");
     }
-    public String getWbPassword() {
-        return (String)json.get("_wbPassword");
+    public int getPort() {
+        Long port = (Long)json.get("_port");
+        return port.intValue();
     }
 
 }

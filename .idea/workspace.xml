@@ -4,19 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Update protocol Client side message send, receive.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Client send receive protocol, New WB request - reply.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/CanvasUpdateReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/CanvasUpdateRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientProcessMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSendMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/message/NewWBRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/NewWBRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerProcessMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerSendMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/WhiteboardMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/WhiteboardMgr.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,8 +64,24 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="message" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.WBClient">
+    <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="client.ClientGUI" />
+      <module name="whiteboard" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WBClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="WBClient" />
       <module name="whiteboard" />
@@ -83,6 +100,7 @@
       <list>
         <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
+        <item itemvalue="Application.ClientGUI" />
       </list>
     </recent_temporary>
   </component>
@@ -116,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665895939913</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Client send receive protocol, New WB request - reply.">
+      <created>1665905729876</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1665905729876</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -130,7 +155,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="damian" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -146,6 +171,7 @@
     <MESSAGE value="Preliminary structure set-up (WIP)." />
     <MESSAGE value="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages." />
     <MESSAGE value="Update protocol Client side message send, receive." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update protocol Client side message send, receive." />
+    <MESSAGE value="Client send receive protocol, New WB request - reply." />
+    <option name="LAST_COMMIT_MESSAGE" value="Client send receive protocol, New WB request - reply." />
   </component>
 </project>

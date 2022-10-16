@@ -5,13 +5,19 @@ import java.util.ArrayList;
 public class WhiteboardMgr {
 
     private ArrayList<User> userList;
-    private String name;
-    private String password;
+    private String wbName;
 
-    public WhiteboardMgr(ArrayList<User> userList, String name, String password) {
+    public WhiteboardMgr(ArrayList<User> userList, String wbName) {
         this.userList = userList;
-        this.name = name;
-        this.password = password;
+        this.wbName = wbName;
+    }
+
+    public String getWbName() {
+        return wbName;
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
     }
 
 }
