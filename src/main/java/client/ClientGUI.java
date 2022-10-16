@@ -207,11 +207,11 @@ public class ClientGUI extends JFrame {
     }
 
     public void updateCanvas(float x, float y, String brushType, String color) {
-
+        //TODO: YP to do
     }
 
     public void updateStatus(String update) {
-        //TODO: Change so that this updates GUI (rather than command line):
+        //TODO: YP: Change so that this updates GUI (rather than command line):
         System.out.println("UPDATE: " + update);
 
     }

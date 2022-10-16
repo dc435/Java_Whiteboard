@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Client send receive protocol, New WB request - reply.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/message/CanvasUpdateReply.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/message/CanvasUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/message/NewWBRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/NewWBRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/WhiteboardMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/WhiteboardMgr.java" afterDir="false" />
-    </list>
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -141,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665905729876</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately).">
+      <created>1665916213912</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1665916213912</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,7 +148,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="damian" />
                       </list>
                     </value>
                   </entry>
@@ -172,6 +165,7 @@
     <MESSAGE value="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages." />
     <MESSAGE value="Update protocol Client side message send, receive." />
     <MESSAGE value="Client send receive protocol, New WB request - reply." />
-    <option name="LAST_COMMIT_MESSAGE" value="Client send receive protocol, New WB request - reply." />
+    <MESSAGE value="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
   </component>
 </project>
