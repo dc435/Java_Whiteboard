@@ -8,12 +8,12 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientProcessMsg extends Thread {
+public class ClientMsgProcessor extends Thread {
 
     Socket socket;
     ClientGUI gui;
 
-    public ClientProcessMsg(Socket socket, ClientGUI gui) {
+    public ClientMsgProcessor(Socket socket, ClientGUI gui) {
         this.socket = socket;
         this.gui = gui;
 

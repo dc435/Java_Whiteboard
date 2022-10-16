@@ -4,13 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Update protocol Client side message send, receive.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/WBServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSendMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientSendMsg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/message/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientProcessMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSendMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerProcessMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerProcessMsg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerProcessMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerSendMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +31,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -98,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665831987770</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Update protocol Client side message send, receive.">
+      <created>1665895939913</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1665895939913</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -106,7 +124,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="damian" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -115,6 +145,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Preliminary structure set-up (WIP)." />
     <MESSAGE value="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages." />
-    <option name="LAST_COMMIT_MESSAGE" value="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages." />
+    <MESSAGE value="Update protocol Client side message send, receive." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update protocol Client side message send, receive." />
   </component>
 </project>
