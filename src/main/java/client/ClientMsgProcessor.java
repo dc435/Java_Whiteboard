@@ -1,9 +1,7 @@
 package client;
 
-import message.CanvasUpdateReply;
 import message.CanvasUpdateRequest;
-import message.Message;
-import message.NewWBRequest;
+import message.ChatUpdateRequest;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -42,17 +40,25 @@ public class ClientMsgProcessor extends Thread {
         String jsType = (String) js.get("_type");
         switch(jsType) {
             case "CanvasUpdateRequest":
-                CanvasUpdateRequest cup = new CanvasUpdateRequest(js);
-                processCanvasUpdate(cup);
+                CanvasUpdateRequest canup = new CanvasUpdateRequest(js);
+                processCanvasUpdate(canup);
                 break;
-
+            case "ChatUpdateRequest":
+                ChatUpdateRequest chatup = new ChatUpdateRequest(js);
+                processChatUpdate(chatup);
+                break;
         }
 
     }
 
-    private void processCanvasUpdate(CanvasUpdateRequest cup) {
-        gui.updateCanvas(cup.getX(), cup.getY(), cup.getBrushType(), cup.getColor());
-        gui.updateStatus("Canvas update from " + cup.getUserName());
+    private void processCanvasUpdate(CanvasUpdateRequest canup) {
+        gui.updateCanvas(canup.getX(), canup.getY(), canup.getBrushType(), canup.getColor());
+        gui.updateStatus("Canvas update from " + canup.getUserName());
+    }
+
+    private void processChatUpdate(ChatUpdateRequest chatup) {
+        gui.updateChat(chatup.getUserName(), chatup.getChat());
+        gui.updateStatus("Chat update from " + chatup.getUserName());
     }
 
 }

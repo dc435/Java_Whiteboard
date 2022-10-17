@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Minor comments in ClientGUI">
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/ChatUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/message/CanvasUpdateReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/BasicReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665916213912</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Minor comments in ClientGUI">
+      <created>1665916457135</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1665916457135</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,19 +157,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="damian" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -166,6 +169,7 @@
     <MESSAGE value="Update protocol Client side message send, receive." />
     <MESSAGE value="Client send receive protocol, New WB request - reply." />
     <MESSAGE value="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
+    <MESSAGE value="Minor comments in ClientGUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor comments in ClientGUI" />
   </component>
 </project>

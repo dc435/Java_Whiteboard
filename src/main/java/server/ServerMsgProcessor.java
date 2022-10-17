@@ -1,10 +1,6 @@
 package server;
 
-import client.ClientMsgSender;
-import message.CanvasUpdateReply;
-import message.CanvasUpdateRequest;
-import message.NewWBReply;
-import message.NewWBRequest;
+import message.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -53,6 +49,10 @@ public class ServerMsgProcessor extends Thread {
                 CanvasUpdateRequest cup = new CanvasUpdateRequest(js);
                 processCanvasUpdate(cup);
                 break;
+            case "ChatUpdate":
+                ChatUpdateRequest chatup = new ChatUpdateRequest(js);
+                processChatUpdate(chatup);
+                break;
 
         }
 
@@ -70,15 +70,20 @@ public class ServerMsgProcessor extends Thread {
         }
     }
 
-    private void processCanvasUpdate(CanvasUpdateRequest cup) {
+    private void processCanvasUpdate(CanvasUpdateRequest canup) {
+        echoMessage(canup, canup.getWbName());
+    }
 
-        System.out.println("TEST: cup X value: " + cup.getX());
+    private void processChatUpdate(ChatUpdateRequest chatup) {
+        echoMessage(chatup, chatup.getWbName());
+    }
 
+    private void echoMessage(Message msg, String wbName) {
         // Check if server is managing a whiteboard with that name:
-        if (!server.isManagingWhiteboard(cup.getWbName())){
-            CanvasUpdateReply cur = new CanvasUpdateReply(false, "No whiteboard named " + cup.getWbName());
+        if (!server.isManagingWhiteboard(wbName)){
+            BasicReply brep = new BasicReply(false, "No whiteboard named " + wbName);
             try {
-                out.writeUTF(cur.toString());
+                out.writeUTF(brep.toString());
                 out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -87,25 +92,24 @@ public class ServerMsgProcessor extends Thread {
         }
 
         // Get User list:
-        ArrayList<User> userList = server.getUserList(cup.getWbName());
+        ArrayList<User> userList = server.getUserList(wbName);
 
         // Forward the cup to each user in the userList (except for the original sender):
         for (User u : userList) {
             if (u.address.getAddress() != socket.getInetAddress()) {
-                ServerMsgSender sender = new ServerMsgSender(cup, u.address);
+                ServerMsgSender sender = new ServerMsgSender(msg, u.address);
                 sender.start();
             }
         }
 
-        // Send reply to original user:
-        CanvasUpdateReply cur = new CanvasUpdateReply(true, "Sent canvas update to " + userList.size() + " users.");
+        // Send reply to original sender:
+        BasicReply brep = new BasicReply(true, "Sent update to " + userList.size() + " users.");
         try {
-            out.writeUTF(cur.toString());
+            out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 }

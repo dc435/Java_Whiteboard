@@ -1,6 +1,7 @@
 package client;
 
 import message.CanvasUpdateRequest;
+import message.ChatUpdateRequest;
 import message.NewWBRequest;
 
 import javax.swing.*;
@@ -201,13 +202,23 @@ public class ClientGUI extends JFrame {
     }
 
     private void sendCanvasUpdate(float x, float y, String brushType, String color) {
-        CanvasUpdateRequest cup = new CanvasUpdateRequest(wbName, userName, x, y, brushType, color);
-        ClientMsgSender sender = new ClientMsgSender(cup, serverAddress, this);
+        CanvasUpdateRequest canup = new CanvasUpdateRequest(wbName, userName, x, y, brushType, color);
+        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this);
+        sender.start();
+    }
+
+    private void sendChatUpdate(String chat) {
+        ChatUpdateRequest chatup = new ChatUpdateRequest(wbName, userName, chat);
+        ClientMsgSender sender = new ClientMsgSender(chatup, serverAddress, this);
         sender.start();
     }
 
     public void updateCanvas(float x, float y, String brushType, String color) {
         //TODO: YP to do
+    }
+
+    public void updateChat(String userName, String chat) {
+        //TODO: YP. For incoming chat / text from other users. Display on GUI, eg: "Bob: Hello, welcome to the canvas!"
     }
 
     public void updateStatus(String update) {

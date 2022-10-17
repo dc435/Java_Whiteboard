@@ -1,9 +1,6 @@
 package client;
 
-import message.CanvasUpdateReply;
-import message.Message;
-import message.NewWBReply;
-import message.NewWBRequest;
+import message.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -49,7 +46,10 @@ public class ClientMsgSender extends Thread {
                 ListenForNewWBReply();
                 break;
             case "CanvasUpdate":
-                ListenForCanvasUpdateReply();
+                ListenForBasicReply();
+                break;
+            case "ChatUpdate":
+                ListenForBasicReply();
                 break;
         }
     }
@@ -70,11 +70,11 @@ public class ClientMsgSender extends Thread {
         }
     }
 
-    private void ListenForCanvasUpdateReply() {
+    private void ListenForBasicReply() {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
-            CanvasUpdateReply cur = new CanvasUpdateReply(js);
-            gui.updateStatus(cur.getMessage());
+            BasicReply brep = new BasicReply(js);
+            gui.updateStatus(brep.getMessage());
         } catch (IOException e) {
             gui.updateStatus("Did not receive confirmation from server (IOException).");
         } catch (ParseException e) {
