@@ -315,6 +315,7 @@ public class ClientGUI extends JFrame {
         sender.start();
 
         // YP: Possible issue: If sending takes a while and local user is drawing, will clear buffer remove current draw?
+        // Might want to flush buffer somewhere else
         graphicsOutBuffer.clear();
     }
 
@@ -338,6 +339,9 @@ public class ClientGUI extends JFrame {
 
     public void updateCanvas(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
         //TODO: YP to do
+        //YP: Implementation issue:
+        // 1. We might want another buffer for graphicsNew. Or a flag in wrapper class to indicate whether the shape is from others
+        // 2. With current paint() implementation, updateCanvas will send out the canvas update req to others. Need to fix it.
 
 
     }
