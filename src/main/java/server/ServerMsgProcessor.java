@@ -47,18 +47,14 @@ public class ServerMsgProcessor extends Thread {
                 NewWBRequest wbr = new NewWBRequest(js);
                 processNewWBRequest(wbr);
                 break;
-            case "CanvasUpdateRequest":
-                CanvasUpdateRequest cup = new CanvasUpdateRequest(js);
-                processCanvasUpdate(cup);
+            case "CanvasUpdate":
+                CanvasUpdate canup = new CanvasUpdate(js);
+                processCanvasUpdate(canup);
                 break;
             case "ChatUpdate":
                 ChatUpdateRequest chatup = new ChatUpdateRequest(js);
                 processChatUpdate(chatup);
                 break;
-//            case "FullCanvas":
-//                FullCanvas fullcan = new FullCanvas(js);
-//                processFullCanvas(fullcan);
-//                break;
             case "JoinRequest":
                 JoinRequest joinreq = new JoinRequest(js);
                 processJoinRequest(joinreq);
@@ -82,10 +78,6 @@ public class ServerMsgProcessor extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void processCanvasUpdate(CanvasUpdateRequest canup) {
-        echoMessageToAll(canup, canup.getWbName());
     }
 
     private void processChatUpdate(ChatUpdateRequest chatup) {
@@ -214,6 +206,24 @@ public class ServerMsgProcessor extends Thread {
             //Delete user from whiteboard manager:
             server.deleteUser(joindec.getWbName(), joindec.getUserName());
         }
+
+    }
+
+    private void processCanvasUpdate(CanvasUpdate canup) {
+
+        System.out.println("Received: " + canup.toString());
+//        String objShape = canup.getShape();
+//        System.out.println(objShape);
+//        try {
+//            switch(objShape) {
+//                case "Line2D":
+//                    Line2D objReceived = (Line2D.Float) inObj.readObject();
+//                    System.out.println("Received: " + objReceived.getClass().getSimpleName() + ":" + objReceived.getBounds());
+//                    break;
+//            }
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }

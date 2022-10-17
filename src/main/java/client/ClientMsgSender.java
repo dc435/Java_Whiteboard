@@ -24,6 +24,7 @@ public class ClientMsgSender extends Thread {
     JSONParser parser;
     ArrayList<Shape> graphicsArrayList;
     ObjectOutputStream outObj;
+    Object objToSend;
 
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui) {
         this.message = message;
@@ -38,6 +39,14 @@ public class ClientMsgSender extends Thread {
         this.gui = gui;
         this.parser = new JSONParser();
         this.graphicsArrayList = graphicsArrayList;
+    }
+
+    public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui, Object objectToSend) {
+        this.message = message;
+        this.target = target;
+        this.gui = gui;
+        this.parser = new JSONParser();
+        this.objToSend = objectToSend;
     }
 
     public void run() {
@@ -59,7 +68,7 @@ public class ClientMsgSender extends Thread {
                 ListenForNewWBReply();
                 break;
             case "CanvasUpdate":
-                ListenForBasicReply();
+                CompleteCanvasUpdate();
                 break;
             case "ChatUpdate":
                 ListenForBasicReply();
@@ -67,9 +76,6 @@ public class ClientMsgSender extends Thread {
             case "JoinDecision":
                 CompleteJoinDecision();
                 break;
-//            case "FullCanvas":
-//                SendFullCanvas();
-//                break;
         }
     }
 
@@ -114,5 +120,15 @@ public class ClientMsgSender extends Thread {
         ListenForBasicReply();
     }
 
+    private void CompleteCanvasUpdate() {
+        CanvasUpdate canup = (CanvasUpdate) message;
+        try {
+            outObj.writeObject(objToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ListenForBasicReply();
+    }
 
 }

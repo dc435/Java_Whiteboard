@@ -1,6 +1,7 @@
 package client;
 
 import message.*;
+import whiteboard.ShapeWrapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,10 @@ public class ClientGUI extends JFrame {
     private int clientPort;
     private String wbName;
     private String userName;
+
+    private ArrayList<ShapeWrapper> graphicsFinal;
+    private ArrayList<ShapeWrapper> graphicsBuffer;
+
 
     public ClientGUI(InetSocketAddress serverAddress, int clientPort) {
         this.serverAddress = serverAddress;
@@ -188,7 +193,9 @@ public class ClientGUI extends JFrame {
 
     //DC: For Testing:
     public void guiTester() {
-        //
+        Line2D line = new Line2D.Float();
+        line.setLine(1,2,3,4);
+        sendCanvasUpdate();
     }
 
     //DC: Example public method for making new whiteboard request to server:
@@ -198,10 +205,12 @@ public class ClientGUI extends JFrame {
         sender.start();
     }
 
-    private void sendCanvasUpdate(float x, float y, String brushType, String color) {
-        CanvasUpdateRequest canup = new CanvasUpdateRequest(wbName, userName, x, y, brushType, color);
-        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this);
+    private void sendCanvasUpdate() {
+        CanvasUpdate canup = new CanvasUpdate(wbName, userName);
+        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this, graphicsBuffer);
         sender.start();
+        graphicsFinal.addAll(graphicsBuffer);
+        graphicsBuffer.clear();
     }
 
     private void sendChatUpdate(String chat) {
