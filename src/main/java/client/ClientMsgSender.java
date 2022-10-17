@@ -5,11 +5,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientMsgSender extends Thread {
 
@@ -19,13 +22,22 @@ public class ClientMsgSender extends Thread {
     DataOutputStream out;
     DataInputStream in;
     JSONParser parser;
+    ArrayList<Shape> graphicsArrayList;
+    ObjectOutputStream outObj;
 
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui) {
         this.message = message;
         this.target = target;
         this.gui = gui;
-        parser = new JSONParser();
+        this.parser = new JSONParser();
+    }
 
+    public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui, ArrayList<Shape> graphicsArrayList) {
+        this.message = message;
+        this.target = target;
+        this.gui = gui;
+        this.parser = new JSONParser();
+        this.graphicsArrayList = graphicsArrayList;
     }
 
     public void run() {
@@ -33,6 +45,7 @@ public class ClientMsgSender extends Thread {
         try {
             Socket socket = new Socket(target.getAddress(), target.getPort());
             out = new DataOutputStream(socket.getOutputStream());
+            outObj = new ObjectOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             out.writeUTF(message.toString());
             out.flush();
@@ -51,6 +64,12 @@ public class ClientMsgSender extends Thread {
             case "ChatUpdate":
                 ListenForBasicReply();
                 break;
+            case "JoinDecision":
+                CompleteJoinDecision();
+                break;
+//            case "FullCanvas":
+//                SendFullCanvas();
+//                break;
         }
     }
 
@@ -81,5 +100,19 @@ public class ClientMsgSender extends Thread {
             gui.updateStatus("Could not parse response from server (ParseException).");
         }
     }
+
+    private void CompleteJoinDecision() {
+        JoinDecision joindec = (JoinDecision) message;
+        if (joindec.getApproved()) {
+            try {
+                outObj.writeObject(graphicsArrayList);
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        ListenForBasicReply();
+    }
+
 
 }

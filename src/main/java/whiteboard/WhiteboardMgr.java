@@ -20,5 +20,37 @@ public class WhiteboardMgr {
         return userList;
     }
 
+    public User getManager() {
+        User manager = null;
+        for (User u: userList) {
+            if (u.manager == true) {
+                manager = u;
+            }
+        }
+        return manager;
+    }
+
+    public void addUser(User u) {
+        userList.add(u);
+    }
+
+    public User getUser(String userName) {
+        User user = null;
+        for (User u: userList) {
+            if (u.username == userName) {
+                user = u;
+            }
+        }
+        return user;
+    }
+
+    public void deleteUser(String userName) {
+        for (User u: userList) {
+            if (u.username == userName) {
+                userList.remove(u);
+            }
+        }
+    }
+
 }
 
