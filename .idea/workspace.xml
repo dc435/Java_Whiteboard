@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="doing:textPane">
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="debug:Math.abs">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +203,21 @@
       <option name="project" value="LOCAL" />
       <updated>1666014701573</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat:implement wrapper">
+      <created>1666015368820</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1666015368820</updated>
+    </task>
+    <task id="LOCAL-00016" summary="debug:Math.abs">
+      <created>1666015587359</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1666015587359</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -217,7 +231,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="damian" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -244,6 +258,8 @@
     <MESSAGE value="feat:Triangle" />
     <MESSAGE value="ShapeWrapper_v1" />
     <MESSAGE value="doing:textPane" />
-    <option name="LAST_COMMIT_MESSAGE" value="doing:textPane" />
+    <MESSAGE value="feat:implement wrapper" />
+    <MESSAGE value="debug:Math.abs" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug:Math.abs" />
   </component>
 </project>
