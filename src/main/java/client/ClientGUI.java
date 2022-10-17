@@ -1,7 +1,6 @@
 package client;
 
-import message.CanvasUpdateRequest;
-import message.NewWBRequest;
+import message.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -189,8 +188,7 @@ public class ClientGUI extends JFrame {
 
     //DC: For Testing:
     public void guiTester() {
-//        sendNewWBRequest("Bob", "My Whiteboard1");
-        sendCanvasUpdate((float)1.345,(float)2.3339, "Line", "Black");
+        //
     }
 
     //DC: Example public method for making new whiteboard request to server:
@@ -201,13 +199,46 @@ public class ClientGUI extends JFrame {
     }
 
     private void sendCanvasUpdate(float x, float y, String brushType, String color) {
-        CanvasUpdateRequest cup = new CanvasUpdateRequest(wbName, userName, x, y, brushType, color);
-        ClientMsgSender sender = new ClientMsgSender(cup, serverAddress, this);
+        CanvasUpdateRequest canup = new CanvasUpdateRequest(wbName, userName, x, y, brushType, color);
+        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this);
+        sender.start();
+    }
+
+    private void sendChatUpdate(String chat) {
+        ChatUpdateRequest chatup = new ChatUpdateRequest(wbName, userName, chat);
+        ClientMsgSender sender = new ClientMsgSender(chatup, serverAddress, this);
+        sender.start();
+    }
+
+    private void sendJoinRequest() {
+        JoinRequest joinreq = new JoinRequest(wbName, userName, clientPort);
+        ClientMsgSender sender = new ClientMsgSender(joinreq, serverAddress, this);
+        sender.start();
+    }
+
+    private void sendJoinDecision(String otherUserName, boolean accepted) {
+        JoinDecision joindec = new JoinDecision(wbName, otherUserName, accepted);
+        ClientMsgSender sender = new ClientMsgSender(joindec, serverAddress, this, graphicsArrayList);
         sender.start();
     }
 
     public void updateCanvas(float x, float y, String brushType, String color) {
         //TODO: YP to do
+    }
+
+    public void updateChat(String otherUserName, String chat) {
+        //TODO: YP. For incoming chat / text from other users. Display on GUI, eg: "Bob: Hello, welcome to the canvas!"
+    }
+
+    public void incomingJoinRequest(String wbName, String userName) {
+        // TODO: YP. For incoming request from other user (userName) to join wb (wbName) hosted by this manager.
+        // This should display the request to the present user with 'accept / decline' button / option.
+        // Then call method .sendJoinDecision() with boolean of true (accepted) or false (declined).
+    }
+
+    public void incomingJoinDecision(String wbName, boolean approved, ArrayList<Shape> wbGraphics) {
+        //TODO: YP. For incoming decisions by managers in reply to an earlier request by this user to join a wb.
+        //'wbGraphics' will only be a complete arraylist if approved = true. Otherwise it will be null.
     }
 
     public void updateStatus(String update) {

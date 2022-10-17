@@ -2,19 +2,19 @@ package message;
 
 import org.json.simple.JSONObject;
 
-public class CanvasUpdateReply extends Message {
+public class BasicReply extends Message {
 
-    public CanvasUpdateReply() {
+    public BasicReply() {
         super();
     }
 
-    public CanvasUpdateReply(boolean success, String message) {
+    public BasicReply(boolean success, String message) {
         super();
         json.put("_success", success);
         json.put("_message", message);
     }
 
-    public CanvasUpdateReply(JSONObject json) {
+    public BasicReply(JSONObject json) {
         super(json);
     }
 
