@@ -24,10 +24,7 @@ public class ClientGUI extends JFrame {
     private String wbName;
     private String userName;
 
-    private ArrayList<ShapeWrapper> graphicsFinal;
-    private ArrayList<ShapeWrapper> graphicsBuffer;
-
-
+    //FIXME:
     public ClientGUI(InetSocketAddress serverAddress, int clientPort) {
         this.serverAddress = serverAddress;
         this.clientPort = clientPort;
@@ -49,7 +46,8 @@ public class ClientGUI extends JFrame {
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
-    public ArrayList<ShapeWrapper> graphicsArrayList = new ArrayList<>();
+    private ArrayList<ShapeWrapper> graphicsFinal = new ArrayList<>();
+    private ArrayList<ShapeWrapper> graphicsOutBuffer = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
@@ -181,10 +179,9 @@ public class ClientGUI extends JFrame {
 
                     case "Line":
                         Line2D.Float line2D = new Line2D.Float(p1, p2);
-                        ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
-                        graphicsArrayList.add(wrapper);
+                        ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex, brush);
+                        graphicsOutBuffer.add(wrapper);
                         repaint(); // Call paint(g)
-                        // TODO: Send out arraylist
                         break;
 
                     case "Circle":
@@ -193,10 +190,9 @@ public class ClientGUI extends JFrame {
                         float w = Math.abs(p2.x - p1.x);
                         float h = Math.abs(p2.y - p1.y);
                         Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
-                        wrapper = new ShapeWrapper(circle2D, colorHex);
-                        graphicsArrayList.add(wrapper);
+                        wrapper = new ShapeWrapper(circle2D, colorHex, brush);
+                        graphicsOutBuffer.add(wrapper);
                         repaint();
-                        // TODO: Send out arraylist
                         break;
 
                     case "Rectangle":
@@ -205,10 +201,9 @@ public class ClientGUI extends JFrame {
                         float w1 = Math.abs(p2.x - p1.x);
                         float h1 = Math.abs(p2.y - p1.y);
                         Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
-                        wrapper = new ShapeWrapper(rectangle2D, colorHex);
-                        graphicsArrayList.add(wrapper);
+                        wrapper = new ShapeWrapper(rectangle2D, colorHex, brush);
+                        graphicsOutBuffer.add(wrapper);
                         repaint();
-                        // TODO: Send out arraylist
                         break;
 
                     case "Triangle":
@@ -217,14 +212,19 @@ public class ClientGUI extends JFrame {
                         triPath.lineTo(p2.x - (2 * pref_w), p2.y);
                         triPath.lineTo(p2.x, p2.y); // Ending point finish point
                         triPath.closePath();
-                        wrapper = new ShapeWrapper(triPath, colorHex);
-                        graphicsArrayList.add(wrapper);
+                        wrapper = new ShapeWrapper(triPath, colorHex, brush);
+                        graphicsOutBuffer.add(wrapper);
                         repaint();
-                        // TODO: Send out arrayList
+
                         break;
 
                     case "Text":
                         // TODO:
+                        break;
+
+                    case "FreeH":
+                        // Send out update only when user release mouse
+                        sendCanvasUpdate();
                         break;
 
                 }
@@ -245,8 +245,8 @@ public class ClientGUI extends JFrame {
                     }
                     p2.setLocation(e.getX(), e.getY());
                     Line2D.Float line2D = new Line2D.Float(p1, p2);
-                    ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
-                    graphicsArrayList.add(wrapper);
+                    ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex, brush);
+                    graphicsOutBuffer.add(wrapper);
                     repaint(); // Call paint(g)
 
                 }
@@ -260,19 +260,37 @@ public class ClientGUI extends JFrame {
 
     }
 
-
     @Override
     public void paint(Graphics g) {
         // Convert graphics objects to graphics2D objects
         Graphics2D g2 = (Graphics2D) g;
 
 
-        // Iterate the lines array and draw
-        for (ShapeWrapper wrapper : graphicsArrayList) {
-            g2.setColor(Color.decode(wrapper.getColor()));
-            g2.draw(wrapper.getShape());
+        if (brush.equals("FreeH")) {
+            for (ShapeWrapper wrapper : graphicsOutBuffer) {
+                g2.setColor(Color.decode(wrapper.getColor()));
+                g2.draw(wrapper.getShape());
+                graphicsFinal.add(wrapper);
 
+                //FIXME: for debug
+                System.out.println("Buffer size: " + graphicsOutBuffer.size());
+                System.out.println("Final size: " + graphicsFinal.size());
+            }
+        } else {
+            // Iterate the lines array and draw locally
+            for (ShapeWrapper wrapper : graphicsOutBuffer) {
+                g2.setColor(Color.decode(wrapper.getColor()));
+                g2.draw(wrapper.getShape());
+                graphicsFinal.add(wrapper);
+
+                //FIXME: for debug
+                System.out.println("Buffer size: " + graphicsOutBuffer.size());
+                System.out.println("Final size: " + graphicsFinal.size());
+            }
+            // Other shapes send update request here
+            sendCanvasUpdate();
         }
+
 
     }
 
@@ -293,10 +311,11 @@ public class ClientGUI extends JFrame {
 
     private void sendCanvasUpdate() {
         CanvasUpdate canup = new CanvasUpdate(wbName, userName);
-        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this, graphicsBuffer);
+        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this, graphicsOutBuffer);
         sender.start();
-        graphicsFinal.addAll(graphicsBuffer);
-        graphicsBuffer.clear();
+
+        // YP: Possible issue: If sending takes a while and local user is drawing, will clear buffer remove current draw?
+        graphicsOutBuffer.clear();
     }
 
     private void sendChatUpdate(String chat) {
@@ -319,6 +338,8 @@ public class ClientGUI extends JFrame {
 
     public void updateCanvas(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
         //TODO: YP to do
+
+
     }
 
     public void updateChat(String otherUserName, String chat) {
