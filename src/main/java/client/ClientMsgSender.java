@@ -4,6 +4,7 @@ import message.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import whiteboard.ShapeWrapper;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -22,7 +23,7 @@ public class ClientMsgSender extends Thread {
     DataOutputStream out;
     DataInputStream in;
     JSONParser parser;
-    ArrayList<Shape> graphicsArrayList;
+    ArrayList<ShapeWrapper> graphics;
     ObjectOutputStream outObj;
     Object objToSend;
 
@@ -33,20 +34,12 @@ public class ClientMsgSender extends Thread {
         this.parser = new JSONParser();
     }
 
-    public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui, ArrayList<Shape> graphicsArrayList) {
+    public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui, ArrayList<ShapeWrapper> graphics) {
         this.message = message;
         this.target = target;
         this.gui = gui;
         this.parser = new JSONParser();
-        this.graphicsArrayList = graphicsArrayList;
-    }
-
-    public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui, Object objectToSend) {
-        this.message = message;
-        this.target = target;
-        this.gui = gui;
-        this.parser = new JSONParser();
-        this.objToSend = objectToSend;
+        this.graphics = graphics;
     }
 
     public void run() {
@@ -111,7 +104,7 @@ public class ClientMsgSender extends Thread {
         JoinDecision joindec = (JoinDecision) message;
         if (joindec.getApproved()) {
             try {
-                outObj.writeObject(graphicsArrayList);
+                outObj.writeObject(graphics);
                 out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -121,9 +114,8 @@ public class ClientMsgSender extends Thread {
     }
 
     private void CompleteCanvasUpdate() {
-        CanvasUpdate canup = (CanvasUpdate) message;
         try {
-            outObj.writeObject(objToSend);
+            outObj.writeObject(graphics);
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();

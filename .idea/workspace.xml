@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/message/CanvasUpdate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +178,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="damian_canvasUpdateFeat" />
+                        <option value="damian" />
                       </list>
                     </value>
                   </entry>
