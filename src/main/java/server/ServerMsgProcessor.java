@@ -7,8 +7,6 @@ import org.json.simple.parser.ParseException;
 import whiteboard.ShapeWrapper;
 import whiteboard.User;
 
-import java.awt.*;
-import java.awt.geom.Line2D;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -53,7 +51,7 @@ public class ServerMsgProcessor extends Thread {
                 processCanvasUpdate(canup);
                 break;
             case "ChatUpdate":
-                ChatUpdateRequest chatup = new ChatUpdateRequest(js);
+                ChatUpdate chatup = new ChatUpdate(js);
                 processChatUpdate(chatup);
                 break;
             case "JoinRequest":
@@ -63,6 +61,10 @@ public class ServerMsgProcessor extends Thread {
             case "JoinDecision":
                 JoinDecision joindec = new JoinDecision(js);
                 processJoinDecision(joindec);
+                break;
+            case "BootUser":
+                BootUser btuser = new BootUser(js);
+                processBootUser(btuser);
                 break;
 
         }
@@ -81,7 +83,7 @@ public class ServerMsgProcessor extends Thread {
         }
     }
 
-    private void processChatUpdate(ChatUpdateRequest chatup) {
+    private void processChatUpdate(ChatUpdate chatup) {
         echoMessageToAll(chatup, chatup.getWbName());
     }
 
@@ -233,6 +235,31 @@ public class ServerMsgProcessor extends Thread {
 
         // Send reply to original sender:
         BasicReply brep = new BasicReply(true, "Sent canvas update to " + userList.size() + " users.");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void processBootUser(BootUser btuser) {
+
+        BasicReply brep;
+        //Check if mgr has authority, then action boot:
+        User manager = server.getManager(btuser.getWbName());
+        if (manager.address.getAddress() != socket.getInetAddress() || manager.username != btuser.getMgrName()) {
+            brep = new BasicReply(false, "No authority to boot user " + btuser.getUserName());
+        } else {
+            server.deleteUser(btuser.getWbName(), btuser.getUserName());
+            brep = new BasicReply(true, "User booted: " + btuser.getUserName());
+            User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
+            ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
+            sender.start();
+        }
+
+        //Send reply to original user:
         try {
             out.writeUTF(brep.toString());
             out.flush();

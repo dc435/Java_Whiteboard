@@ -300,7 +300,7 @@ public class ClientGUI extends JFrame {
     }
 
     private void sendChatUpdate(String chat) {
-        ChatUpdateRequest chatup = new ChatUpdateRequest(wbName, userName, chat);
+        ChatUpdate chatup = new ChatUpdate(wbName, userName, chat);
         ClientMsgSender sender = new ClientMsgSender(chatup, serverAddress, this);
         sender.start();
     }
@@ -317,12 +317,19 @@ public class ClientGUI extends JFrame {
         sender.start();
     }
 
-    public void updateCanvas(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
-        //TODO: YP to do
+    public void sendBootUser(String otherUserName) {
+        BootUser btuser = new BootUser(wbName, userName, otherUserName);
+        ClientMsgSender sender = new ClientMsgSender(btuser, serverAddress, this);
+        sender.start();
     }
 
-    public void updateChat(String otherUserName, String chat) {
-        //TODO: YP. For incoming chat / text from other users. Display on GUI, eg: "Bob: Hello, welcome to the canvas!"
+    public void incomingCanvasUpdate(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
+        //TODO: YP to do. Called when
+    }
+
+    public void incomingChatUpdate(String otherUserName, String chat) {
+        //TODO: YP. For incoming chat / text from other users. Display on GUI with name of sending user
+        //eg: "Bob: Hello, welcome to the canvas!"
     }
 
     public void incomingJoinRequest(String wbName, String userName) {
@@ -333,13 +340,17 @@ public class ClientGUI extends JFrame {
 
     public void incomingJoinDecision(String wbName, boolean approved, ArrayList<ShapeWrapper> graphics) {
         //TODO: YP. For incoming decisions by managers in reply to an earlier request by this user to join a wb.
-        //'wbGraphics' will only be a complete arraylist if approved = true. Otherwise it will be null.
+        //'graphics' will only be a complete arraylist if approved = true. Otherwise it will be null.
+    }
+
+    public void incomingBootUser(String wbName, String mgrName) {
+        //TODO: YP. For incoming boot by manager. When manager boots this user from the wb.
+        //After this is received, user will have no access to canvas/chat etc. Perhaps wipe canvas clean?
     }
 
     public void updateStatus(String update) {
         //TODO: YP: Change so that this updates GUI (rather than command line):
         System.out.println("UPDATE: " + update);
-
     }
 
 }

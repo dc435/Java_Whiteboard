@@ -2,32 +2,29 @@ package message;
 
 import org.json.simple.JSONObject;
 
-public class ChatUpdateRequest extends Message {
+public class BootUser extends Message {
 
-    public ChatUpdateRequest() {
+    public BootUser() {
         super();
     }
 
-    public ChatUpdateRequest(String wbName, String userName, String chat) {
+    public BootUser(String wbName, String mgrName, String userName) {
         super();
         json.put("_wbName", wbName);
+        json.put("_mgrName", mgrName);
         json.put("_userName", userName);
-        json.put("_chat", chat);
     }
 
-    public ChatUpdateRequest(JSONObject json) {
+    public BootUser(JSONObject json) {
         super(json);
     }
-
     public String getWbName() {
         return (String)json.get("_wbName");
     }
-
+    public String getMgrName() {
+        return (String)json.get("_mgrName");
+    }
     public String getUserName() {
         return (String)json.get("_userName");
     }
-    public String getChat() {
-        return (String)json.get("_chat");
-    }
-
 }
