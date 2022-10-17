@@ -46,8 +46,8 @@ public class ClientGUI extends JFrame {
     private JButton triangleButton;
     private JToolBar shapeBar;
     private JButton textButton;
-    private String colorHex = "#000000";
-    private String brush = "Line";
+    private String colorHex = "#000000"; // default black
+    private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
     public ArrayList<Shape> graphicsArrayList = new ArrayList<>(); // TODO:change to wrapper
     public ArrayList<String> colorArrayList = new ArrayList<>();
@@ -65,6 +65,7 @@ public class ClientGUI extends JFrame {
 
         // Set size
         this.setBounds(30,30,900,650);
+
 
         // Color Bar
         colorBar.addItem("Black");
@@ -148,6 +149,15 @@ public class ClientGUI extends JFrame {
             }
         });
 
+        textButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                brush = textButton.getText();
+                System.out.println(brush); //debug
+            }
+        });
+
 
 
 
@@ -212,6 +222,10 @@ public class ClientGUI extends JFrame {
                         colorArrayList.add(colorHex);
                         repaint();
                         // TODO: Send out arrayList
+                        break;
+
+                    case "Text":
+                        // TODO:
                         break;
 
                 }
