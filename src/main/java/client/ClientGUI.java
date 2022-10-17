@@ -190,8 +190,8 @@ public class ClientGUI extends JFrame {
                     case "Circle":
                         float x = p1.x;
                         float y = p1.y;
-                        float w = p2.x - p1.x;
-                        float h = p2.y - p1.y;
+                        float w = Math.abs(p2.x - p1.x);
+                        float h = Math.abs(p2.y - p1.y);
                         Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
                         wrapper = new ShapeWrapper(circle2D, colorHex);
                         graphicsArrayList.add(wrapper);
@@ -202,8 +202,8 @@ public class ClientGUI extends JFrame {
                     case "Rectangle":
                         float x1 = p1.x;
                         float y1 = p1.y;
-                        float w1 = p2.x - p1.x;
-                        float h1 = p2.y - p1.y;
+                        float w1 = Math.abs(p2.x - p1.x);
+                        float h1 = Math.abs(p2.y - p1.y);
                         Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
                         wrapper = new ShapeWrapper(rectangle2D, colorHex);
                         graphicsArrayList.add(wrapper);
