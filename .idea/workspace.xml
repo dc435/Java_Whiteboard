@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="feat:Triangle">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="doing:textPane">
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" afterDir="false" />
     </list>
@@ -191,7 +189,21 @@
       <option name="project" value="LOCAL" />
       <updated>1666009594478</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="ShapeWrapper_v1">
+      <created>1666014666701</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1666014666701</updated>
+    </task>
+    <task id="LOCAL-00014" summary="doing:textPane">
+      <created>1666014701573</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1666014701573</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -230,6 +242,8 @@
     <MESSAGE value="feat:Color" />
     <MESSAGE value="Triangle" />
     <MESSAGE value="feat:Triangle" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:Triangle" />
+    <MESSAGE value="ShapeWrapper_v1" />
+    <MESSAGE value="doing:textPane" />
+    <option name="LAST_COMMIT_MESSAGE" value="doing:textPane" />
   </component>
 </project>

@@ -5,13 +5,17 @@ import java.awt.*;
 public class ShapeWrapper {
 
     //TODO: YP
-    //Shape shape?
-    //String color?
-    //TextBox text?
 
     private Shape shape;
     private String color;
     private String textPane; //FIXME: not implemented
+
+
+    // Constructor
+    public ShapeWrapper(Shape shape, String color) {
+        this.shape = shape;
+        this.color = color;
+    }
 
     // Getters and setters
     public Shape getShape() {return this.shape;}

@@ -49,8 +49,7 @@ public class ClientGUI extends JFrame {
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
-    public ArrayList<Shape> graphicsArrayList = new ArrayList<>(); // TODO:change to wrapper
-    public ArrayList<String> colorArrayList = new ArrayList<>();
+    public ArrayList<ShapeWrapper> graphicsArrayList = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
@@ -182,8 +181,8 @@ public class ClientGUI extends JFrame {
 
                     case "Line":
                         Line2D.Float line2D = new Line2D.Float(p1, p2);
-                        graphicsArrayList.add(line2D);
-                        colorArrayList.add(colorHex);
+                        ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
+                        graphicsArrayList.add(wrapper);
                         repaint(); // Call paint(g)
                         // TODO: Send out arraylist
                         break;
@@ -194,8 +193,8 @@ public class ClientGUI extends JFrame {
                         float w = p2.x - p1.x;
                         float h = p2.y - p1.y;
                         Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
-                        graphicsArrayList.add(circle2D);
-                        colorArrayList.add(colorHex);
+                        wrapper = new ShapeWrapper(circle2D, colorHex);
+                        graphicsArrayList.add(wrapper);
                         repaint();
                         // TODO: Send out arraylist
                         break;
@@ -206,8 +205,8 @@ public class ClientGUI extends JFrame {
                         float w1 = p2.x - p1.x;
                         float h1 = p2.y - p1.y;
                         Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
-                        graphicsArrayList.add(rectangle2D);
-                        colorArrayList.add(colorHex);
+                        wrapper = new ShapeWrapper(rectangle2D, colorHex);
+                        graphicsArrayList.add(wrapper);
                         repaint();
                         // TODO: Send out arraylist
                         break;
@@ -218,8 +217,8 @@ public class ClientGUI extends JFrame {
                         triPath.lineTo(p2.x - (2 * pref_w), p2.y);
                         triPath.lineTo(p2.x, p2.y); // Ending point finish point
                         triPath.closePath();
-                        graphicsArrayList.add(triPath);
-                        colorArrayList.add(colorHex);
+                        wrapper = new ShapeWrapper(triPath, colorHex);
+                        graphicsArrayList.add(wrapper);
                         repaint();
                         // TODO: Send out arrayList
                         break;
@@ -246,8 +245,8 @@ public class ClientGUI extends JFrame {
                     }
                     p2.setLocation(e.getX(), e.getY());
                     Line2D.Float line2D = new Line2D.Float(p1, p2);
-                    graphicsArrayList.add(line2D);
-                    colorArrayList.add(colorHex);
+                    ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
+                    graphicsArrayList.add(wrapper);
                     repaint(); // Call paint(g)
 
                 }
@@ -267,19 +266,15 @@ public class ClientGUI extends JFrame {
         // Convert graphics objects to graphics2D objects
         Graphics2D g2 = (Graphics2D) g;
 
-        int i = 0;
 
         // Iterate the lines array and draw
-        for (Shape obj : graphicsArrayList) {
-            String hexV = colorArrayList.get(i);
-            g2.setColor(Color.decode(hexV));
-            g2.draw(obj);
-            i++;
+        for (ShapeWrapper wrapper : graphicsArrayList) {
+            g2.setColor(Color.decode(wrapper.getColor()));
+            g2.draw(wrapper.getShape());
+
         }
 
     }
-
-    public ArrayList<Shape> getGraphicsArrayList() {return this.graphicsArrayList;}
 
 
     //DC: For Testing:
