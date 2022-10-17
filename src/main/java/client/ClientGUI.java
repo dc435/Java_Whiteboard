@@ -227,11 +227,11 @@ public class ClientGUI extends JFrame {
 
     private void sendJoinDecision(String otherUserName, boolean accepted) {
         JoinDecision joindec = new JoinDecision(wbName, otherUserName, accepted);
-        ClientMsgSender sender = new ClientMsgSender(joindec, serverAddress, this, graphicsArrayList);
+        ClientMsgSender sender = new ClientMsgSender(joindec, serverAddress, this, graphicsFinal);
         sender.start();
     }
 
-    public void updateCanvas(float x, float y, String brushType, String color) {
+    public void updateCanvas(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
         //TODO: YP to do
     }
 
@@ -245,7 +245,7 @@ public class ClientGUI extends JFrame {
         // Then call method .sendJoinDecision() with boolean of true (accepted) or false (declined).
     }
 
-    public void incomingJoinDecision(String wbName, boolean approved, ArrayList<Shape> wbGraphics) {
+    public void incomingJoinDecision(String wbName, boolean approved, ArrayList<ShapeWrapper> graphics) {
         //TODO: YP. For incoming decisions by managers in reply to an earlier request by this user to join a wb.
         //'wbGraphics' will only be a complete arraylist if approved = true. Otherwise it will be null.
     }

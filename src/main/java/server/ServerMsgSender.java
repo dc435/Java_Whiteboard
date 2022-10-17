@@ -1,11 +1,13 @@
 package server;
 
 import message.BasicReply;
+import message.CanvasUpdate;
 import message.JoinDecision;
 import message.Message;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import whiteboard.ShapeWrapper;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -23,7 +25,7 @@ public class ServerMsgSender extends Thread {
     DataOutputStream out;
     DataInputStream in;
     JSONParser parser;
-    ArrayList<Shape> graphicsArrayList;
+    ArrayList<ShapeWrapper> graphics;
     ObjectOutputStream outObj;
 
     public ServerMsgSender(Message message, InetSocketAddress target) {
@@ -32,11 +34,11 @@ public class ServerMsgSender extends Thread {
         this.parser = new JSONParser();
     }
 
-    public ServerMsgSender(Message message, InetSocketAddress target, ArrayList<Shape> graphicsArrayList) {
+    public ServerMsgSender(Message message, InetSocketAddress target, ArrayList<ShapeWrapper> graphics) {
         this.message = message;
         this.target = target;
         this.parser = new JSONParser();
-        this.graphicsArrayList = graphicsArrayList;
+        this.graphics = graphics;
     }
 
     public void run() {
@@ -60,6 +62,9 @@ public class ServerMsgSender extends Thread {
             case "JoinDecision":
                 ProcessJoinDecision();
                 break;
+            case "CanvasUpdate":
+                ProcessCanvasUpdate();
+                break;
         }
     }
 
@@ -79,11 +84,22 @@ public class ServerMsgSender extends Thread {
         JoinDecision joindec = (JoinDecision) message;
         if (joindec.getApproved()) {
             try {
-                outObj.writeObject(graphicsArrayList);
+                outObj.writeObject(graphics);
                 out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        ListenForBasicReply();
+    }
+
+    private void ProcessCanvasUpdate() {
+        CanvasUpdate canup = (CanvasUpdate) message;
+        try {
+            outObj.writeObject(graphics);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         ListenForBasicReply();
     }

@@ -4,6 +4,7 @@ import message.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import whiteboard.ShapeWrapper;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -64,8 +65,25 @@ public class ClientMsgProcessor extends Thread {
     }
 
     private void processCanvasUpdate(CanvasUpdateRequest canup) {
-        gui.updateCanvas(canup.getX(), canup.getY(), canup.getBrushType(), canup.getColor());
-        gui.updateStatus("Canvas update from " + canup.getUserName());
+        ArrayList<ShapeWrapper> graphicsNew = null;
+        // If approved, listen for wb array from server:
+        try {
+            graphicsNew = (ArrayList<ShapeWrapper>) inObj.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //send basic approval reply to server:
+        BasicReply brep = new BasicReply(true, "Updated canvas graphics received.");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //update gui:
+        gui.updateCanvas(graphicsNew, canup.getUserName());
+        gui.updateStatus("Updated canvas received from: " + canup.getUserName());
     }
 
     private void processChatUpdate(ChatUpdateRequest chatup) {
@@ -79,11 +97,11 @@ public class ClientMsgProcessor extends Thread {
     }
 
     private void processJoinDecision(JoinDecision joindec) {
-        ArrayList<Shape> graphicsArrayList = null;
+        ArrayList<ShapeWrapper> graphics = null;
         // If approved, listen for wb array from server:
         if (joindec.getApproved()) {
             try {
-                graphicsArrayList = (ArrayList<Shape>) inObj.readObject();
+                graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -97,7 +115,7 @@ public class ClientMsgProcessor extends Thread {
             e.printStackTrace();
         }
         //update gui:
-        gui.incomingJoinDecision(joindec.getWbName(), joindec.getApproved(), graphicsArrayList);
+        gui.incomingJoinDecision(joindec.getWbName(), joindec.getApproved(), graphics);
         gui.updateStatus("Join decision received regarding whiteboard: " + joindec.getWbName() + " : " + joindec.getApproved());
 
     }

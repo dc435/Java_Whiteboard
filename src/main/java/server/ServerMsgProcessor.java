@@ -4,6 +4,7 @@ import message.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import whiteboard.ShapeWrapper;
 import whiteboard.User;
 
 import java.awt.*;
@@ -171,14 +172,14 @@ public class ServerMsgProcessor extends Thread {
         if (joindec.getApproved()) {
 
             otherUser.approved = true;
-            ArrayList<Shape> graphicsArrayList = null;
+            ArrayList<ShapeWrapper> graphics = null;
             try {
-                graphicsArrayList = (ArrayList<Shape>) inObj.readObject();
+                graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
             //Forward JoinDec and GraphicArrayList to otherUser:
-            ServerMsgSender sender = new ServerMsgSender(joindec, otherUser.address, graphicsArrayList);
+            ServerMsgSender sender = new ServerMsgSender(joindec, otherUser.address, graphics);
             sender.start();
             // Send reply to original sender:
             BasicReply brep = new BasicReply(true, "Sent join approval and full canvas to user " + joindec.getUserName());
@@ -211,19 +212,33 @@ public class ServerMsgProcessor extends Thread {
 
     private void processCanvasUpdate(CanvasUpdate canup) {
 
-        System.out.println("Received: " + canup.toString());
-//        String objShape = canup.getShape();
-//        System.out.println(objShape);
-//        try {
-//            switch(objShape) {
-//                case "Line2D":
-//                    Line2D objReceived = (Line2D.Float) inObj.readObject();
-//                    System.out.println("Received: " + objReceived.getClass().getSimpleName() + ":" + objReceived.getBounds());
-//                    break;
-//            }
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        //Get graphics object from stream:
+        ArrayList<ShapeWrapper> graphics = null;
+        try {
+            graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Get User list:
+        ArrayList<User> userList = server.getUserList(canup.getWbName());
+
+        // Forward the canup and graphics to each user in the userList (except for the original sender):
+        for (User u : userList) {
+            if (u.address.getAddress() != socket.getInetAddress()) {
+                ServerMsgSender sender = new ServerMsgSender(canup, u.address, graphics);
+                sender.start();
+            }
+        }
+
+        // Send reply to original sender:
+        BasicReply brep = new BasicReply(true, "Sent canvas update to " + userList.size() + " users.");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
