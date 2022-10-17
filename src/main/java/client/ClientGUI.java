@@ -45,8 +45,9 @@ public class ClientGUI extends JFrame {
     private JComboBox<String> colorBar;
     private JButton triangleButton;
     private JToolBar shapeBar;
+    private JButton textButton;
     private String colorHex = "#000000";
-    private String brush;
+    private String brush = "Line";
     private Path2D triPath = new Path2D.Float();
     public ArrayList<Shape> graphicsArrayList = new ArrayList<>(); // TODO:change to wrapper
     public ArrayList<String> colorArrayList = new ArrayList<>();
@@ -201,6 +202,18 @@ public class ClientGUI extends JFrame {
                         // TODO: Send out arraylist
                         break;
 
+                    case "Triangle":
+                        triPath.moveTo(p1.x, p1.y); // Starting point as mid-point
+                        float pref_w = p2.x - p1.x;
+                        triPath.lineTo(p2.x - (2 * pref_w), p2.y);
+                        triPath.lineTo(p2.x, p2.y); // Ending point finish point
+                        triPath.closePath();
+                        graphicsArrayList.add(triPath);
+                        colorArrayList.add(colorHex);
+                        repaint();
+                        // TODO: Send out arrayList
+                        break;
+
                 }
             }
         });
@@ -223,15 +236,6 @@ public class ClientGUI extends JFrame {
                     colorArrayList.add(colorHex);
                     repaint(); // Call paint(g)
 
-                }
-
-                if (brush.equals("Triangle")) {
-                    Point p = e.getPoint();
-                    float tx = p.x - p1.x;
-                    float ty = p.y - p1.y;
-                    AffineTransform area = AffineTransform.getTranslateInstance(tx, ty);
-                    triPath.transform(area);
-                    repaint();
                 }
             }
         });
