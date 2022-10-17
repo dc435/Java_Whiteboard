@@ -9,10 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -46,8 +43,11 @@ public class ClientGUI extends JFrame {
     private JButton rectangleButton;
     private JButton freeButton;
     private JComboBox<String> colorBar;
-    private String colorHex;
+    private JButton triangleButton;
+    private JToolBar shapeBar;
+    private String colorHex = "#000000";
     private String brush;
+    private Path2D triPath = new Path2D.Float();
     public ArrayList<Shape> graphicsArrayList = new ArrayList<>(); // TODO:change to wrapper
     public ArrayList<String> colorArrayList = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
@@ -129,6 +129,15 @@ public class ClientGUI extends JFrame {
             }
         });
 
+        triangleButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                brush = triangleButton.getText();
+                System.out.println(brush); //debug
+            }
+        });
+
         freeButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -137,6 +146,8 @@ public class ClientGUI extends JFrame {
                 System.out.println(brush); //debug
             }
         });
+
+
 
 
 
@@ -212,6 +223,15 @@ public class ClientGUI extends JFrame {
                     colorArrayList.add(colorHex);
                     repaint(); // Call paint(g)
 
+                }
+
+                if (brush.equals("Triangle")) {
+                    Point p = e.getPoint();
+                    float tx = p.x - p1.x;
+                    float ty = p.y - p1.y;
+                    AffineTransform area = AffineTransform.getTranslateInstance(tx, ty);
+                    triPath.transform(area);
+                    repaint();
                 }
             }
         });
