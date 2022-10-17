@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +58,7 @@
       <recent name="message" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.WBClient">
+  <component name="RunManager" selected="Application.ClientGUI">
     <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.ClientGUI" />
       <module name="whiteboard" />
@@ -91,9 +88,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ClientGUI" />
         <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
-        <item itemvalue="Application.ClientGUI" />
         <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
       </list>

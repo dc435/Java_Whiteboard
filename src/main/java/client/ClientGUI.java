@@ -41,10 +41,11 @@ public class ClientGUI extends JFrame {
     private JButton circleButton;
     private JButton rectangleButton;
     private JButton freeButton;
+    private JComboBox colorBar;
     private String brush;
     public ArrayList<Shape> graphicsArrayList = new ArrayList<Shape>();
-    private Point2D.Float p1;
-    private Point2D.Float p2;
+    private Point2D.Float p1 = new Point2D.Float();
+    private Point2D.Float p2 = new Point2D.Float();
 
 
     public ClientGUI(String appName) {
@@ -103,15 +104,17 @@ public class ClientGUI extends JFrame {
             // Starting point of the shape
             @Override
             public void mousePressed(MouseEvent e) {
-                p1 = new Point2D.Float(e.getX(), e.getY());
+                p1.setLocation(0,0);
+                p2.setLocation(0,0);
+                p1.setLocation(e.getX(), e.getY());
             }
 
             // Ending point of the shape
             @Override
             public void mouseReleased(MouseEvent e) {
-                p2 = new Point2D.Float(e.getX(), e.getY());
+                p2.setLocation(e.getX(), e.getY());
 
-                switch (brush) { //FIXME: weird error coming out
+                switch (brush) {
 
                     case "Line":
                         Line2D.Float line2D = new Line2D.Float(p1, p2);
@@ -154,9 +157,10 @@ public class ClientGUI extends JFrame {
                 super.mouseDragged(e);
 
                 if (brush.equals("FreeH")) { //FIXME: need to init p1 and p2 and clear positions
-
-                    p1.x = p2.x;
-                    p1.y = p2.y;
+                    if (p2.x != 0 && p2.y != 0) {
+                        p1.x = p2.x;
+                        p1.y = p2.y;
+                    }
                     p2.setLocation(e.getX(), e.getY());
                     Line2D.Float line2D = new Line2D.Float(p1, p2);
                     graphicsArrayList.add(line2D);
