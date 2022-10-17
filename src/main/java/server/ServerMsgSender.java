@@ -65,6 +65,9 @@ public class ServerMsgSender extends Thread {
             case "CanvasUpdate":
                 ProcessCanvasUpdate();
                 break;
+            case "Boot User":
+                ListenForBasicReply();
+                break;
         }
     }
 

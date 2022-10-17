@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Tidy up of CanvasUpdate and JoinDecision to account for new 'ShapeWrapper' class.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/message/BootUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/message/CanvasUpdateRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/message/ChatUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/ChatUpdate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
     </list>
@@ -164,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665983536028</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Tidy up of CanvasUpdate and JoinDecision to account for new 'ShapeWrapper' class.">
+      <created>1666000773843</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1666000773843</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -199,6 +209,7 @@
     <MESSAGE value="Minor comments in ClientGUI" />
     <MESSAGE value="Chat updaterequest protocol added. Make 'echoMsg' generic functionality in server." />
     <MESSAGE value="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods." />
+    <MESSAGE value="Tidy up of CanvasUpdate and JoinDecision to account for new 'ShapeWrapper' class." />
+    <option name="LAST_COMMIT_MESSAGE" value="Tidy up of CanvasUpdate and JoinDecision to account for new 'ShapeWrapper' class." />
   </component>
 </project>

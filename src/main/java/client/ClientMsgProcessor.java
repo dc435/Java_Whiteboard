@@ -6,7 +6,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import whiteboard.ShapeWrapper;
 
-import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -45,11 +44,11 @@ public class ClientMsgProcessor extends Thread {
         String jsType = (String) js.get("_type");
         switch(jsType) {
             case "CanvasUpdateRequest":
-                CanvasUpdateRequest canup = new CanvasUpdateRequest(js);
+                CanvasUpdate canup = new CanvasUpdate(js);
                 processCanvasUpdate(canup);
                 break;
             case "ChatUpdateRequest":
-                ChatUpdateRequest chatup = new ChatUpdateRequest(js);
+                ChatUpdate chatup = new ChatUpdate(js);
                 processChatUpdate(chatup);
                 break;
             case "JoinRequest":
@@ -60,11 +59,15 @@ public class ClientMsgProcessor extends Thread {
                 JoinDecision joindec = new JoinDecision(js);
                 processJoinDecision(joindec);
                 break;
+            case "BootUSer":
+                BootUser btuser = new BootUser(js);
+                processBootUser(btuser);
+                break;
         }
 
     }
 
-    private void processCanvasUpdate(CanvasUpdateRequest canup) {
+    private void processCanvasUpdate(CanvasUpdate canup) {
         ArrayList<ShapeWrapper> graphicsNew = null;
         // If approved, listen for wb array from server:
         try {
@@ -82,12 +85,12 @@ public class ClientMsgProcessor extends Thread {
             e.printStackTrace();
         }
         //update gui:
-        gui.updateCanvas(graphicsNew, canup.getUserName());
+        gui.incomingCanvasUpdate(graphicsNew, canup.getUserName());
         gui.updateStatus("Updated canvas received from: " + canup.getUserName());
     }
 
-    private void processChatUpdate(ChatUpdateRequest chatup) {
-        gui.updateChat(chatup.getUserName(), chatup.getChat());
+    private void processChatUpdate(ChatUpdate chatup) {
+        gui.incomingChatUpdate(chatup.getUserName(), chatup.getChat());
         gui.updateStatus("Chat update from " + chatup.getUserName());
     }
 
@@ -118,6 +121,11 @@ public class ClientMsgProcessor extends Thread {
         gui.incomingJoinDecision(joindec.getWbName(), joindec.getApproved(), graphics);
         gui.updateStatus("Join decision received regarding whiteboard: " + joindec.getWbName() + " : " + joindec.getApproved());
 
+    }
+
+    private void processBootUser(BootUser btuser) {
+        gui.incomingBootUser(btuser.getWbName(), btuser.getMgrName());
+        gui.updateStatus("User booted from whiteboard by " + btuser.getMgrName());
     }
 
 }

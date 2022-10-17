@@ -69,6 +69,20 @@ public class ClientMsgSender extends Thread {
             case "JoinDecision":
                 CompleteJoinDecision();
                 break;
+            case "BootUser":
+                ListenForBasicReply();
+        }
+    }
+
+    private void ListenForBasicReply() {
+        try {
+            JSONObject js = (JSONObject) parser.parse(in.readUTF());
+            BasicReply brep = new BasicReply(js);
+            gui.updateStatus(brep.getMessage());
+        } catch (IOException e) {
+            gui.updateStatus("Did not receive confirmation from server (IOException).");
+        } catch (ParseException e) {
+            gui.updateStatus("Could not parse response from server (ParseException).");
         }
     }
 
@@ -88,17 +102,6 @@ public class ClientMsgSender extends Thread {
         }
     }
 
-    private void ListenForBasicReply() {
-        try {
-            JSONObject js = (JSONObject) parser.parse(in.readUTF());
-            BasicReply brep = new BasicReply(js);
-            gui.updateStatus(brep.getMessage());
-        } catch (IOException e) {
-            gui.updateStatus("Did not receive confirmation from server (IOException).");
-        } catch (ParseException e) {
-            gui.updateStatus("Could not parse response from server (ParseException).");
-        }
-    }
 
     private void CompleteJoinDecision() {
         JoinDecision joindec = (JoinDecision) message;
