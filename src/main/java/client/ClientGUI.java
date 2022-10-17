@@ -5,6 +5,8 @@ import whiteboard.ShapeWrapper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -13,6 +15,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 
 
 public class ClientGUI extends JFrame {
@@ -35,15 +38,18 @@ public class ClientGUI extends JFrame {
         this.userName = DEFAULT_USER_NAME;
     }
 
+    public final static HashMap<String, String> COLOR = new HashMap<>();
     private JPanel panel1;
     private JPanel canvas;
     private JButton lineButton;
     private JButton circleButton;
     private JButton rectangleButton;
     private JButton freeButton;
-    private JComboBox colorBar;
+    private JComboBox<String> colorBar;
+    private String colorHex;
     private String brush;
-    public ArrayList<Shape> graphicsArrayList = new ArrayList<Shape>();
+    public ArrayList<Shape> graphicsArrayList = new ArrayList<>(); // TODO:change to wrapper
+    public ArrayList<String> colorArrayList = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
@@ -58,6 +64,42 @@ public class ClientGUI extends JFrame {
 
         // Set size
         this.setBounds(30,30,900,650);
+
+        // Color Bar
+        colorBar.addItem("Black");
+        COLOR.put("Black", "#000000");
+        colorBar.addItem("Red");
+        COLOR.put("Red", "#FF0000");
+        colorBar.addItem("Maroon");
+        COLOR.put("Maroon", "#800000");
+        colorBar.addItem("Yellow");
+        COLOR.put("Yellow", "#FFFF00");
+        colorBar.addItem("Olive");
+        COLOR.put("Olive", "#808000");
+        colorBar.addItem("Green");
+        COLOR.put("Green", "#008000");
+        colorBar.addItem("Blue");
+        COLOR.put("Blue", "#0000FF");
+        colorBar.addItem("Purple");
+        COLOR.put("Purple", "#800080");
+        colorBar.addItem("Navy");
+        COLOR.put("Navy", "#000080");
+        colorBar.addItem("Aqua");
+        COLOR.put("Aqua", "#00FFFF");
+        colorBar.addItem("Fuchsia");
+        COLOR.put("Fuchsia", "#FF00FF");
+
+        // Color Bar listener
+        colorBar.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                String color = (String) e.getItem();
+                colorHex = COLOR.get(color);
+                System.out.println(colorHex);
+            }
+        });
+
+
 
         // MouseListener for switching brushes
         rectangleButton.addMouseListener(new MouseAdapter() {
@@ -119,28 +161,31 @@ public class ClientGUI extends JFrame {
                     case "Line":
                         Line2D.Float line2D = new Line2D.Float(p1, p2);
                         graphicsArrayList.add(line2D);
+                        colorArrayList.add(colorHex);
                         repaint(); // Call paint(g)
                         // TODO: Send out arraylist
                         break;
 
                     case "Circle":
-                        float x = (float) p1.getX();
-                        float y = (float) p1.getY();
-                        float w = (float) (p2.getX() - p1.getX());
-                        float h = (float) (p2.getY() - p1.getY());
+                        float x = p1.x;
+                        float y = p1.y;
+                        float w = p2.x - p1.x;
+                        float h = p2.y - p1.y;
                         Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
                         graphicsArrayList.add(circle2D);
+                        colorArrayList.add(colorHex);
                         repaint();
                         // TODO: Send out arraylist
                         break;
 
                     case "Rectangle":
-                        float x1 = (float) p1.getX();
-                        float y1 = (float) p1.getY();
-                        float w1 = (float) (p2.getX() - p1.getX());
-                        float h1 = (float) (p2.getY() - p1.getY());
+                        float x1 = p1.x;
+                        float y1 = p1.y;
+                        float w1 = p2.x - p1.x;
+                        float h1 = p2.y - p1.y;
                         Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
                         graphicsArrayList.add(rectangle2D);
+                        colorArrayList.add(colorHex);
                         repaint();
                         // TODO: Send out arraylist
                         break;
@@ -156,7 +201,7 @@ public class ClientGUI extends JFrame {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
-                if (brush.equals("FreeH")) { //FIXME: need to init p1 and p2 and clear positions
+                if (brush.equals("FreeH")) {
                     if (p2.x != 0 && p2.y != 0) {
                         p1.x = p2.x;
                         p1.y = p2.y;
@@ -164,6 +209,7 @@ public class ClientGUI extends JFrame {
                     p2.setLocation(e.getX(), e.getY());
                     Line2D.Float line2D = new Line2D.Float(p1, p2);
                     graphicsArrayList.add(line2D);
+                    colorArrayList.add(colorHex);
                     repaint(); // Call paint(g)
 
                 }
@@ -183,11 +229,14 @@ public class ClientGUI extends JFrame {
         // Convert graphics objects to graphics2D objects
         Graphics2D g2 = (Graphics2D) g;
 
-
+        int i = 0;
 
         // Iterate the lines array and draw
         for (Shape obj : graphicsArrayList) {
+            String hexV = colorArrayList.get(i);
+            g2.setColor(Color.decode(hexV));
             g2.draw(obj);
+            i++;
         }
 
     }
