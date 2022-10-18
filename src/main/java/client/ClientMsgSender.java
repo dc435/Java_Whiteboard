@@ -25,7 +25,6 @@ public class ClientMsgSender extends Thread {
     JSONParser parser;
     ArrayList<ShapeWrapper> graphics;
     ObjectOutputStream outObj;
-    Object objToSend;
 
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui) {
         this.message = message;

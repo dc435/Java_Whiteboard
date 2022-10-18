@@ -35,18 +35,18 @@ public class WBClient {
 
     private static void startListening(ClientGUI gui) {
 
-            ServerSocketFactory factory = ServerSocketFactory.getDefault();
-            try(
-                ServerSocket server = factory.createServerSocket(clientPort)){
-                System.out.println("Listening for messages on port " + clientPort);
-                while(true){
-                    Socket socket = server.accept();
-                    ClientMsgProcessor processor =  new ClientMsgProcessor(socket, gui);
-                    processor.start();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        ServerSocketFactory factory = ServerSocketFactory.getDefault();
+        try(
+            ServerSocket server = factory.createServerSocket(clientPort)){
+            System.out.println("Listening for messages on port " + clientPort);
+            while(true){
+                Socket socket = server.accept();
+                ClientMsgProcessor processor =  new ClientMsgProcessor(socket, gui);
+                processor.start();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -26,10 +26,6 @@ public class ClientGUI extends JFrame {
     private String wbName;
     private String userName;
 
-//    private ArrayList<ShapeWrapper> graphicsFinal;
-//    private ArrayList<ShapeWrapper> graphicsBuffer;
-
-
     public ClientGUI(InetSocketAddress serverAddress, int clientPort) {
         this.serverAddress = serverAddress;
         this.clientPort = clientPort;
@@ -81,6 +77,7 @@ public class ClientGUI extends JFrame {
         this.setContentPane(pnlMain);
         this.setBackground(Color.WHITE);
         this.pack();
+
 
         // Set size
         this.setBounds(30,30,900,650);
@@ -301,7 +298,8 @@ public class ClientGUI extends JFrame {
     @Override
     public void paint(Graphics g) {
         // Convert graphics objects to graphics2D objects
-        Graphics2D g2 = (Graphics2D) g;
+        super.paint(g);
+        Graphics2D g2 = (Graphics2D) pnlCanvas.getGraphics();
 
         for (ShapeWrapper wrapper : graphicsFinal) {
             g2.setColor(Color.decode(wrapper.getColor()));
@@ -355,11 +353,10 @@ public class ClientGUI extends JFrame {
         }
     }
 
-    private void updateUserName(String un){
-        userName = un;
+    private void updateUserName(String newUserName){
+        userName = newUserName;
     }
 
-    //DC: Example public method for making new whiteboard request to server:
     private void sendNewWBRequest(String mgrName, String wbName) {
         NewWBRequest wbr = new NewWBRequest(mgrName, wbName, clientPort);
         ClientMsgSender sender = new ClientMsgSender(wbr, serverAddress, this);
@@ -392,7 +389,7 @@ public class ClientGUI extends JFrame {
         sender.start();
     }
 
-    public void sendBootUser(String otherUserName) {
+    private void sendBootUser(String otherUserName) {
         BootUser btuser = new BootUser(wbName, userName, otherUserName);
         ClientMsgSender sender = new ClientMsgSender(btuser, serverAddress, this);
         sender.start();
