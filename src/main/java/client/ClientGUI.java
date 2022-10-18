@@ -63,6 +63,8 @@ public class ClientGUI extends JFrame {
     private JButton bntBoot;
     private JButton bntSaveAs;
     private JButton bntClose;
+    private JButton btnUser;
+    private JButton btnServer;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
