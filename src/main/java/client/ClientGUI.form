@@ -105,7 +105,7 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Send"/>
             </properties>
           </component>
           <component id="50d96" class="javax.swing.JTextArea" binding="txtMember">
@@ -184,22 +184,6 @@
               <text value="Save as"/>
             </properties>
           </component>
-          <component id="774bf" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="UserName"/>
-            </properties>
-          </component>
-          <component id="a56de" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Server"/>
-            </properties>
-          </component>
           <component id="9895e" class="javax.swing.JButton" binding="bntClose">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -214,6 +198,22 @@
             </constraints>
             <properties>
               <text value="Leave"/>
+            </properties>
+          </component>
+          <component id="31d31" class="javax.swing.JButton" binding="btnServer">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Server"/>
+            </properties>
+          </component>
+          <component id="6b232" class="javax.swing.JButton" binding="btnUser">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="User"/>
             </properties>
           </component>
         </children>

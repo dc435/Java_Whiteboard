@@ -2,6 +2,7 @@ package client;
 
 import message.*;
 import whiteboard.ShapeWrapper;
+import whiteboard.Whiteboard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -61,6 +63,8 @@ public class ClientGUI extends JFrame {
     private JButton bntBoot;
     private JButton bntSaveAs;
     private JButton bntClose;
+    private JButton btnUser;
+    private JButton btnServer;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
@@ -315,9 +319,47 @@ public class ClientGUI extends JFrame {
 
     //DC: For Testing:
     public void guiTester() {
-        Line2D line = new Line2D.Float();
-        line.setLine(1,2,3,4);
-        sendCanvasUpdate();
+//        Line2D line = new Line2D.Float();
+//        line.setLine(1,2,3,4);
+//        sendCanvasUpdate();
+        PopUpGUI popUpGUI = new PopUpGUI("appname,", "Enter name of wb to join:");
+        popUpGUI.setVisible(true);
+
+    }
+
+    private void writeToFile(String fileName) {
+        Whiteboard wb = new Whiteboard(wbName, graphicsFinal);
+        ObjectOutputStream outputStream = null;
+        try {
+            outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+            outputStream.writeObject(wb);
+            outputStream.close();
+            updateStatus("Whiteboard saved to file " + fileName);
+        } catch (IOException e) {
+            updateStatus("Error saving whiteboard.");
+            updateStatus("Error saving whiteboard. File not found.");
+        }
+    }
+
+    private void openFile(String fileName) {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName));
+            Whiteboard wb = (Whiteboard) inputStream.readObject();
+            inputStream.close();
+            graphicsFinal = wb.getGraphicsFinal();
+            wbName = wb.getWbName();
+            //TODO: refresh canvas? Disable buttons? Update window title bar?
+        } catch (FileNotFoundException e) {
+            updateStatus("Could not open whiteboard. File not found.");
+        } catch (IOException e) {
+            updateStatus("Could not open whiteboard.");
+        } catch (ClassNotFoundException e) {
+            updateStatus("Could not open whiteboard. WB class not found.");
+        }
+    }
+
+    private void updateUserName(String un){
+        userName = un;
     }
 
     //DC: Example public method for making new whiteboard request to server:
