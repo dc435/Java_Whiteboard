@@ -105,9 +105,9 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="b9113" class="javax.swing.JButton" binding="bntSend">
+          <component id="b9113" class="javax.swing.JButton" binding="btnSend">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Send"/>
@@ -144,7 +144,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="3ae33" class="javax.swing.JButton" binding="bntJoin">
+          <component id="3ae33" class="javax.swing.JButton" binding="btnJoin">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -152,7 +152,7 @@
               <text value="Join"/>
             </properties>
           </component>
-          <component id="6799f" class="javax.swing.JButton" binding="bntSave">
+          <component id="6799f" class="javax.swing.JButton" binding="btnSave">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -160,7 +160,7 @@
               <text value="Save"/>
             </properties>
           </component>
-          <component id="315b2" class="javax.swing.JButton" binding="bntNew">
+          <component id="315b2" class="javax.swing.JButton" binding="btnNew">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -168,7 +168,7 @@
               <text value="New"/>
             </properties>
           </component>
-          <component id="30120" class="javax.swing.JButton" binding="bntOpen">
+          <component id="30120" class="javax.swing.JButton" binding="btnOpen">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -176,7 +176,7 @@
               <text value="Open"/>
             </properties>
           </component>
-          <component id="70e21" class="javax.swing.JButton" binding="bntBoot">
+          <component id="70e21" class="javax.swing.JButton" binding="btnBoot">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -184,7 +184,7 @@
               <text value="Boot User"/>
             </properties>
           </component>
-          <component id="fcbfc" class="javax.swing.JButton" binding="bntSaveAs">
+          <component id="fcbfc" class="javax.swing.JButton" binding="btnSaveAs">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -192,7 +192,7 @@
               <text value="Save as"/>
             </properties>
           </component>
-          <component id="9895e" class="javax.swing.JButton" binding="bntClose">
+          <component id="9895e" class="javax.swing.JButton" binding="btnClose">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -200,7 +200,7 @@
               <text value="Close"/>
             </properties>
           </component>
-          <component id="8f6f2" class="javax.swing.JButton" binding="bntLeave">
+          <component id="8f6f2" class="javax.swing.JButton" binding="btnLeave">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -216,12 +216,12 @@
               <text value="Server"/>
             </properties>
           </component>
-          <component id="6b232" class="javax.swing.JButton" binding="btnUser">
+          <component id="6b232" class="javax.swing.JButton" binding="btnUserName">
             <constraints>
               <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="User"/>
+              <text value="Username"/>
             </properties>
           </component>
         </children>
