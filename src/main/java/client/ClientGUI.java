@@ -75,8 +75,8 @@ public class ClientGUI extends JFrame {
         super(appName);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pnlMain);
-        this.setBackground(Color.WHITE);
-        this.pack();
+        this.setPreferredSize(new Dimension(1000,750));
+
 
 
         // Set size
@@ -287,6 +287,8 @@ public class ClientGUI extends JFrame {
                 }
             }
         });
+
+        this.pack();
     }
 
     public static void main(String[] args) {
