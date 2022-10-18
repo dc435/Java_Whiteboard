@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Fix paint() to canvas. Changes to GUI.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/whiteboard/ClientState.java" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Add use of JOptionPane for user input (and delete PopUpGUI). Create some click listeners for change username and server. Add clientState enum and method to switch state and dis/enable option buttons.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/PopUpGUI.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/PopUpGUI.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +60,7 @@
       <recent name="message" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.WBClient">
+  <component name="RunManager" selected="Application.ClientGUI">
     <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.ClientGUI" />
       <module name="whiteboard" />
@@ -94,8 +90,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.ClientGUI" />
+        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
         <item itemvalue="Application.ClientGUI" />
         <item itemvalue="Application.WBClient" />
@@ -244,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666084220088</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Add use of JOptionPane for user input (and delete PopUpGUI). Create some click listeners for change username and server. Add clientState enum and method to switch state and dis/enable option buttons.">
+      <created>1666088875744</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1666088875744</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -258,7 +261,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="damian" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -291,6 +294,7 @@
     <MESSAGE value="merge" />
     <MESSAGE value="Minor amends to ClientGUI" />
     <MESSAGE value="Fix paint() to canvas. Changes to GUI." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix paint() to canvas. Changes to GUI." />
+    <MESSAGE value="Add use of JOptionPane for user input (and delete PopUpGUI). Create some click listeners for change username and server. Add clientState enum and method to switch state and dis/enable option buttons." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add use of JOptionPane for user input (and delete PopUpGUI). Create some click listeners for change username and server. Add clientState enum and method to switch state and dis/enable option buttons." />
   </component>
 </project>
