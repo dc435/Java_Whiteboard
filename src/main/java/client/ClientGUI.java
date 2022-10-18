@@ -1,17 +1,17 @@
 package client;
 
 import message.*;
+import whiteboard.ClientState;
 import whiteboard.ShapeWrapper;
 import whiteboard.Whiteboard;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -46,20 +46,20 @@ public class ClientGUI extends JFrame {
     private JButton bntTextCanvas;
     private JTextArea txtChat;
     private JTextField txtType;
-    private JButton bntSend;
+    private JButton btnSend;
     private JTextArea txtMember;
     private JTextArea txtLog;
     private JPanel pnlText;
     private JPanel pnlManage;
-    private JButton bntJoin;
-    private JButton bntLeave;
-    private JButton bntSave;
-    private JButton bntNew;
-    private JButton bntOpen;
-    private JButton bntBoot;
-    private JButton bntSaveAs;
-    private JButton bntClose;
-    private JButton btnUser;
+    private JButton btnJoin;
+    private JButton btnLeave;
+    private JButton btnSave;
+    private JButton btnNew;
+    private JButton btnOpen;
+    private JButton btnBoot;
+    private JButton btnSaveAs;
+    private JButton btnClose;
+    private JButton btnUserName;
     private JButton btnServer;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
@@ -174,10 +174,6 @@ public class ClientGUI extends JFrame {
             }
         });
 
-
-
-
-
         // MouseListener for drawing on canvas
         pnlCanvas.addMouseListener(new MouseAdapter() {
 
@@ -265,7 +261,6 @@ public class ClientGUI extends JFrame {
             }
         });
 
-
         pnlCanvas.addMouseMotionListener(new MouseAdapter() {
 
             @Override
@@ -287,6 +282,7 @@ public class ClientGUI extends JFrame {
                 }
             }
         });
+
     }
 
     public static void main(String[] args) {
@@ -311,15 +307,81 @@ public class ClientGUI extends JFrame {
         }
     }
 
-
     //DC: For Testing:
     public void guiTester() {
-//        Line2D line = new Line2D.Float();
-//        line.setLine(1,2,3,4);
-//        sendCanvasUpdate();
-        PopUpGUI popUpGUI = new PopUpGUI("appname,", "Enter name of wb to join:");
-        popUpGUI.setVisible(true);
+        //
+    }
 
+    private void setMngButtonListeners() {
+
+        btnUserName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                Object result = JOptionPane.showInputDialog(userInput, "Enter new username:");
+                updateUserName(result.toString());
+            }
+        });
+        btnServer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                Object result = JOptionPane.showInputDialog(userInput, "Enter server address in form '127.0.0.1:999':");
+                String newServerAddress = result.toString();
+                try {
+                    URI uri = new URI("my://" + newServerAddress);
+                    String host = uri.getHost();
+                    int port = uri.getPort();
+                    InetSocketAddress newAdd = new InetSocketAddress(host,port);
+                    updateServerAddress(newAdd);
+                } catch (URISyntaxException urx) {
+                    updateStatus("Failure to process new server address.");
+                }
+            }
+        });
+    }
+
+    private void switchState(ClientState state){
+        switch (state) {
+            case NONE:
+                btnJoin.setEnabled(true);
+                btnLeave.setEnabled(false);
+                btnOpen.setEnabled(true);
+                btnNew.setEnabled(true);
+                btnSave.setEnabled(false);
+                btnSaveAs.setEnabled(false);
+                btnBoot.setEnabled(false);
+                btnClose.setEnabled(false);
+                btnUserName.setEnabled(true);
+                btnServer.setEnabled(true);
+                break;
+            case USER:
+                btnJoin.setEnabled(false);
+                btnLeave.setEnabled(true);
+                btnOpen.setEnabled(false);
+                btnNew.setEnabled(false);
+                btnSave.setEnabled(false);
+                btnSaveAs.setEnabled(false);
+                btnBoot.setEnabled(false);
+                btnClose.setEnabled(false);
+                btnUserName.setEnabled(false);
+                btnServer.setEnabled(false);
+                break;
+            case MGR:
+                btnJoin.setEnabled(false);
+                btnLeave.setEnabled(false);
+                btnOpen.setEnabled(false);
+                btnNew.setEnabled(false);
+                btnSave.setEnabled(true);
+                btnSaveAs.setEnabled(true);
+                btnBoot.setEnabled(true);
+                btnClose.setEnabled(true);
+                btnUserName.setEnabled(false);
+                btnServer.setEnabled(false);
+                break;
+        }
     }
 
     private void writeToFile(String fileName) {
@@ -356,6 +418,8 @@ public class ClientGUI extends JFrame {
     private void updateUserName(String newUserName){
         userName = newUserName;
     }
+
+    private void updateServerAddress(InetSocketAddress newAdd) {serverAddress = newAdd;}
 
     private void sendNewWBRequest(String mgrName, String wbName) {
         NewWBRequest wbr = new NewWBRequest(mgrName, wbName, clientPort);
