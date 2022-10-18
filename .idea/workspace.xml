@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="merge">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Minor amends to ClientGUI">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/PopUpGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/PopUpGUI.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="damian" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,18 +43,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "398",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;false&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;398&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -89,8 +94,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.ClientGUI" />
-        <item itemvalue="Application.WBServer" />
         <item itemvalue="Application.WBClient" />
+        <item itemvalue="Application.WBServer" />
         <item itemvalue="Application.ClientGUI" />
         <item itemvalue="Application.WBClient" />
       </list>
@@ -224,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666064369551</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Minor amends to ClientGUI">
+      <created>1666071708747</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1666071708747</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -238,7 +250,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="damian_featPlayJFrame" />
                       </list>
                     </value>
                   </entry>
@@ -269,6 +281,7 @@
     <MESSAGE value="debug:Math.abs" />
     <MESSAGE value="chore" />
     <MESSAGE value="merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge" />
+    <MESSAGE value="Minor amends to ClientGUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor amends to ClientGUI" />
   </component>
 </project>

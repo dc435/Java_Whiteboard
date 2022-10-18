@@ -63,7 +63,9 @@
         <properties>
           <toolTipText value="Canvas"/>
         </properties>
-        <border type="none"/>
+        <border type="line">
+          <color color="-16777216"/>
+        </border>
         <children/>
       </grid>
       <component id="e0930" class="javax.swing.JComboBox" binding="barColor">
@@ -88,7 +90,10 @@
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1182465"/>
+              <enabled value="true"/>
+            </properties>
           </component>
           <component id="a924e" class="javax.swing.JTextField" binding="txtType">
             <constraints>
@@ -115,6 +120,7 @@
               </grid>
             </constraints>
             <properties>
+              <background color="-1182465"/>
               <text value=""/>
             </properties>
           </component>
@@ -124,7 +130,9 @@
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1182465"/>
+            </properties>
           </component>
         </children>
       </grid>
