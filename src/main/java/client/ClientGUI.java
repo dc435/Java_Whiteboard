@@ -36,16 +36,31 @@ public class ClientGUI extends JFrame {
     }
 
     public final static HashMap<String, String> COLOR = new HashMap<>();
-    private JPanel panel1;
-    private JPanel canvas;
-    private JButton lineButton;
-    private JButton circleButton;
-    private JButton rectangleButton;
-    private JButton freeButton;
-    private JComboBox<String> colorBar;
-    private JButton triangleButton;
-    private JToolBar shapeBar;
-    private JButton textButton;
+    private JPanel pnlMain;
+    private JPanel pnlCanvas;
+    private JButton bntLine;
+    private JButton bntCircle;
+    private JButton bntRectangle;
+    private JButton bntFreeHand;
+    private JComboBox<String> barColor;
+    private JButton bntTriangle;
+    private JToolBar barShape;
+    private JButton bntTextCanvas;
+    private JTextArea txtChat;
+    private JTextField txtType;
+    private JButton bntSend;
+    private JTextArea txtMember;
+    private JTextArea txtLog;
+    private JPanel pnlText;
+    private JPanel pnlManage;
+    private JButton bntJoin;
+    private JButton bntLeave;
+    private JButton bntSave;
+    private JButton bntNew;
+    private JButton bntOpen;
+    private JButton bntBoot;
+    private JButton bntSaveAs;
+    private JButton bntClose;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
@@ -59,7 +74,7 @@ public class ClientGUI extends JFrame {
         // From tutorial
         super(appName);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(panel1);
+        this.setContentPane(pnlMain);
         this.setBackground(Color.WHITE);
         this.pack();
 
@@ -68,31 +83,31 @@ public class ClientGUI extends JFrame {
 
 
         // Color Bar
-        colorBar.addItem("Black");
+        barColor.addItem("Black");
         COLOR.put("Black", "#000000");
-        colorBar.addItem("Red");
+        barColor.addItem("Red");
         COLOR.put("Red", "#FF0000");
-        colorBar.addItem("Maroon");
+        barColor.addItem("Maroon");
         COLOR.put("Maroon", "#800000");
-        colorBar.addItem("Yellow");
+        barColor.addItem("Yellow");
         COLOR.put("Yellow", "#FFFF00");
-        colorBar.addItem("Olive");
+        barColor.addItem("Olive");
         COLOR.put("Olive", "#808000");
-        colorBar.addItem("Green");
+        barColor.addItem("Green");
         COLOR.put("Green", "#008000");
-        colorBar.addItem("Blue");
+        barColor.addItem("Blue");
         COLOR.put("Blue", "#0000FF");
-        colorBar.addItem("Purple");
+        barColor.addItem("Purple");
         COLOR.put("Purple", "#800080");
-        colorBar.addItem("Navy");
+        barColor.addItem("Navy");
         COLOR.put("Navy", "#000080");
-        colorBar.addItem("Aqua");
+        barColor.addItem("Aqua");
         COLOR.put("Aqua", "#00FFFF");
-        colorBar.addItem("Fuchsia");
+        barColor.addItem("Fuchsia");
         COLOR.put("Fuchsia", "#FF00FF");
 
         // Color Bar listener
-        colorBar.addItemListener(new ItemListener() {
+        barColor.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 String color = (String) e.getItem();
@@ -104,56 +119,56 @@ public class ClientGUI extends JFrame {
 
 
         // MouseListener for switching brushes
-        rectangleButton.addMouseListener(new MouseAdapter() {
+        bntRectangle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = rectangleButton.getText();
+                brush = bntRectangle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        lineButton.addMouseListener(new MouseAdapter() {
+        bntLine.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = lineButton.getText();
+                brush = bntLine.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        circleButton.addMouseListener(new MouseAdapter() {
+        bntCircle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = circleButton.getText();
+                brush = bntCircle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        triangleButton.addMouseListener(new MouseAdapter() {
+        bntTriangle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = triangleButton.getText();
+                brush = bntTriangle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        freeButton.addMouseListener(new MouseAdapter() {
+        bntFreeHand.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = freeButton.getText();
+                brush = bntFreeHand.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        textButton.addMouseListener(new MouseAdapter() {
+        bntTextCanvas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = textButton.getText();
+                brush = bntTextCanvas.getText();
                 System.out.println(brush); //debug
             }
         });
@@ -163,7 +178,7 @@ public class ClientGUI extends JFrame {
 
 
         // MouseListener for drawing on canvas
-        canvas.addMouseListener(new MouseAdapter() {
+        pnlCanvas.addMouseListener(new MouseAdapter() {
 
             // Starting point of the shape
             @Override
@@ -235,7 +250,7 @@ public class ClientGUI extends JFrame {
         });
 
 
-        canvas.addMouseMotionListener(new MouseAdapter() {
+        pnlCanvas.addMouseMotionListener(new MouseAdapter() {
 
             @Override
             public void mouseDragged(MouseEvent e) {
