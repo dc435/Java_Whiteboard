@@ -2,20 +2,20 @@ package message;
 
 import org.json.simple.JSONObject;
 
-public class NewWBRequest extends Message {
+public class NewWhiteboard extends Message {
 
-    public NewWBRequest() {
+    public NewWhiteboard() {
         super();
     }
 
-    public NewWBRequest(String mgrName, String wbName, int port) {
+    public NewWhiteboard(String mgrName, String wbName, int port) {
         super();
         json.put("_mgrName", mgrName);
         json.put("_wbName", wbName);
         json.put("_port", port);
     }
 
-    public NewWBRequest(JSONObject json) {
+    public NewWhiteboard(JSONObject json) {
         super(json);
     }
 

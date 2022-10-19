@@ -12,6 +12,7 @@ public class WBClient {
     private static final int DEFAULT_CLIENT_PORT = 3210;
     private static final InetSocketAddress DEFAULT_SERVER_ADDRESS = new InetSocketAddress("localhost", 3211);
     private static final String WELCOME_MSG = "Welcome to the COMP90015 Whiteboard Client, by D Curran & Y Peng.";
+    private static final String APP_NAME = "WHITEBOARD";
     private static int clientPort;
     private static InetSocketAddress serverAddress;
 
@@ -22,7 +23,7 @@ public class WBClient {
         serverAddress = DEFAULT_SERVER_ADDRESS;
 
         System.out.println(WELCOME_MSG);
-        ClientGUI gui = new ClientGUI(serverAddress, clientPort);
+        ClientGUI gui = new ClientGUI(serverAddress, clientPort, APP_NAME);
         gui.setVisible(true);
 
         Thread t = new Thread(() -> startListening(gui));
