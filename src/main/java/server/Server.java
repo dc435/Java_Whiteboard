@@ -1,6 +1,6 @@
 package server;
 
-import message.NewWBRequest;
+import message.NewWhiteboard;
 import whiteboard.User;
 import whiteboard.WhiteboardMgr;
 
@@ -16,10 +16,10 @@ public class Server extends Thread {
         whiteboards = new HashMap<String,WhiteboardMgr>();
     }
 
-    public boolean addWhiteboardMgr(NewWBRequest wbr, InetSocketAddress address){
+    public boolean addWhiteboardMgr(NewWhiteboard newwb, InetSocketAddress address){
 
-        String mgrName = wbr.getMgrName();
-        String wbName = wbr.getWbName();
+        String mgrName = newwb.getMgrName();
+        String wbName = newwb.getWbName();
         User manager = new User(mgrName, true, address, true);
         ArrayList<User> userList = new ArrayList<User>();
         userList.add(manager);

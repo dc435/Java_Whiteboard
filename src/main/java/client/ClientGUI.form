@@ -126,8 +126,8 @@
           </component>
           <component id="a9f91" class="javax.swing.JTextArea" binding="txtLog">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="25"/>
               </grid>
             </constraints>
             <properties>

@@ -19,6 +19,7 @@ public class ServerMsgProcessor extends Thread {
     DataInputStream in;
     DataOutputStream out;
     ObjectInputStream inObj;
+    private final String TAG = "(SERVER): ";
 
     public ServerMsgProcessor(Socket socket, Server server) {
         this.socket = socket;
@@ -42,9 +43,9 @@ public class ServerMsgProcessor extends Thread {
 
         String jsType = (String) js.get("_type");
         switch(jsType) {
-            case "NewWBRequest":
-                NewWBRequest wbr = new NewWBRequest(js);
-                processNewWBRequest(wbr);
+            case "NewWhiteboard":
+                NewWhiteboard newwb = new NewWhiteboard(js);
+                processNewWhiteboard(newwb);
                 break;
             case "CanvasUpdate":
                 CanvasUpdate canup = new CanvasUpdate(js);
@@ -71,15 +72,20 @@ public class ServerMsgProcessor extends Thread {
 
     }
 
-    private void processNewWBRequest(NewWBRequest wbr) {
-        InetSocketAddress mgrAddress = new InetSocketAddress(socket.getInetAddress(), wbr.getPort());
-        boolean added = server.addWhiteboardMgr(wbr, mgrAddress);
-        NewWBReply newWBReply = new NewWBReply(added);
+    private void processNewWhiteboard(NewWhiteboard newwb) {
+        InetSocketAddress mgrAddress = new InetSocketAddress(socket.getInetAddress(), newwb.getPort());
+        boolean success = server.addWhiteboardMgr(newwb, mgrAddress);
+        BasicReply brep;
+        if (success) {
+            brep = new BasicReply(success, TAG + "Successfully added whiteboard named " + newwb.getWbName());
+        } else {
+            brep = new BasicReply(success, TAG + "Could not add whiteboard named " + newwb.getWbName() + ". Try a different name.");
+        }
         try {
-            out.writeUTF(newWBReply.toString());
+            out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error processing new whiteboard.");
         }
     }
 
@@ -90,7 +96,7 @@ public class ServerMsgProcessor extends Thread {
     private void echoMessageToAll(Message msg, String wbName) {
         // Check if server is managing a whiteboard with that name:
         if (!server.isManagingWhiteboard(wbName)){
-            BasicReply brep = new BasicReply(false, "No whiteboard named " + wbName);
+            BasicReply brep = new BasicReply(false, TAG + "No whiteboard named " + wbName);
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
@@ -112,7 +118,7 @@ public class ServerMsgProcessor extends Thread {
         }
 
         // Send reply to original sender:
-        BasicReply brep = new BasicReply(true, "Sent update to " + userList.size() + " users.");
+        BasicReply brep = new BasicReply(true, TAG + "Sent update to " + userList.size() + " users.");
         try {
             out.writeUTF(brep.toString());
             out.flush();
@@ -124,7 +130,7 @@ public class ServerMsgProcessor extends Thread {
     private void processJoinRequest(JoinRequest joinreq) {
         // Check if server is managing a whiteboard with that name:
         if (!server.isManagingWhiteboard(joinreq.getWbName())){
-            BasicReply brep = new BasicReply(false, "No whiteboard named " + joinreq.getWbName());
+            BasicReply brep = new BasicReply(false, TAG + "No whiteboard named " + joinreq.getWbName());
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
@@ -136,7 +142,7 @@ public class ServerMsgProcessor extends Thread {
 
         //Check if username is unique to that whiteboard:
         if (!server.isUserNameUnique(joinreq.getWbName(), joinreq.getUserName())){
-            BasicReply brep = new BasicReply(false, "Username (" + joinreq.getUserName() + ") is not unique to this whiteboard.");
+            BasicReply brep = new BasicReply(false, TAG + "Username (" + joinreq.getUserName() + ") is not unique to this whiteboard.");
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
@@ -157,7 +163,7 @@ public class ServerMsgProcessor extends Thread {
         sender.start();
 
         //Send reply to original sender:
-        BasicReply brep = new BasicReply(true, "Join Request sent to " + joinreq.getWbName() + " manager. Request pending.");
+        BasicReply brep = new BasicReply(true, TAG + "Join Request sent to " + joinreq.getWbName() + " manager. Request pending.");
         try {
             out.writeUTF(brep.toString());
             out.flush();
@@ -184,7 +190,7 @@ public class ServerMsgProcessor extends Thread {
             ServerMsgSender sender = new ServerMsgSender(joindec, otherUser.address, graphics);
             sender.start();
             // Send reply to original sender:
-            BasicReply brep = new BasicReply(true, "Sent join approval and full canvas to user " + joindec.getUserName());
+            BasicReply brep = new BasicReply(true, TAG + "Sent join approval and full canvas to user " + joindec.getUserName());
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
@@ -199,7 +205,7 @@ public class ServerMsgProcessor extends Thread {
             ServerMsgSender sender = new ServerMsgSender(joindec, otherUser.address);
             sender.start();
             // Send reply to original sender:
-            BasicReply brep = new BasicReply(true, "Join denial ackowledged and sent to user " + joindec.getUserName());
+            BasicReply brep = new BasicReply(true, TAG + "Join denial ackowledged and sent to user " + joindec.getUserName());
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
@@ -234,7 +240,7 @@ public class ServerMsgProcessor extends Thread {
         }
 
         // Send reply to original sender:
-        BasicReply brep = new BasicReply(true, "Sent canvas update to " + userList.size() + " users.");
+        BasicReply brep = new BasicReply(true, TAG + "Sent canvas update to " + userList.size() + " users.");
         try {
             out.writeUTF(brep.toString());
             out.flush();
@@ -250,10 +256,10 @@ public class ServerMsgProcessor extends Thread {
         //Check if mgr has authority, then action boot:
         User manager = server.getManager(btuser.getWbName());
         if (manager.address.getAddress() != socket.getInetAddress() || manager.username != btuser.getMgrName()) {
-            brep = new BasicReply(false, "No authority to boot user " + btuser.getUserName());
+            brep = new BasicReply(false, TAG + "No authority to boot user " + btuser.getUserName());
         } else {
             server.deleteUser(btuser.getWbName(), btuser.getUserName());
-            brep = new BasicReply(true, "User booted: " + btuser.getUserName());
+            brep = new BasicReply(true, TAG + "User booted: " + btuser.getUserName());
             User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
             ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
             sender.start();

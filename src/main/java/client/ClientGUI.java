@@ -24,16 +24,21 @@ public class ClientGUI extends JFrame {
 
     private final String DEFAULT_WB_NAME = "My New Whiteboard";
     private final String DEFAULT_USER_NAME = "New User";
+    private final String TAG = "(THIS CLIENT): ";
     private InetSocketAddress serverAddress;
     private int clientPort;
     private String wbName;
     private String userName;
+    private String currentFileName;
 
-    public ClientGUI(InetSocketAddress serverAddress, int clientPort) {
+    public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
+        super(APP_NAME);
         this.serverAddress = serverAddress;
         this.clientPort = clientPort;
         this.wbName = DEFAULT_WB_NAME;
         this.userName = DEFAULT_USER_NAME;
+        setState(ClientState.NONE);
+        callYPConstructors();
     }
 
     public final static HashMap<String, String> COLOR = new HashMap<>();
@@ -74,8 +79,12 @@ public class ClientGUI extends JFrame {
 
 
     public ClientGUI(String appName) {
-        // From tutorial
         super(appName);
+        callYPConstructors();//TODO: NOTE to YP: I have moved your constructors to separate method (below), so I can call them also.
+    }
+
+    private void callYPConstructors() {
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pnlMain);
         this.setPreferredSize(new Dimension(1000,750));
@@ -317,18 +326,105 @@ public class ClientGUI extends JFrame {
 
     //DC: For Testing:
     public void guiTester() {
-        //
+        setMngButtonListeners();
     }
 
     private void setMngButtonListeners() {
 
+        btnJoin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                Object result = JOptionPane.showInputDialog(userInput, "Enter name of the remote whiteboard to join:");
+                if (result!=null) {
+                    wbName = result.toString();
+                    sendJoinRequest();
+                };
+            }
+        });
+        btnOpen.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                Object result = JOptionPane.showInputDialog(userInput, "Enter the name of the file to open:");
+                if (result!=null) {
+                    String fileName = result.toString();
+                    openFile(fileName);
+                };
+            }
+        });
+        btnNew.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                Object result = JOptionPane.showInputDialog(userInput, "Enter name of new whiteboard:");
+                if (result!=null) {sendNewWhiteboard(result.toString());};
+            }
+        });
+        btnSave.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                writeToFile(currentFileName);
+            }
+        });
+        btnSaveAs.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                Object result = JOptionPane.showInputDialog(userInput, "Enter new file name:");
+                if (result!=null) {
+                    currentFileName = result.toString();
+                    writeToFile(currentFileName);
+                };
+            }
+        });
+        btnBoot.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                Object result = JOptionPane.showInputDialog(userInput, "Enter name of user to boot from this whiteboard:");
+                if (result!=null) {
+                    String otherUserName = result.toString();
+                    sendBootUser(otherUserName);
+                };
+            }
+        });
+        btnClose.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                int result = JOptionPane.showConfirmDialog(null, "Are sure you want to close this whiteboard?");
+                switch(result){
+                    case JOptionPane.YES_OPTION:
+                        //TODO: Close whiteboard - send close whiteboard to server?
+                        setState(ClientState.NONE);
+                        break;
+                    case JOptionPane.NO_OPTION:
+                        updateStatus(TAG + "Continue.");
+                        break;
+                    case JOptionPane.CANCEL_OPTION:
+                        updateStatus(TAG + "Continue.");
+                        break;
+                    case JOptionPane.CLOSED_OPTION:
+                        System.out.println(TAG + "Closed");
+                        break;
+                }
+            }
+        });
         btnUserName.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Enter new username:");
-                updateUserName(result.toString());
+                Object result = JOptionPane.showInputDialog(userInput, "Edit your username:", userName);
+                if (result!=null) {updateUserName(result.toString());};
             }
         });
         btnServer.addMouseListener(new MouseAdapter() {
@@ -336,22 +432,25 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Enter server address in form '127.0.0.1:999':");
-                String newServerAddress = result.toString();
-                try {
-                    URI uri = new URI("my://" + newServerAddress);
-                    String host = uri.getHost();
-                    int port = uri.getPort();
-                    InetSocketAddress newAdd = new InetSocketAddress(host,port);
-                    updateServerAddress(newAdd);
-                } catch (URISyntaxException urx) {
-                    updateStatus("Failure to process new server address.");
+                Object result = JOptionPane.showInputDialog(userInput, "Edit server address:",
+                        serverAddress.getAddress() + ":" + serverAddress.getPort());
+                if (result!=null) {
+                    String newServerAddress = result.toString();
+                    try {
+                        URI uri = new URI("my://" + newServerAddress);
+                        String host = uri.getHost();
+                        int port = uri.getPort();
+                        InetSocketAddress newAdd = new InetSocketAddress(host, port);
+                        updateServerAddress(newAdd);
+                    } catch (Exception ex) {
+                        updateStatus(TAG + "Failure to process new server address. Please check the address.");
+                    }
                 }
             }
         });
     }
 
-    private void switchState(ClientState state){
+    public void setState(ClientState state){
         switch (state) {
             case NONE:
                 btnJoin.setEnabled(true);
@@ -382,7 +481,11 @@ public class ClientGUI extends JFrame {
                 btnLeave.setEnabled(false);
                 btnOpen.setEnabled(false);
                 btnNew.setEnabled(false);
-                btnSave.setEnabled(true);
+                if (currentFileName!=null) {
+                    btnSave.setEnabled(true);
+                } else {
+                    btnSave.setEnabled(false);
+                }
                 btnSaveAs.setEnabled(true);
                 btnBoot.setEnabled(true);
                 btnClose.setEnabled(true);
@@ -400,6 +503,8 @@ public class ClientGUI extends JFrame {
             outputStream.writeObject(wb);
             outputStream.close();
             updateStatus("Whiteboard saved to file " + fileName);
+            currentFileName = fileName;
+            btnSave.setEnabled(true);
         } catch (IOException e) {
             updateStatus("Error saving whiteboard.");
             updateStatus("Error saving whiteboard. File not found.");
@@ -425,13 +530,17 @@ public class ClientGUI extends JFrame {
 
     private void updateUserName(String newUserName){
         userName = newUserName;
+        updateStatus(TAG + "Updated username to " + userName);
     }
 
-    private void updateServerAddress(InetSocketAddress newAdd) {serverAddress = newAdd;}
+    private void updateServerAddress(InetSocketAddress newAdd) {
+        serverAddress = newAdd;
+        updateStatus(TAG + "Updated server address to " + serverAddress.toString());
+    }
 
-    private void sendNewWBRequest(String mgrName, String wbName) {
-        NewWBRequest wbr = new NewWBRequest(mgrName, wbName, clientPort);
-        ClientMsgSender sender = new ClientMsgSender(wbr, serverAddress, this);
+    private void sendNewWhiteboard(String newWBName) {
+        NewWhiteboard newwb = new NewWhiteboard(userName, newWBName, clientPort);
+        ClientMsgSender sender = new ClientMsgSender(newwb, serverAddress, this);
         sender.start();
     }
 
@@ -468,7 +577,6 @@ public class ClientGUI extends JFrame {
     }
 
     public void incomingCanvasUpdate(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
-        //TODO: YP to do. Called when
         graphicsFinal.addAll(graphicsNew);
         repaint();
     }
@@ -478,15 +586,34 @@ public class ClientGUI extends JFrame {
         //eg: "Bob: Hello, welcome to the canvas!"
     }
 
-    public void incomingJoinRequest(String wbName, String userName) {
-        // TODO: YP. For incoming request from other user (userName) to join wb (wbName) hosted by this manager.
-        // This should display the request to the present user with 'accept / decline' button / option.
-        // Then call method .sendJoinDecision() with boolean of true (accepted) or false (declined).
+    public void incomingJoinRequest(String wbName, String newUserName) {
+        JFrame userInput = new JFrame();
+        int result = JOptionPane.showConfirmDialog(null, "The user "
+                + newUserName + " has requested to join " + wbName + ". Approve join?");
+        switch (result) {
+            case JOptionPane.YES_OPTION:
+                sendJoinDecision(newUserName, true);
+                break;
+            case JOptionPane.NO_OPTION:
+            case JOptionPane.CANCEL_OPTION:
+            case JOptionPane.CLOSED_OPTION:
+                sendJoinDecision(newUserName, false);
+                break;
+        }
     }
 
     public void incomingJoinDecision(String wbName, boolean approved, ArrayList<ShapeWrapper> graphics) {
-        //TODO: YP. For incoming decisions by managers in reply to an earlier request by this user to join a wb.
-        //'graphics' will only be a complete arraylist if approved = true. Otherwise it will be null.
+        if (approved) {
+            updateStatus(TAG + "Your request to join " + wbName + " has been approved.");
+            graphicsFinal.clear();
+            graphicsBuffer.clear();
+            graphicsFinal = graphics;
+            repaint();
+            setState(ClientState.USER);
+            updateStatus(TAG + "The whiteboard has been update with current status of " + wbName);
+        } else {
+            updateStatus(TAG + "The manager of " + wbName + " did not approve your request to join.");
+        }
     }
 
     public void incomingBootUser(String wbName, String mgrName) {
@@ -495,8 +622,8 @@ public class ClientGUI extends JFrame {
     }
 
     public void updateStatus(String update) {
-        //TODO: YP: Change so that this updates GUI (rather than command line):
-        System.out.println("UPDATE: " + update);
+        txtLog.append("\n" + update);
+//        System.out.println("UPDATE: " + update);
 
     }
 

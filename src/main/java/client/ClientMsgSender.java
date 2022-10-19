@@ -6,7 +6,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import whiteboard.ShapeWrapper;
 
-import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -56,8 +55,11 @@ public class ClientMsgSender extends Thread {
 
         String type = message.getType();
         switch(type) {
-            case "NewWBRequest":
-                ListenForNewWBReply();
+            case "JoinRequest":
+                ListenForBasicReply();
+                break;
+            case "NewWhiteboard":
+                ListenForBasicReply();
                 break;
             case "CanvasUpdate":
                 CompleteCanvasUpdate();
@@ -84,23 +86,6 @@ public class ClientMsgSender extends Thread {
             gui.updateStatus("Could not parse response from server (ParseException).");
         }
     }
-
-    private void ListenForNewWBReply() {
-        try {
-            JSONObject js = (JSONObject) parser.parse(in.readUTF());
-            NewWBReply wbr = new NewWBReply(js);
-            if (wbr.getAdded()) {
-                gui.updateStatus("New Whiteboard added by server.");
-            } else {
-                gui.updateStatus("Server failed to add whiteboard.");
-            }
-        } catch (IOException e) {
-            gui.updateStatus("Did not receive confirmation from server (IOException).");
-        } catch (ParseException e) {
-            gui.updateStatus("Could not parse response from server (ParseException).");
-        }
-    }
-
 
     private void CompleteJoinDecision() {
         JoinDecision joindec = (JoinDecision) message;
