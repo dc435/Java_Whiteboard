@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class Server extends Thread {
 
+    private final String TAG = "(SERVER):";
     private HashMap<String,WhiteboardMgr> whiteboards;
 
     public Server() {
@@ -26,11 +27,11 @@ public class Server extends Thread {
         WhiteboardMgr whiteboardMgr = new WhiteboardMgr(userList, wbName);
 
         if (whiteboards.containsKey(wbName)) {
-            System.out.println("Could not add whiteboard. WB Name already in use.");
+            System.out.println(TAG + "Could not add whiteboard. WB Name already in use.");
             return false;
         } else {
             whiteboards.put(wbName,whiteboardMgr);
-            System.out.println("Added new whiteboard: " + wbName + " at " + manager.address);
+            System.out.println(TAG + "Added new whiteboard: " + wbName + " at " + manager.address);
             return true;
         }
     }
@@ -75,6 +76,19 @@ public class Server extends Thread {
     public void deleteUser(String wbName, String userName) {
         WhiteboardMgr whiteboardMgr = whiteboards.get(wbName);
         whiteboardMgr.deleteUser(userName);
+    }
+
+    public boolean checkUser(String wbName, String userName) {
+        if (whiteboards.containsKey(wbName)) {
+            WhiteboardMgr wbMgr = whiteboards.get(wbName);
+            if (wbMgr.checkUser(userName)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }

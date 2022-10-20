@@ -14,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.io.*;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -24,12 +23,13 @@ public class ClientGUI extends JFrame {
 
     private final String DEFAULT_WB_NAME = "My New Whiteboard";
     private final String DEFAULT_USER_NAME = "New User";
-    private final String TAG = "(THIS CLIENT): ";
+    private final String TAG = "(CLIENT GUI): ";
     private InetSocketAddress serverAddress;
     private int clientPort;
     private String wbName;
     private String userName;
     private String currentFileName;
+    private ArrayList<String> activeUsers;
 
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
@@ -38,6 +38,7 @@ public class ClientGUI extends JFrame {
         this.wbName = DEFAULT_WB_NAME;
         this.userName = DEFAULT_USER_NAME;
         setState(ClientState.NONE);
+        setTitle(wbName);
         callYPConstructors();
     }
 
@@ -53,9 +54,9 @@ public class ClientGUI extends JFrame {
     private JToolBar barShape;
     private JButton bntTextCanvas;
     private JTextArea txtChat;
-    private JTextField txtType;
+    private JTextField txtChatIn;
     private JButton btnSend;
-    private JTextArea txtMember;
+    private JTextArea txtUsers;
     private JTextArea txtLog;
     private JPanel pnlText;
     private JPanel pnlManage;
@@ -343,6 +344,24 @@ public class ClientGUI extends JFrame {
                 };
             }
         });
+        btnLeave.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JFrame userInput = new JFrame();
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to leave");
+                switch (result) {
+                    case JOptionPane.YES_OPTION:
+                        sendLeave();
+                        setState(ClientState.NONE);
+                        break;
+                    case JOptionPane.NO_OPTION:
+                    case JOptionPane.CANCEL_OPTION:
+                    case JOptionPane.CLOSED_OPTION:
+                        break;
+                }
+            }
+        });
         btnOpen.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -361,7 +380,9 @@ public class ClientGUI extends JFrame {
                 super.mouseClicked(e);
                 JFrame userInput = new JFrame();
                 Object result = JOptionPane.showInputDialog(userInput, "Enter name of new whiteboard:");
-                if (result!=null) {sendNewWhiteboard(result.toString());};
+                if (result!=null) {
+                    buildNewWhiteboard(result.toString());
+                };
             }
         });
         btnSave.addMouseListener(new MouseAdapter() {
@@ -403,17 +424,12 @@ public class ClientGUI extends JFrame {
                 int result = JOptionPane.showConfirmDialog(null, "Are sure you want to close this whiteboard?");
                 switch(result){
                     case JOptionPane.YES_OPTION:
-                        //TODO: Close whiteboard - send close whiteboard to server?
-                        setState(ClientState.NONE);
+                        closeCurrentWhiteboard();
                         break;
                     case JOptionPane.NO_OPTION:
-                        updateStatus(TAG + "Continue.");
-                        break;
                     case JOptionPane.CANCEL_OPTION:
-                        updateStatus(TAG + "Continue.");
-                        break;
                     case JOptionPane.CLOSED_OPTION:
-                        System.out.println(TAG + "Closed");
+                        System.out.println(TAG + "Continue.");
                         break;
                 }
             }
@@ -448,6 +464,15 @@ public class ClientGUI extends JFrame {
                 }
             }
         });
+        btnSend.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                sendChatUpdate(txtChatIn.getText());
+            }
+        });
+        //TODO: Add listener for when press ENTER whilst in Chat text box.
+
     }
 
     public void setState(ClientState state){
@@ -463,6 +488,7 @@ public class ClientGUI extends JFrame {
                 btnClose.setEnabled(false);
                 btnUserName.setEnabled(true);
                 btnServer.setEnabled(true);
+                txtUsers.setVisible(false);
                 break;
             case USER:
                 btnJoin.setEnabled(false);
@@ -475,6 +501,7 @@ public class ClientGUI extends JFrame {
                 btnClose.setEnabled(false);
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
+                txtUsers.setVisible(false);
                 break;
             case MGR:
                 btnJoin.setEnabled(false);
@@ -491,6 +518,7 @@ public class ClientGUI extends JFrame {
                 btnClose.setEnabled(true);
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
+                txtUsers.setVisible(true);
                 break;
         }
     }
@@ -502,12 +530,13 @@ public class ClientGUI extends JFrame {
             outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
             outputStream.writeObject(wb);
             outputStream.close();
-            updateStatus("Whiteboard saved to file " + fileName);
+            updateStatus(TAG + "Whiteboard saved to file " + fileName);
             currentFileName = fileName;
             btnSave.setEnabled(true);
         } catch (IOException e) {
-            updateStatus("Error saving whiteboard.");
-            updateStatus("Error saving whiteboard. File not found.");
+            updateStatus(TAG + "Error saving whiteboard.");
+            updateStatus(TAG + "Error saving whiteboard. File not found.");
+            updateStatus(TAG + "Error saving whiteboard. File not found.");
         }
     }
 
@@ -517,14 +546,15 @@ public class ClientGUI extends JFrame {
             Whiteboard wb = (Whiteboard) inputStream.readObject();
             inputStream.close();
             graphicsFinal = wb.getGraphicsFinal();
+            repaint();
             wbName = wb.getWbName();
-            //TODO: refresh canvas? Disable buttons? Update window title bar?
+            setState(ClientState.MGR);
         } catch (FileNotFoundException e) {
-            updateStatus("Could not open whiteboard. File not found.");
+            updateStatus(TAG + "Could not open whiteboard. File not found.");
         } catch (IOException e) {
-            updateStatus("Could not open whiteboard.");
+            updateStatus(TAG + "Could not open whiteboard.");
         } catch (ClassNotFoundException e) {
-            updateStatus("Could not open whiteboard. WB class not found.");
+            updateStatus(TAG + "Could not open whiteboard. WB class not found.");
         }
     }
 
@@ -536,6 +566,46 @@ public class ClientGUI extends JFrame {
     private void updateServerAddress(InetSocketAddress newAdd) {
         serverAddress = newAdd;
         updateStatus(TAG + "Updated server address to " + serverAddress.toString());
+    }
+
+    private void removeUser(String otherUserName) {
+        activeUsers.remove(otherUserName);
+    }
+
+    private void addUser(String otherUserName) {
+        activeUsers.add(otherUserName);
+    }
+
+    private void refreshUserList(){
+        txtUsers.setText("");
+        txtUsers.append("ACTIVE USERS:\n");
+        txtUsers.append(userName + " (mgr)\n");
+        for (String u : activeUsers) {
+            txtUsers.append(u + "\n");
+        }
+    }
+
+    private void buildNewWhiteboard(String newWBName){
+        setState(ClientState.MGR);
+        wbName = newWBName;
+        setTitle(newWBName);
+        graphicsFinal.clear();
+        graphicsBuffer.clear();
+        repaint();
+        activeUsers.clear();
+        refreshUserList();
+        sendNewWhiteboard(newWBName);
+    }
+
+    private void closeCurrentWhiteboard() {
+        setState(ClientState.NONE);
+        wbName = DEFAULT_WB_NAME;
+        setTitle(wbName);
+        graphicsFinal.clear();
+        graphicsBuffer.clear();
+        repaint();
+        activeUsers.clear();
+        refreshUserList();
     }
 
     private void sendNewWhiteboard(String newWBName) {
@@ -564,6 +634,12 @@ public class ClientGUI extends JFrame {
         sender.start();
     }
 
+    private void sendLeave() {
+        Leave leave = new Leave(wbName, userName);
+        ClientMsgSender sender = new ClientMsgSender(leave, serverAddress, this);
+        sender.start();
+    }
+
     private void sendJoinDecision(String otherUserName, boolean accepted) {
         JoinDecision joindec = new JoinDecision(wbName, otherUserName, accepted);
         ClientMsgSender sender = new ClientMsgSender(joindec, serverAddress, this, graphicsFinal);
@@ -579,11 +655,12 @@ public class ClientGUI extends JFrame {
     public void incomingCanvasUpdate(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
         graphicsFinal.addAll(graphicsNew);
         repaint();
+        updateStatus(TAG + "Canvas update received from " + otherUserName);
     }
 
     public void incomingChatUpdate(String otherUserName, String chat) {
-        //TODO: YP. For incoming chat / text from other users. Display on GUI with name of sending user
-        //eg: "Bob: Hello, welcome to the canvas!"
+        txtChat.append(otherUserName + ": " + chat + "\n");
+        updateStatus(TAG + "Chat update received from " + otherUserName);
     }
 
     public void incomingJoinRequest(String wbName, String newUserName) {
@@ -593,6 +670,8 @@ public class ClientGUI extends JFrame {
         switch (result) {
             case JOptionPane.YES_OPTION:
                 sendJoinDecision(newUserName, true);
+                addUser(newUserName);
+                refreshUserList();
                 break;
             case JOptionPane.NO_OPTION:
             case JOptionPane.CANCEL_OPTION:
@@ -600,6 +679,7 @@ public class ClientGUI extends JFrame {
                 sendJoinDecision(newUserName, false);
                 break;
         }
+        updateStatus(TAG + "Join request received from " + newUserName);
     }
 
     public void incomingJoinDecision(String wbName, boolean approved, ArrayList<ShapeWrapper> graphics) {
@@ -617,14 +697,32 @@ public class ClientGUI extends JFrame {
     }
 
     public void incomingBootUser(String wbName, String mgrName) {
-        //TODO: YP. For incoming boot by manager. When manager boots this user from the wb.
-        //After this is received, user will have no access to canvas/chat etc. Perhaps wipe canvas clean?
+        graphicsFinal.clear();
+        graphicsBuffer.clear();
+        repaint();
+        setState(ClientState.NONE);
+        updateStatus(TAG + "You have been booted from this whiteboard by " + mgrName);
+    }
+
+    public void incomingLeave(String otherUserName) {
+        //Manager receives confirmation that another user has left:
+        removeUser(otherUserName);
+        refreshUserList();
+        updateStatus(TAG + otherUserName + " has left the whiteboard.");
+    }
+
+    public void incomingBootUserReply(boolean success, String otherUserName) {
+        if (success) {
+            removeUser(otherUserName);
+            refreshUserList();
+            updateStatus(TAG + otherUserName + " has been removed from the whiteboard.");
+        } else {
+            updateStatus(TAG + "Could not remove user '" + otherUserName + "'. Check the user name.");
+        }
     }
 
     public void updateStatus(String update) {
         txtLog.append("\n" + update);
-//        System.out.println("UPDATE: " + update);
-
     }
 
 }

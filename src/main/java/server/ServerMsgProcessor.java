@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 public class ServerMsgProcessor extends Thread {
 
-    Socket socket;
-    Server server;
-    DataInputStream in;
-    DataOutputStream out;
-    ObjectInputStream inObj;
-    private final String TAG = "(SERVER): ";
+    private final String TAG = "(SERVER MSGPROCESS):";
+    private Socket socket;
+    private Server server;
+    private DataInputStream in;
+    private DataOutputStream out;
+    private ObjectInputStream inObj;
 
     public ServerMsgProcessor(Socket socket, Server server) {
         this.socket = socket;
@@ -35,7 +35,7 @@ public class ServerMsgProcessor extends Thread {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             processJSON(js);
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error establishing inbound connection and reading inbound message.");
         }
     }
 
@@ -63,6 +63,10 @@ public class ServerMsgProcessor extends Thread {
                 JoinDecision joindec = new JoinDecision(js);
                 processJoinDecision(joindec);
                 break;
+            case "Leave":
+                Leave leave = new Leave(js);
+                processLeave(leave);
+                break;
             case "BootUser":
                 BootUser btuser = new BootUser(js);
                 processBootUser(btuser);
@@ -77,15 +81,15 @@ public class ServerMsgProcessor extends Thread {
         boolean success = server.addWhiteboardMgr(newwb, mgrAddress);
         BasicReply brep;
         if (success) {
-            brep = new BasicReply(success, TAG + "Successfully added whiteboard named " + newwb.getWbName());
+            brep = new BasicReply(success, "Successfully added whiteboard named " + newwb.getWbName());
         } else {
-            brep = new BasicReply(success, TAG + "Could not add whiteboard named " + newwb.getWbName() + ". Try a different name.");
+            brep = new BasicReply(success, "Could not add whiteboard named " + newwb.getWbName() + ". Try a different name.");
         }
         try {
             out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            System.out.println("Error processing new whiteboard.");
+            System.out.println(TAG + "Error processing new whiteboard.");
         }
     }
 
@@ -96,12 +100,12 @@ public class ServerMsgProcessor extends Thread {
     private void echoMessageToAll(Message msg, String wbName) {
         // Check if server is managing a whiteboard with that name:
         if (!server.isManagingWhiteboard(wbName)){
-            BasicReply brep = new BasicReply(false, TAG + "No whiteboard named " + wbName);
+            BasicReply brep = new BasicReply(false, "No whiteboard named " + wbName);
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(TAG + "Error sending no-whiteboard reply to original sender during echo.");
             }
             return;
         }
@@ -118,36 +122,36 @@ public class ServerMsgProcessor extends Thread {
         }
 
         // Send reply to original sender:
-        BasicReply brep = new BasicReply(true, TAG + "Sent update to " + userList.size() + " users.");
+        BasicReply brep = new BasicReply(true, "Sent update to " + userList.size() + " users.");
         try {
             out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error sending confirmation reply to original sender during echo.");
         }
     }
 
     private void processJoinRequest(JoinRequest joinreq) {
         // Check if server is managing a whiteboard with that name:
         if (!server.isManagingWhiteboard(joinreq.getWbName())){
-            BasicReply brep = new BasicReply(false, TAG + "No whiteboard named " + joinreq.getWbName());
+            BasicReply brep = new BasicReply(false, "No whiteboard named " + joinreq.getWbName());
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(TAG + "Error sending reply to user during process join request.");
             }
             return;
         }
 
         //Check if username is unique to that whiteboard:
         if (!server.isUserNameUnique(joinreq.getWbName(), joinreq.getUserName())){
-            BasicReply brep = new BasicReply(false, TAG + "Username (" + joinreq.getUserName() + ") is not unique to this whiteboard.");
+            BasicReply brep = new BasicReply(false, "Username (" + joinreq.getUserName() + ") is not unique to this whiteboard.");
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(TAG + "Error sending name-not-unique reply to user during process join request.");
             }
             return;
         }
@@ -163,12 +167,12 @@ public class ServerMsgProcessor extends Thread {
         sender.start();
 
         //Send reply to original sender:
-        BasicReply brep = new BasicReply(true, TAG + "Join Request sent to " + joinreq.getWbName() + " manager. Request pending.");
+        BasicReply brep = new BasicReply(true, "Join Request sent to " + joinreq.getWbName() + " manager. Request pending.");
         try {
             out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error send confirmation reply to user following process join request.");
         }
     }
 
@@ -184,18 +188,18 @@ public class ServerMsgProcessor extends Thread {
             try {
                 graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(TAG + "Error reading in graphics during approved join decision.");
             }
             //Forward JoinDec and GraphicArrayList to otherUser:
             ServerMsgSender sender = new ServerMsgSender(joindec, otherUser.address, graphics);
             sender.start();
             // Send reply to original sender:
-            BasicReply brep = new BasicReply(true, TAG + "Sent join approval and full canvas to user " + joindec.getUserName());
+            BasicReply brep = new BasicReply(true, "Sent join approval and full canvas to user " + joindec.getUserName());
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(TAG + "Error writing confirmation reply during approved join decision.");
             }
 
         } else {
@@ -205,12 +209,12 @@ public class ServerMsgProcessor extends Thread {
             ServerMsgSender sender = new ServerMsgSender(joindec, otherUser.address);
             sender.start();
             // Send reply to original sender:
-            BasicReply brep = new BasicReply(true, TAG + "Join denial ackowledged and sent to user " + joindec.getUserName());
+            BasicReply brep = new BasicReply(true, "Join denial ackowledged and sent to user " + joindec.getUserName());
             try {
                 out.writeUTF(brep.toString());
                 out.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(TAG + "Error sending join denial acknoweldgement during denied join decison.");
             }
             //Delete user from whiteboard manager:
             server.deleteUser(joindec.getWbName(), joindec.getUserName());
@@ -225,7 +229,7 @@ public class ServerMsgProcessor extends Thread {
         try {
             graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error reading in graphics during canvas update.");
         }
 
         // Get User list:
@@ -240,37 +244,63 @@ public class ServerMsgProcessor extends Thread {
         }
 
         // Send reply to original sender:
-        BasicReply brep = new BasicReply(true, TAG + "Sent canvas update to " + userList.size() + " users.");
+        BasicReply brep = new BasicReply(true, "Sent canvas update to " + userList.size() + " users.");
         try {
             out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error sending confirmation reply during canvas update.");
         }
 
     }
 
-    private void processBootUser(BootUser btuser) {
-
+    private void processLeave(Leave leave) {
         BasicReply brep;
-        //Check if mgr has authority, then action boot:
-        User manager = server.getManager(btuser.getWbName());
-        if (manager.address.getAddress() != socket.getInetAddress() || manager.username != btuser.getMgrName()) {
-            brep = new BasicReply(false, TAG + "No authority to boot user " + btuser.getUserName());
-        } else {
-            server.deleteUser(btuser.getWbName(), btuser.getUserName());
-            brep = new BasicReply(true, TAG + "User booted: " + btuser.getUserName());
-            User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
-            ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
+        if (server.checkUser(leave.getWbName(), leave.getUserName())) {
+            server.deleteUser(leave.getWbName(), leave.getUserName());
+            brep = new BasicReply(true, "You have been removed from " + leave.getWbName() + ".");
+            User manager = server.getManager(leave.getWbName());
+            ServerMsgSender sender = new ServerMsgSender(leave, manager.address);
             sender.start();
+        } else {
+            brep = new BasicReply(false, "Error removing user from " + leave.getWbName() + ".");
         }
-
         //Send reply to original user:
         try {
             out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error sending error message to user during leave processing.");
+        }
+    }
+
+    private void processBootUser(BootUser btuser) {
+
+        BootUserReply btuserrep;
+        User manager = server.getManager(btuser.getWbName());
+        //Check if mgr has authority, then action boot:
+        if (manager.address.getAddress() != socket.getInetAddress() || manager.username != btuser.getMgrName()) {
+            btuserrep = new BootUserReply(false, btuser.getUserName());
+        }
+        // Check if user exists on this wb:
+        else if (!server.checkUser(btuser.getWbName(), btuser.getUserName())) {
+            btuserrep = new BootUserReply(false, btuser.getUserName());
+        }
+        // Otherwise delete user:
+        else {
+            server.deleteUser(btuser.getWbName(), btuser.getUserName());
+            btuserrep = new BootUserReply(true, btuser.getUserName());
+            User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
+            ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
+            sender.start();
+        }
+
+        //Send boot user reply to manager:
+        try {
+            out.writeUTF(btuserrep.toString());
+            out.flush();
+        } catch (IOException e) {
+            System.out.println(TAG + "Error sending boot user reply to manager.");
         }
 
     }
