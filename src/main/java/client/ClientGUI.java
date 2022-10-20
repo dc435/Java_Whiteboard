@@ -89,7 +89,7 @@ public class ClientGUI extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pnlMain);
-        //this.setPreferredSize(new Dimension(1000,750));
+        this.setPreferredSize(new Dimension(1500,800));
 
         // Color Bar
         barColor.addItem("Black");
