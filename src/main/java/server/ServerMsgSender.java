@@ -52,7 +52,8 @@ public class ServerMsgSender extends Thread {
             out.writeUTF(message.toString());
             out.flush();
         } catch (IOException e) {
-            System.out.println(TAG + "Error establishing inbound connection and reading inbound message.");
+            System.out.println(TAG + "Error establishing outbound connection with client.");
+            return;
         }
 
         String type = message.getType();
@@ -72,6 +73,9 @@ public class ServerMsgSender extends Thread {
             case "Leave":
                 ListenForBasicReply();
                 break;
+            case "Close":
+                ListenForBasicReply();
+                break;
         }
     }
 
@@ -79,7 +83,7 @@ public class ServerMsgSender extends Thread {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             BasicReply brep = new BasicReply(js);
-            System.out.println(TAG + "-Message received-: " + brep.getMessage());
+            System.out.println(TAG + "(RECEIVED FROM CLIENT:)  " + brep.getMessage());
         } catch (IOException e) {
             System.out.println(TAG + "Did not receive confirmation from client (IOException).");
         } catch (ParseException e) {

@@ -51,7 +51,8 @@ public class ClientMsgSender extends Thread {
             out.writeUTF(message.toString());
             out.flush();
         } catch (IOException e) {
-            System.out.println(TAG + "Error establishing inbound connection and reading inbound message.");
+            gui.updateStatus(TAG + "Unable to establish connection with server.");
+            return;
         }
 
         String type = message.getType();
@@ -84,7 +85,7 @@ public class ClientMsgSender extends Thread {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             BasicReply brep = new BasicReply(js);
-            gui.updateStatus(TAG + "-Message received-: " + brep.getMessage());
+            gui.updateStatus(TAG + "(RECEIVED FROM SERVER:) " + brep.getMessage());
         } catch (IOException e) {
             gui.updateStatus(TAG + "Did not receive confirmation from server (IOException).");
         } catch (ParseException e) {

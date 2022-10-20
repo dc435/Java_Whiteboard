@@ -49,7 +49,7 @@ public class Server extends Thread {
         ArrayList<User> userList = whiteboardMgr.getUserList();
         boolean clash = false;
         for (User u: userList) {
-            if (u.username == userName) {
+            if (u.username.equals(userName)) {
                 clash = true;
             }
         }
@@ -89,6 +89,10 @@ public class Server extends Thread {
         } else {
             return false;
         }
+    }
+
+    public void deleteWhiteboard(String wbName) {
+        whiteboards.remove(wbName);
     }
 
 }

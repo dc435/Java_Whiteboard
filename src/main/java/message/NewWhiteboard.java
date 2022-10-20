@@ -20,7 +20,7 @@ public class NewWhiteboard extends Message {
     }
 
     public String getMgrName() {
-        return (String)json.get("_manager");
+        return (String)json.get("_mgrName");
     }
     public String getWbName() {
         return (String)json.get("_wbName");

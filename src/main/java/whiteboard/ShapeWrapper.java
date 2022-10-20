@@ -1,8 +1,9 @@
 package whiteboard;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class ShapeWrapper {
+public class ShapeWrapper implements Serializable {
 
     //TODO: YP
     private Shape shape;

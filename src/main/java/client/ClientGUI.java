@@ -39,6 +39,7 @@ public class ClientGUI extends JFrame {
         this.userName = DEFAULT_USER_NAME;
         setState(ClientState.NONE);
         setTitle(wbName);
+        activeUsers = new ArrayList<String>();
         callYPConstructors();
     }
 
@@ -348,7 +349,6 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
                 int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to leave");
                 switch (result) {
                     case JOptionPane.YES_OPTION:
@@ -420,11 +420,12 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
                 int result = JOptionPane.showConfirmDialog(null, "Are sure you want to close this whiteboard?");
                 switch(result){
                     case JOptionPane.YES_OPTION:
+                        sendCloseWhiteboard();
                         closeCurrentWhiteboard();
+                        updateStatus(TAG + "Whiteboard closed.");
                         break;
                     case JOptionPane.NO_OPTION:
                     case JOptionPane.CANCEL_OPTION:
@@ -468,7 +469,10 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                sendChatUpdate(txtChatIn.getText());
+                String chatText = txtChatIn.getText();
+                txtChat.append(userName + ": " + chatText + "\n");
+                sendChatUpdate(chatText);
+                txtChatIn.setText("");
             }
         });
         //TODO: Add listener for when press ENTER whilst in Chat text box.
@@ -488,7 +492,9 @@ public class ClientGUI extends JFrame {
                 btnClose.setEnabled(false);
                 btnUserName.setEnabled(true);
                 btnServer.setEnabled(true);
+                btnSend.setEnabled(false);
                 txtUsers.setVisible(false);
+                pnlCanvas.setVisible(false);
                 break;
             case USER:
                 btnJoin.setEnabled(false);
@@ -501,7 +507,9 @@ public class ClientGUI extends JFrame {
                 btnClose.setEnabled(false);
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
+                btnSend.setEnabled(true);
                 txtUsers.setVisible(false);
+                pnlCanvas.setVisible(true);
                 break;
             case MGR:
                 btnJoin.setEnabled(false);
@@ -518,7 +526,9 @@ public class ClientGUI extends JFrame {
                 btnClose.setEnabled(true);
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
+                btnSend.setEnabled(true);
                 txtUsers.setVisible(true);
+                pnlCanvas.setVisible(true);
                 break;
         }
     }
@@ -535,8 +545,6 @@ public class ClientGUI extends JFrame {
             btnSave.setEnabled(true);
         } catch (IOException e) {
             updateStatus(TAG + "Error saving whiteboard.");
-            updateStatus(TAG + "Error saving whiteboard. File not found.");
-            updateStatus(TAG + "Error saving whiteboard. File not found.");
         }
     }
 
@@ -548,7 +556,9 @@ public class ClientGUI extends JFrame {
             graphicsFinal = wb.getGraphicsFinal();
             repaint();
             wbName = wb.getWbName();
+            currentFileName = fileName;
             setState(ClientState.MGR);
+            sendNewWhiteboard(wbName);
         } catch (FileNotFoundException e) {
             updateStatus(TAG + "Could not open whiteboard. File not found.");
         } catch (IOException e) {
@@ -589,23 +599,24 @@ public class ClientGUI extends JFrame {
         setState(ClientState.MGR);
         wbName = newWBName;
         setTitle(newWBName);
-        graphicsFinal.clear();
-        graphicsBuffer.clear();
+        graphicsFinal = new ArrayList<ShapeWrapper>();
+        graphicsBuffer = new ArrayList<ShapeWrapper>();
         repaint();
         activeUsers.clear();
         refreshUserList();
         sendNewWhiteboard(newWBName);
+        updateStatus(TAG + "New whiteboard " + newWBName + " created. Switch to manager state.");
     }
 
     private void closeCurrentWhiteboard() {
         setState(ClientState.NONE);
         wbName = DEFAULT_WB_NAME;
         setTitle(wbName);
-        graphicsFinal.clear();
-        graphicsBuffer.clear();
-        repaint();
+        graphicsFinal = new ArrayList<ShapeWrapper>();
+        graphicsBuffer = new ArrayList<ShapeWrapper>();
         activeUsers.clear();
         refreshUserList();
+        txtChat.setText("");
     }
 
     private void sendNewWhiteboard(String newWBName) {
@@ -614,11 +625,17 @@ public class ClientGUI extends JFrame {
         sender.start();
     }
 
+    private void sendCloseWhiteboard() {
+        Close close = new Close(wbName, userName);
+        ClientMsgSender sender = new ClientMsgSender(close, serverAddress, this);
+        sender.start();
+    }
+
     private void sendCanvasUpdate() {
         CanvasUpdate canup = new CanvasUpdate(wbName, userName);
-        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this, graphicsBuffer);
+        ArrayList<ShapeWrapper> graphicsToSend = makeCopy(graphicsBuffer);
+        ClientMsgSender sender = new ClientMsgSender(canup, serverAddress, this, graphicsToSend);
         sender.start();
-
         graphicsBuffer.clear();
     }
 
@@ -721,8 +738,24 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    public void incomingClose(Close close) {
+        if (close.getWbName().equals(wbName)) {
+            closeCurrentWhiteboard();
+            updateStatus(TAG + "Whiteboard closed by manager " + close.getMgrName());
+        }
+    }
+
+    private ArrayList<ShapeWrapper> makeCopy(ArrayList<ShapeWrapper> arrayIN) {
+        ArrayList<ShapeWrapper>arrayOUT = new ArrayList<ShapeWrapper>();
+        for (ShapeWrapper sw : arrayIN) {
+            arrayOUT.add(sw);
+        }
+        return arrayOUT;
+    }
+
     public void updateStatus(String update) {
         txtLog.append("\n" + update);
+        repaint();
     }
 
 }
