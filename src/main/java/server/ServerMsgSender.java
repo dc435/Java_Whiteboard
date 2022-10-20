@@ -20,13 +20,14 @@ import java.util.ArrayList;
 
 public class ServerMsgSender extends Thread {
 
-    Message message;
-    InetSocketAddress target;
-    DataOutputStream out;
-    DataInputStream in;
-    JSONParser parser;
-    ArrayList<ShapeWrapper> graphics;
-    ObjectOutputStream outObj;
+    private final String TAG = "(SERVER MSGSEND): ";
+    private Message message;
+    private InetSocketAddress target;
+    private DataOutputStream out;
+    private DataInputStream in;
+    private JSONParser parser;
+    private ArrayList<ShapeWrapper> graphics;
+    private ObjectOutputStream outObj;
 
     public ServerMsgSender(Message message, InetSocketAddress target) {
         this.message = message;
@@ -51,7 +52,7 @@ public class ServerMsgSender extends Thread {
             out.writeUTF(message.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error establishing inbound connection and reading inbound message.");
         }
 
         String type = message.getType();
@@ -65,7 +66,10 @@ public class ServerMsgSender extends Thread {
             case "CanvasUpdate":
                 ProcessCanvasUpdate();
                 break;
-            case "Boot User":
+            case "BootUser": //Send notification to booted user that they have been booted.
+                ListenForBasicReply();
+                break;
+            case "Leave":
                 ListenForBasicReply();
                 break;
         }
@@ -75,11 +79,11 @@ public class ServerMsgSender extends Thread {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             BasicReply brep = new BasicReply(js);
-            System.out.println(brep.getMessage());
+            System.out.println(TAG + "-Message received-: " + brep.getMessage());
         } catch (IOException e) {
-            System.out.println("Did not receive confirmation from client (IOException).");
+            System.out.println(TAG + "Did not receive confirmation from client (IOException).");
         } catch (ParseException e) {
-            System.out.println("Could not parse response from client (ParseException).");
+            System.out.println(TAG + "Could not parse response from client (ParseException).");
         }
     }
 
@@ -90,7 +94,7 @@ public class ServerMsgSender extends Thread {
                 outObj.writeObject(graphics);
                 out.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(TAG + "Error writing graphics during approved join decision.");
             }
         }
         ListenForBasicReply();
@@ -102,7 +106,7 @@ public class ServerMsgSender extends Thread {
             outObj.writeObject(graphics);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error writing graphics during canvas update.");
         }
         ListenForBasicReply();
     }

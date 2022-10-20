@@ -15,11 +15,12 @@ import java.util.ArrayList;
 
 public class ClientMsgProcessor extends Thread {
 
+    private final String TAG = "(CLIENT MSGPROCESS): ";
     private Socket socket;
     private ClientGUI gui;
     private DataInputStream in;
     private DataOutputStream out;
-    ObjectInputStream inObj;
+    private ObjectInputStream inObj;
 
     public ClientMsgProcessor(Socket socket, ClientGUI gui) {
         this.socket = socket;
@@ -35,7 +36,7 @@ public class ClientMsgProcessor extends Thread {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             processJSON(js);
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            gui.updateStatus(TAG + "Error establishing inbound connection and reading inbound message.");
         }
     }
 
@@ -43,11 +44,11 @@ public class ClientMsgProcessor extends Thread {
 
         String jsType = (String) js.get("_type");
         switch(jsType) {
-            case "CanvasUpdateRequest":
+            case "CanvasUpdate":
                 CanvasUpdate canup = new CanvasUpdate(js);
                 processCanvasUpdate(canup);
                 break;
-            case "ChatUpdateRequest":
+            case "ChatUpdate":
                 ChatUpdate chatup = new ChatUpdate(js);
                 processChatUpdate(chatup);
                 break;
@@ -59,12 +60,15 @@ public class ClientMsgProcessor extends Thread {
                 JoinDecision joindec = new JoinDecision(js);
                 processJoinDecision(joindec);
                 break;
-            case "BootUSer":
+            case "Leave":
+                Leave leave = new Leave(js);
+                processLeave(leave);
+                break;
+            case "BootUser":
                 BootUser btuser = new BootUser(js);
                 processBootUser(btuser);
                 break;
         }
-
     }
 
     private void processCanvasUpdate(CanvasUpdate canup) {
@@ -73,7 +77,7 @@ public class ClientMsgProcessor extends Thread {
         try {
             graphicsNew = (ArrayList<ShapeWrapper>) inObj.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            gui.updateStatus(TAG + "Error reading inbound canvas update graphics.");
         }
 
         //send basic approval reply to server:
@@ -82,21 +86,18 @@ public class ClientMsgProcessor extends Thread {
             out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            gui.updateStatus(TAG + "Error sending confirmation of canvas update to server.");
         }
         //update gui:
         gui.incomingCanvasUpdate(graphicsNew, canup.getUserName());
-        gui.updateStatus("Updated canvas received from: " + canup.getUserName());
     }
 
     private void processChatUpdate(ChatUpdate chatup) {
         gui.incomingChatUpdate(chatup.getUserName(), chatup.getChat());
-        gui.updateStatus("Chat update from " + chatup.getUserName());
     }
 
     private void processJoinRequest(JoinRequest joinreq) {
         gui.incomingJoinRequest(joinreq.getWbName(), joinreq.getUserName());
-        gui.updateStatus("Join request from " + joinreq.getUserName());
     }
 
     private void processJoinDecision(JoinDecision joindec) {
@@ -106,7 +107,7 @@ public class ClientMsgProcessor extends Thread {
             try {
                 graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                gui.updateStatus(TAG + "Error reading graphics after approved join decision.");
             }
         }
         //send basic approval reply to server:
@@ -115,17 +116,26 @@ public class ClientMsgProcessor extends Thread {
             out.writeUTF(brep.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            gui.updateStatus(TAG + "Error sending confirmation reply to server after join decision received.");
         }
         //update gui:
         gui.incomingJoinDecision(joindec.getWbName(), joindec.getApproved(), graphics);
-        gui.updateStatus("Join decision received regarding whiteboard: " + joindec.getWbName() + " : " + joindec.getApproved());
-
     }
 
     private void processBootUser(BootUser btuser) {
         gui.incomingBootUser(btuser.getWbName(), btuser.getMgrName());
-        gui.updateStatus("User booted from whiteboard by " + btuser.getMgrName());
+    }
+
+    private void processLeave(Leave leave) {
+        gui.incomingLeave(leave.getUserName());
+        //send basic approval reply to server:
+        BasicReply brep = new BasicReply(true, "Leave message received.");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Error sending confirmation reply for leave message.");
+        }
     }
 
 }

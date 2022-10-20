@@ -52,5 +52,14 @@ public class WhiteboardMgr {
         }
     }
 
+    public boolean checkUser(String userName) {
+        for (User u: userList) {
+            if (u.username == userName) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 

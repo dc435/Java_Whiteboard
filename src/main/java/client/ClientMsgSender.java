@@ -16,14 +16,15 @@ import java.util.ArrayList;
 
 public class ClientMsgSender extends Thread {
 
-    Message message;
-    InetSocketAddress target;
-    ClientGUI gui;
-    DataOutputStream out;
-    DataInputStream in;
-    JSONParser parser;
-    ArrayList<ShapeWrapper> graphics;
-    ObjectOutputStream outObj;
+    private final String TAG = "(CLIENT MSGSEND): ";
+    private Message message;
+    private InetSocketAddress target;
+    private ClientGUI gui;
+    private DataOutputStream out;
+    private DataInputStream in;
+    private JSONParser parser;
+    private ArrayList<ShapeWrapper> graphics;
+    private ObjectOutputStream outObj;
 
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui) {
         this.message = message;
@@ -50,12 +51,15 @@ public class ClientMsgSender extends Thread {
             out.writeUTF(message.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(TAG + "Error establishing inbound connection and reading inbound message.");
         }
 
         String type = message.getType();
         switch(type) {
             case "JoinRequest":
+                ListenForBasicReply();
+                break;
+            case "Leave":
                 ListenForBasicReply();
                 break;
             case "NewWhiteboard":
@@ -71,7 +75,8 @@ public class ClientMsgSender extends Thread {
                 CompleteJoinDecision();
                 break;
             case "BootUser":
-                ListenForBasicReply();
+                CompleteBootUser();
+                break;
         }
     }
 
@@ -79,11 +84,11 @@ public class ClientMsgSender extends Thread {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             BasicReply brep = new BasicReply(js);
-            gui.updateStatus(brep.getMessage());
+            gui.updateStatus(TAG + "-Message received-: " + brep.getMessage());
         } catch (IOException e) {
-            gui.updateStatus("Did not receive confirmation from server (IOException).");
+            gui.updateStatus(TAG + "Did not receive confirmation from server (IOException).");
         } catch (ParseException e) {
-            gui.updateStatus("Could not parse response from server (ParseException).");
+            gui.updateStatus(TAG + "Could not parse response from server (ParseException).");
         }
     }
 
@@ -94,7 +99,7 @@ public class ClientMsgSender extends Thread {
                 outObj.writeObject(graphics);
                 out.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                gui.updateStatus(TAG + "Error: Could not send graphics to new user.");
             }
         }
         ListenForBasicReply();
@@ -105,9 +110,21 @@ public class ClientMsgSender extends Thread {
             outObj.writeObject(graphics);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            gui.updateStatus(TAG + "Error writing graphics during canvas update.");
         }
         ListenForBasicReply();
+    }
+
+    private void CompleteBootUser() {
+        try {
+            JSONObject js = (JSONObject) parser.parse(in.readUTF());
+            BootUserReply btuserrep = new BootUserReply(js);
+            gui.incomingBootUserReply(btuserrep.getSuccess(), btuserrep.getUserName());
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Did not receive confirmation from server (IOException).");
+        } catch (ParseException e) {
+            gui.updateStatus(TAG + "Could not parse response from server (ParseException).");
+        }
     }
 
 }
