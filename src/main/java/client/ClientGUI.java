@@ -30,19 +30,6 @@ public class ClientGUI extends JFrame {
     private String userName;
     private String currentFileName;
     private ArrayList<String> activeUsers;
-
-    public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
-        super(APP_NAME);
-        this.serverAddress = serverAddress;
-        this.clientPort = clientPort;
-        this.wbName = DEFAULT_WB_NAME;
-        this.userName = DEFAULT_USER_NAME;
-        setState(ClientState.NONE);
-        setTitle(wbName);
-        activeUsers = new ArrayList<String>();
-        callYPConstructors();
-    }
-
     public final static HashMap<String, String> COLOR = new HashMap<>();
     private JPanel pnlMain;
     private JPanel pnlCanvas;
@@ -80,18 +67,29 @@ public class ClientGUI extends JFrame {
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
-
-    public ClientGUI(String appName) {
-        super(appName);
-        callYPConstructors();//TODO: NOTE to YP: I have moved your constructors to separate method (below), so I can call them also.
+    public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
+        super(APP_NAME);
+        this.serverAddress = serverAddress;
+        this.clientPort = clientPort;
+        this.wbName = DEFAULT_WB_NAME;
+        this.userName = DEFAULT_USER_NAME;
+        setState(ClientState.NONE);
+        setTitle(wbName);
+        activeUsers = new ArrayList<String>();
+        guiConstructors();
+        setMngButtonListeners();
     }
 
-    private void callYPConstructors() {
+//    public ClientGUI(String appName) {
+//        super(appName);
+//        callYPConstructors();//TODO: NOTE to YP: I have moved your constructors to separate method (below), so I can call them also.
+//    }
+
+    private void guiConstructors() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pnlMain);
         this.setPreferredSize(new Dimension(1000,750));
-
 
         // Color Bar
         barColor.addItem("Black");
@@ -181,10 +179,6 @@ public class ClientGUI extends JFrame {
                 System.out.println(brush); //debug
             }
         });
-
-
-
-
 
         // MouseListener for drawing on canvas
         pnlCanvas.addMouseListener(new MouseAdapter() {
@@ -298,11 +292,11 @@ public class ClientGUI extends JFrame {
         this.pack();
     }
 
-    public static void main(String[] args) {
-        ClientGUI frame = new ClientGUI("Tester");
-        frame.setVisible(true);
-
-    }
+//    public static void main(String[] args) {
+//        ClientGUI frame = new ClientGUI("Tester");
+//        frame.setVisible(true);
+//
+//    }
 
     @Override
     public void paint(Graphics g) {
@@ -321,11 +315,10 @@ public class ClientGUI extends JFrame {
         }
     }
 
-
     //DC: For Testing:
-    public void guiTester() {
-        setMngButtonListeners();
-    }
+//    public void guiTester() {
+//        setMngButtonListeners();
+//    }
 
     private void setMngButtonListeners() {
 

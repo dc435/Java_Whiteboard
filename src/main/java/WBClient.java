@@ -29,9 +29,6 @@ public class WBClient {
         Thread t = new Thread(() -> startListening(gui));
         t.start();
 
-        //For testing:
-        gui.guiTester();
-
     }
 
     private static void startListening(ClientGUI gui) {
