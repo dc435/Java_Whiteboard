@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="pnlMain" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1505" height="809"/>
+      <xy x="20" y="20" width="1497" height="955"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -21,7 +21,13 @@
           <font/>
           <color color="-16777216"/>
         </border>
-        <children/>
+        <children>
+          <hspacer id="e3a1">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+        </children>
       </grid>
       <grid id="2037b" binding="pnlText" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
@@ -31,42 +37,6 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a924e" class="javax.swing.JTextField" binding="txtChatIn">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="21"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="b9113" class="javax.swing.JButton" binding="btnSend">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false">
-                <preferred-size width="98" height="21"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="Send"/>
-            </properties>
-          </component>
-          <scrollpane id="13695">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="a9f91" class="javax.swing.JTextArea" binding="txtLog">
-                <constraints/>
-                <properties>
-                  <background color="-1182465"/>
-                  <enabled value="false"/>
-                </properties>
-              </component>
-            </children>
-          </scrollpane>
           <scrollpane id="b987">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -83,9 +53,62 @@
               </component>
             </children>
           </scrollpane>
+          <scrollpane id="13695">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="a9f91" class="javax.swing.JTextArea" binding="txtLog">
+                <constraints/>
+                <properties>
+                  <background color="-1182465"/>
+                  <enabled value="false"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <grid id="9af3f" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="a924e" class="javax.swing.JTextField" binding="txtChatIn">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="21"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="10"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <vspacer id="c86a1">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="b9113" class="javax.swing.JButton" binding="btnSend">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="0" indent="1" use-parent-layout="false">
+                    <preferred-size width="98" height="21"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <text value="Send"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
-      <grid id="2cece" binding="pnlManage" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="2cece" binding="pnlManage" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -93,13 +116,29 @@
         <properties/>
         <border type="none"/>
         <children>
+          <scrollpane id="d1b6a">
+            <constraints>
+              <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="50d96" class="javax.swing.JTextArea" binding="txtUsers">
+                <constraints/>
+                <properties>
+                  <background color="-1182465"/>
+                  <enabled value="false"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
           <toolbar id="afa8c" binding="barManage">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="1039" height="77"/>
-              </grid>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <floatable value="false"/>
               <orientation value="0"/>
             </properties>
             <border type="none"/>
@@ -164,28 +203,21 @@
                   <text value="Join"/>
                 </properties>
               </component>
+              <grid id="36b8a" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
             </children>
           </toolbar>
-          <component id="e0930" class="javax.swing.JComboBox" binding="barColor">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="1039" height="38"/>
-              </grid>
-            </constraints>
-            <properties>
-              <editable value="false"/>
-              <model/>
-              <toolTipText value=""/>
-            </properties>
-          </component>
           <toolbar id="173c" binding="barShape">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="1039" height="20"/>
-              </grid>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <floatable value="true"/>
+              <floatable value="false"/>
               <rollover value="false"/>
             </properties>
             <clientProperties>
@@ -229,25 +261,16 @@
                   <text value="Text"/>
                 </properties>
               </component>
-            </children>
-          </toolbar>
-          <scrollpane id="d1b6a">
-            <constraints>
-              <grid row="0" column="1" row-span="3" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="50d96" class="javax.swing.JTextArea" binding="txtUsers">
+              <component id="e0930" class="javax.swing.JComboBox" binding="barColor">
                 <constraints/>
                 <properties>
-                  <background color="-1182465"/>
-                  <enabled value="false"/>
-                  <text value=""/>
+                  <editable value="false"/>
+                  <model/>
+                  <toolTipText value=""/>
                 </properties>
               </component>
             </children>
-          </scrollpane>
+          </toolbar>
         </children>
       </grid>
     </children>
