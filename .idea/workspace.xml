@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/message/Close.java" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/message/NewWBReply.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/message/NewWhiteboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/message/NewWhiteboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +60,11 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="message" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn assembly clean compile" />
+    </option>
   </component>
   <component name="RunManager" selected="Application.WBClient">
     <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -288,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666248441031</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server.">
+      <created>1666261691410</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1666261691410</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,6 +339,7 @@
     <MESSAGE value="Gitignore add workspace.xml." />
     <MESSAGE value="Client GUI button listeners (WIP). Constructors for ClientGUI amended. Some public functions ClientGUI updated (WIP)." />
     <MESSAGE value="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function." />
-    <option name="LAST_COMMIT_MESSAGE" value="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function." />
+    <MESSAGE value="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server." />
+    <option name="LAST_COMMIT_MESSAGE" value="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server." />
   </component>
 </project>

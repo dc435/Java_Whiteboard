@@ -555,6 +555,7 @@ public class ClientGUI extends JFrame {
             currentFileName = fileName;
             setState(ClientState.MGR);
             sendNewWhiteboard(wbName);
+            repaint();
         } catch (FileNotFoundException e) {
             updateStatus(TAG + "Could not open whiteboard. File not found.");
         } catch (IOException e) {
