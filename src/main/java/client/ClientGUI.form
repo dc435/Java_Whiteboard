@@ -3,18 +3,24 @@
   <grid id="27dc6" binding="pnlMain" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="758" height="519"/>
+      <xy x="20" y="20" width="1987" height="722"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
       <toolbar id="173c" binding="barShape">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="20"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="1039" height="20"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <floatable value="true"/>
+          <rollover value="false"/>
+        </properties>
+        <clientProperties>
+          <JToolBar.isRollover class="java.lang.Boolean" value="false"/>
+        </clientProperties>
         <border type="none"/>
         <children>
           <component id="ef21f" class="javax.swing.JButton" binding="bntTriangle">
@@ -55,10 +61,22 @@
           </component>
         </children>
       </toolbar>
+      <component id="e0930" class="javax.swing.JComboBox" binding="barColor">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="1039" height="38"/>
+          </grid>
+        </constraints>
+        <properties>
+          <editable value="false"/>
+          <model/>
+          <toolTipText value=""/>
+        </properties>
+      </component>
       <grid id="2f975" binding="pnlCanvas" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <toolTipText value="Canvas"/>
@@ -68,14 +86,6 @@
         </border>
         <children/>
       </grid>
-      <component id="e0930" class="javax.swing.JComboBox" binding="barColor">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <toolTipText value=""/>
-        </properties>
-      </component>
       <grid id="2037b" binding="pnlText" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
@@ -86,8 +96,8 @@
         <children>
           <component id="f6924" class="javax.swing.JTextArea" binding="txtChat">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="193"/>
               </grid>
             </constraints>
             <properties>
@@ -98,7 +108,7 @@
           <component id="a924e" class="javax.swing.JTextField" binding="txtChatIn">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
+                <preferred-size width="150" height="21"/>
               </grid>
             </constraints>
             <properties>
@@ -107,7 +117,9 @@
           </component>
           <component id="b9113" class="javax.swing.JButton" binding="btnSend">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="1" use-parent-layout="false">
+                <preferred-size width="98" height="21"/>
+              </grid>
             </constraints>
             <properties>
               <text value="Send"/>
@@ -115,8 +127,8 @@
           </component>
           <component id="50d96" class="javax.swing.JTextArea" binding="txtUsers">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="193"/>
               </grid>
             </constraints>
             <properties>
@@ -126,7 +138,7 @@
           </component>
           <component id="a9f91" class="javax.swing.JTextArea" binding="txtLog">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="4" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="25"/>
               </grid>
             </constraints>
@@ -136,96 +148,79 @@
           </component>
         </children>
       </grid>
-      <grid id="cc98d" binding="pnlManage" layout-manager="GridLayoutManager" row-count="10" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <toolbar id="afa8c">
         <constraints>
-          <grid row="2" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="1039" height="102"/>
+          </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <orientation value="0"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="3ae33" class="javax.swing.JButton" binding="btnJoin">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Join"/>
-            </properties>
-          </component>
-          <component id="6799f" class="javax.swing.JButton" binding="btnSave">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Save"/>
-            </properties>
-          </component>
-          <component id="315b2" class="javax.swing.JButton" binding="btnNew">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="New"/>
-            </properties>
-          </component>
-          <component id="30120" class="javax.swing.JButton" binding="btnOpen">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Open"/>
-            </properties>
-          </component>
-          <component id="70e21" class="javax.swing.JButton" binding="btnBoot">
-            <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Boot User"/>
-            </properties>
-          </component>
-          <component id="fcbfc" class="javax.swing.JButton" binding="btnSaveAs">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Save as"/>
-            </properties>
-          </component>
-          <component id="9895e" class="javax.swing.JButton" binding="btnClose">
-            <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Close"/>
-            </properties>
-          </component>
-          <component id="8f6f2" class="javax.swing.JButton" binding="btnLeave">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Leave"/>
-            </properties>
-          </component>
-          <component id="31d31" class="javax.swing.JButton" binding="btnServer">
-            <constraints>
-              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Server"/>
-            </properties>
-          </component>
           <component id="6b232" class="javax.swing.JButton" binding="btnUserName">
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
+            <constraints/>
             <properties>
               <text value="Username"/>
             </properties>
           </component>
+          <component id="31d31" class="javax.swing.JButton" binding="btnServer">
+            <constraints/>
+            <properties>
+              <text value="Server"/>
+            </properties>
+          </component>
+          <component id="8f6f2" class="javax.swing.JButton" binding="btnLeave">
+            <constraints/>
+            <properties>
+              <text value="Leave"/>
+            </properties>
+          </component>
+          <component id="9895e" class="javax.swing.JButton" binding="btnClose">
+            <constraints/>
+            <properties>
+              <text value="Close"/>
+            </properties>
+          </component>
+          <component id="fcbfc" class="javax.swing.JButton" binding="btnSaveAs">
+            <constraints/>
+            <properties>
+              <text value="Save as"/>
+            </properties>
+          </component>
+          <component id="70e21" class="javax.swing.JButton" binding="btnBoot">
+            <constraints/>
+            <properties>
+              <text value="Boot User"/>
+            </properties>
+          </component>
+          <component id="30120" class="javax.swing.JButton" binding="btnOpen">
+            <constraints/>
+            <properties>
+              <text value="Open"/>
+            </properties>
+          </component>
+          <component id="315b2" class="javax.swing.JButton" binding="btnNew">
+            <constraints/>
+            <properties>
+              <text value="New"/>
+            </properties>
+          </component>
+          <component id="6799f" class="javax.swing.JButton" binding="btnSave">
+            <constraints/>
+            <properties>
+              <text value="Save"/>
+            </properties>
+          </component>
+          <component id="3ae33" class="javax.swing.JButton" binding="btnJoin">
+            <constraints/>
+            <properties>
+              <text value="Join"/>
+            </properties>
+          </component>
         </children>
-      </grid>
+      </toolbar>
     </children>
   </grid>
 </form>
