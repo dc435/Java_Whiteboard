@@ -36,7 +36,8 @@ public class ClientMsgProcessor extends Thread {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
             processJSON(js);
         } catch (IOException | ParseException e) {
-            gui.updateStatus(TAG + "Error establishing inbound connection and reading inbound message.");
+            gui.updateStatus(TAG + "Error establishing inbound connection with server.");
+            return;
         }
     }
 
@@ -67,6 +68,10 @@ public class ClientMsgProcessor extends Thread {
             case "BootUser":
                 BootUser btuser = new BootUser(js);
                 processBootUser(btuser);
+                break;
+            case "Close":
+                Close close = new Close(js);
+                processClose(close);
                 break;
         }
     }
@@ -135,6 +140,17 @@ public class ClientMsgProcessor extends Thread {
             out.flush();
         } catch (IOException e) {
             gui.updateStatus(TAG + "Error sending confirmation reply for leave message.");
+        }
+    }
+
+    private void processClose(Close close) {
+        gui.incomingClose(close);
+        BasicReply brep = new BasicReply(true, "Close message received.");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Error sending confirmation reply for close message.");
         }
     }
 

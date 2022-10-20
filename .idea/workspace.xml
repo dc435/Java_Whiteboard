@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Client GUI button listeners (WIP). Constructors for ClientGUI amended. Some public functions ClientGUI updated (WIP).">
-      <change afterPath="$PROJECT_DIR$/src/main/java/message/BootUserReply.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/message/Leave.java" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Troubleshooting Client GUI. Check client GUI operations in new layout format.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/WhiteboardMgr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/WhiteboardMgr.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,19 +41,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;false&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;398&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "398",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -69,6 +61,11 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="message" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn assembly clean compile" />
+    </option>
   </component>
   <component name="RunManager" selected="Application.WBClient">
     <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -278,7 +275,28 @@
       <option name="project" value="LOCAL" />
       <updated>1666165792465</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function.">
+      <created>1666248441031</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1666248441031</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server.">
+      <created>1666261691410</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1666261691410</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Troubleshooting Client GUI. Check client GUI operations in new layout format.">
+      <created>1666262459652</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1666262459652</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -305,7 +323,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Preliminary structure set-up (WIP)." />
     <MESSAGE value="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages." />
     <MESSAGE value="Update protocol Client side message send, receive." />
     <MESSAGE value="Client send receive protocol, New WB request - reply." />
@@ -328,6 +345,9 @@
     <MESSAGE value="Add use of JOptionPane for user input (and delete PopUpGUI). Create some click listeners for change username and server. Add clientState enum and method to switch state and dis/enable option buttons." />
     <MESSAGE value="Gitignore add workspace.xml." />
     <MESSAGE value="Client GUI button listeners (WIP). Constructors for ClientGUI amended. Some public functions ClientGUI updated (WIP)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Client GUI button listeners (WIP). Constructors for ClientGUI amended. Some public functions ClientGUI updated (WIP)." />
+    <MESSAGE value="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function." />
+    <MESSAGE value="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server." />
+    <MESSAGE value="Troubleshooting Client GUI. Check client GUI operations in new layout format." />
+    <option name="LAST_COMMIT_MESSAGE" value="Troubleshooting Client GUI. Check client GUI operations in new layout format." />
   </component>
 </project>
