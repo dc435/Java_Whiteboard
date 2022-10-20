@@ -59,7 +59,6 @@ public class ClientGUI extends JFrame {
     private JTextArea txtUsers;
     private JTextArea txtLog;
     private JPanel pnlText;
-    private JPanel pnlManage;
     private JButton btnJoin;
     private JButton btnLeave;
     private JButton btnSave;
@@ -89,10 +88,6 @@ public class ClientGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pnlMain);
         this.setPreferredSize(new Dimension(1000,750));
-
-
-        // Set size
-        this.setBounds(30,30,900,650);
 
 
         // Color Bar
@@ -128,8 +123,6 @@ public class ClientGUI extends JFrame {
                 System.out.println(colorHex);
             }
         });
-
-
 
         // MouseListener for switching brushes
         bntRectangle.addMouseListener(new MouseAdapter() {
@@ -316,6 +309,7 @@ public class ClientGUI extends JFrame {
 
         for (ShapeWrapper wrapper : graphicsFinal) {
             g2.setColor(Color.decode(wrapper.getColor()));
+            g2.setStroke(new BasicStroke(5));
             g2.draw(wrapper.getShape());
 
             //FIXME: for debug
