@@ -27,11 +27,10 @@ public class ShapeWrapper implements Serializable {
         this.pos = pos;
     }
 
-    // Getters and setters
-    //public String getBrush() {return this.brush;}
-    //public void setBrush(String brush) {
-    //this.brush = brush;
-    //}
+    public ShapeWrapper() {
+        //dummy
+    }
+
     public Object getShape() {
         return this.shape;
     }
@@ -44,9 +43,6 @@ public class ShapeWrapper implements Serializable {
         return this.pos;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public Boolean isText() {
         return this.isText;

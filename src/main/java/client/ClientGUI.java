@@ -64,10 +64,12 @@ public class ClientGUI extends JFrame {
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
+    ShapeWrapper wrapper = new ShapeWrapper();
     private ArrayList<ShapeWrapper> graphicsFinal = new ArrayList<>();
     private ArrayList<ShapeWrapper> graphicsBuffer = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
+    private Point2D.Float temPoint = new Point2D.Float();
 
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
@@ -180,7 +182,6 @@ public class ClientGUI extends JFrame {
                 super.mouseClicked(e);
                 JFrame canvasTextInput = new JFrame();
                 canvasStr = JOptionPane.showInputDialog(canvasTextInput, "Enter text for canvas:");
-                System.out.println(canvasStr);
                 brush = bntTextCanvas.getText();
                 System.out.println(brush);
             }
@@ -209,7 +210,7 @@ public class ClientGUI extends JFrame {
 
                         case "Line":
                             Line2D.Float line2D = new Line2D.Float(p1, p2);
-                            ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
+                            wrapper = new ShapeWrapper(line2D, colorHex);
 
                             graphicsFinal.add(wrapper);
                             graphicsBuffer.add(wrapper);
@@ -269,25 +270,27 @@ public class ClientGUI extends JFrame {
                             break;
 
                         case "Text":
-//                            BufferedImage image = new BufferedImage(200,100,BufferedImage.TYPE_4BYTE_ABGR);
-//                            Graphics2D canvasG2 = (Graphics2D) pnlCanvas.getGraphics();
-//
-//                            Rectangle2D rec2D = new Rectangle2D.Double(0,0,200,100);
-//                            canvasG2.setPaint(new TexturePaint(image, rec2D));
-//                            canvasG2.fill(rec2D);
 
-                            System.out.println("In");
-                            wrapper = new ShapeWrapper(canvasStr, colorHex, true, p2);
-                            System.out.println(wrapper.getColor());
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
+                            if (!canvasStr.isEmpty()) {
+                                wrapper = new ShapeWrapper(canvasStr, colorHex, true, p2);
+                                canvasStr = "";
 
-                            repaint();
+                                graphicsFinal.add(wrapper);
+                                graphicsBuffer.add(wrapper);
+                                sendCanvasUpdate();
+
+                                repaint();
+
+                            }
+
+                            break;
+
+
 
                     }
                 }
             }
+
         });
 
         pnlCanvas.addMouseMotionListener(new MouseAdapter() {
@@ -329,20 +332,29 @@ public class ClientGUI extends JFrame {
         Graphics2D g2 = (Graphics2D) pnlCanvas.getGraphics();
 
         for (ShapeWrapper wrapper : graphicsFinal) {
+
+            // Normal Shapes
             if (!wrapper.isText()) {
                 g2.setColor(Color.decode(wrapper.getColor()));
                 g2.setStroke(new BasicStroke(5));
                 g2.draw((Shape) wrapper.getShape());
+
+            // Draw text
             } else {
+                String text = (String) wrapper.getShape();
                 g2.setColor(Color.decode(wrapper.getColor()));
-                Point2D temPoint = wrapper.getPoint();
-                g2.drawString((String) wrapper.getShape(), (int) temPoint.getX(), (int) temPoint.getY());
+                System.out.println(temPoint);
+                temPoint.setLocation(wrapper.getPoint().getX(), wrapper.getPoint().getY()); //FIXME:
+                System.out.println(temPoint);
+                g2.drawString(text, temPoint.x, temPoint.y);
+
             }
 
             //FIXME: for debug
-            System.out.println("Buffer size: " + graphicsBuffer.size());
-            System.out.println("Final size: " + graphicsFinal.size());
+            //System.out.println("Buffer size: " + graphicsBuffer.size());
         }
+        System.out.println("Final size: " + graphicsFinal.size());
+
     }
 
     //DC: For Testing:
