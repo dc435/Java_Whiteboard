@@ -1,11 +1,17 @@
 package client;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 import message.*;
 import whiteboard.ClientState;
 import whiteboard.ShapeWrapper;
 import whiteboard.Whiteboard;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -17,6 +23,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class ClientGUI extends JFrame {
@@ -89,7 +96,7 @@ public class ClientGUI extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pnlMain);
-        this.setPreferredSize(new Dimension(1500,800));
+        this.setPreferredSize(new Dimension(1500, 800));
 
         // Color Bar
         barColor.addItem("Black");
@@ -186,8 +193,8 @@ public class ClientGUI extends JFrame {
             // Starting point of the shape
             @Override
             public void mousePressed(MouseEvent e) {
-                p1.setLocation(0,0);
-                p2.setLocation(0,0);
+                p1.setLocation(0, 0);
+                p2.setLocation(0, 0);
                 p1.setLocation(e.getX(), e.getY());
             }
 
@@ -333,7 +340,8 @@ public class ClientGUI extends JFrame {
                     if (result != null) {
                         wbName = result.toString();
                         sendJoinRequest();
-                    };
+                    }
+                    ;
                 }
             }
         });
@@ -366,7 +374,8 @@ public class ClientGUI extends JFrame {
                     if (result != null) {
                         String fileName = result.toString();
                         openFile(fileName);
-                    };
+                    }
+                    ;
                 }
             }
         });
@@ -379,7 +388,8 @@ public class ClientGUI extends JFrame {
                     Object result = JOptionPane.showInputDialog(userInput, "Enter name of new whiteboard:");
                     if (result != null) {
                         buildNewWhiteboard(result.toString());
-                    };
+                    }
+                    ;
                 }
             }
         });
@@ -402,7 +412,8 @@ public class ClientGUI extends JFrame {
                     if (result != null) {
                         currentFileName = result.toString();
                         writeToFile(currentFileName);
-                    };
+                    }
+                    ;
                 }
             }
         });
@@ -416,7 +427,8 @@ public class ClientGUI extends JFrame {
                     if (result != null) {
                         String otherUserName = result.toString();
                         sendBootUser(otherUserName);
-                    };
+                    }
+                    ;
                 }
             }
         });
@@ -450,7 +462,8 @@ public class ClientGUI extends JFrame {
                     Object result = JOptionPane.showInputDialog(userInput, "Edit your username:", userName);
                     if (result != null) {
                         updateUserName(result.toString());
-                    };
+                    }
+                    ;
                 }
             }
         });
@@ -492,7 +505,7 @@ public class ClientGUI extends JFrame {
         //TODO: Add listener for when press ENTER whilst in Chat text box.
     }
 
-    public void setState(ClientState state){
+    public void setState(ClientState state) {
         switch (state) {
             case NONE:
                 btnJoin.setEnabled(true);
@@ -529,7 +542,7 @@ public class ClientGUI extends JFrame {
                 btnLeave.setEnabled(false);
                 btnOpen.setEnabled(false);
                 btnNew.setEnabled(false);
-                if (currentFileName!=null) {
+                if (currentFileName != null) {
                     btnSave.setEnabled(true);
                 } else {
                     btnSave.setEnabled(false);
@@ -582,7 +595,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
-    private void updateUserName(String newUserName){
+    private void updateUserName(String newUserName) {
         userName = newUserName;
         updateStatus(TAG + "Updated username to " + userName);
     }
@@ -600,7 +613,7 @@ public class ClientGUI extends JFrame {
         activeUsers.add(otherUserName);
     }
 
-    private void refreshUserList(){
+    private void refreshUserList() {
         txtUsers.setText("");
         txtUsers.append("ACTIVE USERS:\n");
         txtUsers.append(userName + " (mgr)\n");
@@ -609,7 +622,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
-    private void buildNewWhiteboard(String newWBName){
+    private void buildNewWhiteboard(String newWBName) {
         setState(ClientState.MGR);
         wbName = newWBName;
         setTitle(newWBName);
@@ -760,7 +773,7 @@ public class ClientGUI extends JFrame {
     }
 
     private ArrayList<ShapeWrapper> makeCopy(ArrayList<ShapeWrapper> arrayIN) {
-        ArrayList<ShapeWrapper>arrayOUT = new ArrayList<ShapeWrapper>();
+        ArrayList<ShapeWrapper> arrayOUT = new ArrayList<ShapeWrapper>();
         for (ShapeWrapper sw : arrayIN) {
             arrayOUT.add(sw);
         }
@@ -772,4 +785,165 @@ public class ClientGUI extends JFrame {
         repaint();
     }
 
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        pnlMain = new JPanel();
+        pnlMain.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        pnlCanvas = new JPanel();
+        pnlCanvas.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        pnlCanvas.setEnabled(true);
+        pnlCanvas.setToolTipText("Canvas");
+        pnlMain.add(pnlCanvas, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        pnlCanvas.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(-16777216)), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, this.$$$getFont$$$(null, -1, -1, pnlCanvas.getFont()), null));
+        final Spacer spacer1 = new Spacer();
+        pnlCanvas.add(spacer1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        pnlCanvas.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        pnlText = new JPanel();
+        pnlText.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        pnlMain.add(pnlText, new GridConstraints(0, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        pnlText.add(scrollPane1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        txtChat = new JTextArea();
+        txtChat.setBackground(new Color(-1182465));
+        txtChat.setEnabled(false);
+        scrollPane1.setViewportView(txtChat);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        pnlText.add(scrollPane2, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        txtLog = new JTextArea();
+        txtLog.setBackground(new Color(-1182465));
+        txtLog.setEnabled(false);
+        txtLog.setText("");
+        scrollPane2.setViewportView(txtLog);
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        pnlText.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        txtChatIn = new JTextField();
+        txtChatIn.setHorizontalAlignment(10);
+        txtChatIn.setText("");
+        panel1.add(txtChatIn, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 21), null, 0, false));
+        final Spacer spacer3 = new Spacer();
+        panel1.add(spacer3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        btnSend = new JButton();
+        btnSend.setText("Send");
+        panel1.add(btnSend, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(98, 21), null, 1, false));
+        pnlManage = new JPanel();
+        pnlManage.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        pnlMain.add(pnlManage, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JScrollPane scrollPane3 = new JScrollPane();
+        pnlManage.add(scrollPane3, new GridConstraints(0, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        txtUsers = new JTextArea();
+        txtUsers.setBackground(new Color(-1182465));
+        txtUsers.setEnabled(false);
+        txtUsers.setText("");
+        scrollPane3.setViewportView(txtUsers);
+        barManage = new JToolBar();
+        barManage.setFloatable(false);
+        barManage.setOrientation(0);
+        pnlManage.add(barManage, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnUserName = new JButton();
+        btnUserName.setText("Username");
+        barManage.add(btnUserName);
+        btnServer = new JButton();
+        btnServer.setText("Server");
+        barManage.add(btnServer);
+        btnLeave = new JButton();
+        btnLeave.setText("Leave");
+        barManage.add(btnLeave);
+        btnClose = new JButton();
+        btnClose.setText("Close");
+        barManage.add(btnClose);
+        btnSaveAs = new JButton();
+        btnSaveAs.setText("Save as");
+        barManage.add(btnSaveAs);
+        btnBoot = new JButton();
+        btnBoot.setText("Boot User");
+        barManage.add(btnBoot);
+        btnOpen = new JButton();
+        btnOpen.setText("Open");
+        barManage.add(btnOpen);
+        btnNew = new JButton();
+        btnNew.setText("New");
+        barManage.add(btnNew);
+        btnSave = new JButton();
+        btnSave.setText("Save");
+        barManage.add(btnSave);
+        btnJoin = new JButton();
+        btnJoin.setText("Join");
+        barManage.add(btnJoin);
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        barManage.add(panel2);
+        barShape = new JToolBar();
+        barShape.setFloatable(false);
+        barShape.setRollover(false);
+        barShape.putClientProperty("JToolBar.isRollover", Boolean.FALSE);
+        pnlManage.add(barShape, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        bntTriangle = new JButton();
+        bntTriangle.setText("Triangle");
+        barShape.add(bntTriangle);
+        bntFreeHand = new JButton();
+        bntFreeHand.setText("FreeH");
+        barShape.add(bntFreeHand);
+        bntRectangle = new JButton();
+        bntRectangle.setText("Rectangle");
+        barShape.add(bntRectangle);
+        bntCircle = new JButton();
+        bntCircle.setText("Circle");
+        barShape.add(bntCircle);
+        bntLine = new JButton();
+        bntLine.setText("Line");
+        barShape.add(bntLine);
+        bntTextCanvas = new JButton();
+        bntTextCanvas.setText("Text");
+        barShape.add(bntTextCanvas);
+        barColor = new JComboBox();
+        barColor.setEditable(false);
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        barColor.setModel(defaultComboBoxModel1);
+        barColor.setToolTipText("");
+        barShape.add(barColor);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
+        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
+        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return pnlMain;
+    }
 }

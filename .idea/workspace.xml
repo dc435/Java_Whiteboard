@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Troubleshooting Client GUI. Check client GUI operations in new layout format.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Parse command line arguments.">
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +52,8 @@
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "398",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propGUI"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -67,7 +69,7 @@
       <command value="mvn assembly clean compile" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.WBClient">
+  <component name="RunManager" selected="Application.WBServer">
     <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.ClientGUI" />
       <module name="whiteboard" />
@@ -97,8 +99,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
+        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.ClientGUI" />
         <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
@@ -296,7 +298,21 @@
       <option name="project" value="LOCAL" />
       <updated>1666262459652</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="POM updates.">
+      <created>1666344979849</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1666344979849</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Parse command line arguments.">
+      <created>1666346478439</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1666346478439</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -323,8 +339,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages." />
-    <MESSAGE value="Update protocol Client side message send, receive." />
     <MESSAGE value="Client send receive protocol, New WB request - reply." />
     <MESSAGE value="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
     <MESSAGE value="Minor comments in ClientGUI" />
@@ -348,6 +362,8 @@
     <MESSAGE value="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function." />
     <MESSAGE value="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server." />
     <MESSAGE value="Troubleshooting Client GUI. Check client GUI operations in new layout format." />
-    <option name="LAST_COMMIT_MESSAGE" value="Troubleshooting Client GUI. Check client GUI operations in new layout format." />
+    <MESSAGE value="POM updates." />
+    <MESSAGE value="Parse command line arguments." />
+    <option name="LAST_COMMIT_MESSAGE" value="Parse command line arguments." />
   </component>
 </project>
