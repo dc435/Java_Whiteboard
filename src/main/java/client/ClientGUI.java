@@ -179,10 +179,12 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame canvasTextInput = new JFrame();
-                canvasStr = JOptionPane.showInputDialog(canvasTextInput, "Enter text for canvas:");
-                brush = bntTextCanvas.getText();
-                System.out.println(brush);
+                if (e.getComponent().isEnabled()) {
+                    JFrame canvasTextInput = new JFrame();
+                    canvasStr = JOptionPane.showInputDialog(canvasTextInput, "Enter text for canvas:");
+                    brush = bntTextCanvas.getText();
+                    System.out.println(brush);
+                }
             }
         });
 
@@ -544,6 +546,7 @@ public class ClientGUI extends JFrame {
                 btnSend.setEnabled(false);
                 txtUsers.setVisible(false);
                 pnlCanvas.setEnabled(false);
+                bntTextCanvas.setEnabled(false);
                 break;
             case USER:
                 btnJoin.setEnabled(false);
@@ -559,6 +562,7 @@ public class ClientGUI extends JFrame {
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(false);
                 pnlCanvas.setEnabled(true);
+                bntTextCanvas.setEnabled(true);
                 break;
             case MGR:
                 btnJoin.setEnabled(false);
@@ -578,6 +582,7 @@ public class ClientGUI extends JFrame {
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(true);
                 pnlCanvas.setEnabled(true);
+                bntTextCanvas.setEnabled(true);
                 break;
         }
     }
