@@ -219,37 +219,37 @@
             </clientProperties>
             <border type="none"/>
             <children>
-              <component id="ef21f" class="javax.swing.JButton" binding="bntTriangle">
+              <component id="ef21f" class="javax.swing.JButton" binding="btnTriangle">
                 <constraints/>
                 <properties>
                   <text value="Triangle"/>
                 </properties>
               </component>
-              <component id="a7b78" class="javax.swing.JButton" binding="bntFreeHand">
+              <component id="a7b78" class="javax.swing.JButton" binding="btnFreeHand">
                 <constraints/>
                 <properties>
                   <text value="FreeH"/>
                 </properties>
               </component>
-              <component id="e71ab" class="javax.swing.JButton" binding="bntRectangle">
+              <component id="e71ab" class="javax.swing.JButton" binding="btnRectangle">
                 <constraints/>
                 <properties>
                   <text value="Rectangle"/>
                 </properties>
               </component>
-              <component id="f9c45" class="javax.swing.JButton" binding="bntCircle">
+              <component id="f9c45" class="javax.swing.JButton" binding="btnCircle">
                 <constraints/>
                 <properties>
                   <text value="Circle"/>
                 </properties>
               </component>
-              <component id="2e7b7" class="javax.swing.JButton" binding="bntLine">
+              <component id="2e7b7" class="javax.swing.JButton" binding="btnLine">
                 <constraints/>
                 <properties>
                   <text value="Line"/>
                 </properties>
               </component>
-              <component id="ad312" class="javax.swing.JButton" binding="bntTextCanvas">
+              <component id="ad312" class="javax.swing.JButton" binding="btnTextCanvas">
                 <constraints/>
                 <properties>
                   <text value="Text"/>

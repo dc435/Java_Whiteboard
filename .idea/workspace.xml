@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="fix:draw text">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="fix:btnTextCanvas state control">
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,7 +316,28 @@
       <option name="project" value="LOCAL" />
       <updated>1666348415374</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fix:text relocated issue">
+      <created>1666350657418</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1666350657418</updated>
+    </task>
+    <task id="LOCAL-00031" summary="minor">
+      <created>1666350682858</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1666350682858</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fix:btnTextCanvas state control">
+      <created>1666350883479</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1666350883479</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -345,9 +364,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
-    <MESSAGE value="Minor comments in ClientGUI" />
-    <MESSAGE value="Chat updaterequest protocol added. Make 'echoMsg' generic functionality in server." />
     <MESSAGE value="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods." />
     <MESSAGE value="debug:freeH" />
     <MESSAGE value="feat:Color" />
@@ -370,6 +386,9 @@
     <MESSAGE value="fix:pnlCanvas display" />
     <MESSAGE value="feat:draw text" />
     <MESSAGE value="fix:draw text" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix:draw text" />
+    <MESSAGE value="fix:text relocated issue" />
+    <MESSAGE value="minor" />
+    <MESSAGE value="fix:btnTextCanvas state control" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix:btnTextCanvas state control" />
   </component>
 </project>

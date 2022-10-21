@@ -34,14 +34,14 @@ public class ClientGUI extends JFrame {
     public final static HashMap<String, String> COLOR = new HashMap<>();
     private JPanel pnlMain;
     private JPanel pnlCanvas;
-    private JButton bntLine;
-    private JButton bntCircle;
-    private JButton bntRectangle;
-    private JButton bntFreeHand;
+    private JButton btnLine;
+    private JButton btnCircle;
+    private JButton btnRectangle;
+    private JButton btnFreeHand;
     private JComboBox<String> barColor;
-    private JButton bntTriangle;
+    private JButton btnTriangle;
     private JToolBar barShape;
-    private JButton bntTextCanvas;
+    private JButton btnTextCanvas;
     private JTextArea txtChat;
     private JTextField txtChatIn;
     private JButton btnSend;
@@ -130,59 +130,59 @@ public class ClientGUI extends JFrame {
         });
 
         // MouseListener for switching brushes
-        bntRectangle.addMouseListener(new MouseAdapter() {
+        btnRectangle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntRectangle.getText();
+                brush = btnRectangle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntLine.addMouseListener(new MouseAdapter() {
+        btnLine.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntLine.getText();
+                brush = btnLine.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntCircle.addMouseListener(new MouseAdapter() {
+        btnCircle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntCircle.getText();
+                brush = btnCircle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntTriangle.addMouseListener(new MouseAdapter() {
+        btnTriangle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntTriangle.getText();
+                brush = btnTriangle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntFreeHand.addMouseListener(new MouseAdapter() {
+        btnFreeHand.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntFreeHand.getText();
+                brush = btnFreeHand.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntTextCanvas.addMouseListener(new MouseAdapter() {
+        btnTextCanvas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (e.getComponent().isEnabled()) {
                     JFrame canvasTextInput = new JFrame();
                     canvasStr = JOptionPane.showInputDialog(canvasTextInput, "Enter text for canvas:");
-                    brush = bntTextCanvas.getText();
+                    brush = btnTextCanvas.getText();
                     System.out.println(brush);
                 }
             }
@@ -546,7 +546,7 @@ public class ClientGUI extends JFrame {
                 btnSend.setEnabled(false);
                 txtUsers.setVisible(false);
                 pnlCanvas.setEnabled(false);
-                bntTextCanvas.setEnabled(false);
+                btnTextCanvas.setEnabled(false);
                 break;
             case USER:
                 btnJoin.setEnabled(false);
@@ -562,7 +562,7 @@ public class ClientGUI extends JFrame {
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(false);
                 pnlCanvas.setEnabled(true);
-                bntTextCanvas.setEnabled(true);
+                btnTextCanvas.setEnabled(true);
                 break;
             case MGR:
                 btnJoin.setEnabled(false);
@@ -582,7 +582,7 @@ public class ClientGUI extends JFrame {
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(true);
                 pnlCanvas.setEnabled(true);
-                bntTextCanvas.setEnabled(true);
+                btnTextCanvas.setEnabled(true);
                 break;
         }
     }
