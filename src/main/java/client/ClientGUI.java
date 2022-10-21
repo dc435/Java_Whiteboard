@@ -186,83 +186,87 @@ public class ClientGUI extends JFrame {
             // Starting point of the shape
             @Override
             public void mousePressed(MouseEvent e) {
-                p1.setLocation(0,0);
-                p2.setLocation(0,0);
-                p1.setLocation(e.getX(), e.getY());
+                if (pnlCanvas.isEnabled()) {
+                    p1.setLocation(0, 0);
+                    p2.setLocation(0, 0);
+                    p1.setLocation(e.getX(), e.getY());
+                }
             }
 
             // Ending point of the shape
             @Override
             public void mouseReleased(MouseEvent e) {
-                p2.setLocation(e.getX(), e.getY());
+                if (pnlCanvas.isEnabled()) {
+                    p2.setLocation(e.getX(), e.getY());
 
-                switch (brush) {
+                    switch (brush) {
 
-                    case "Line":
-                        Line2D.Float line2D = new Line2D.Float(p1, p2);
-                        ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
+                        case "Line":
+                            Line2D.Float line2D = new Line2D.Float(p1, p2);
+                            ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Circle":
-                        float x = p1.x;
-                        float y = p1.y;
-                        float w = Math.abs(p2.x - p1.x);
-                        float h = Math.abs(p2.y - p1.y);
-                        Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
-                        wrapper = new ShapeWrapper(circle2D, colorHex);
+                        case "Circle":
+                            float x = p1.x;
+                            float y = p1.y;
+                            float w = Math.abs(p2.x - p1.x);
+                            float h = Math.abs(p2.y - p1.y);
+                            Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
+                            wrapper = new ShapeWrapper(circle2D, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Rectangle":
-                        float x1 = p1.x;
-                        float y1 = p1.y;
-                        float w1 = Math.abs(p2.x - p1.x);
-                        float h1 = Math.abs(p2.y - p1.y);
-                        Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
-                        wrapper = new ShapeWrapper(rectangle2D, colorHex);
+                        case "Rectangle":
+                            float x1 = p1.x;
+                            float y1 = p1.y;
+                            float w1 = Math.abs(p2.x - p1.x);
+                            float h1 = Math.abs(p2.y - p1.y);
+                            Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
+                            wrapper = new ShapeWrapper(rectangle2D, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Triangle":
-                        triPath.moveTo(p1.x, p1.y); // Starting point as mid-point
-                        float pref_w = p2.x - p1.x;
-                        triPath.lineTo(p2.x - (2 * pref_w), p2.y);
-                        triPath.lineTo(p2.x, p2.y); // Ending point finish point
-                        triPath.closePath();
-                        wrapper = new ShapeWrapper(triPath, colorHex);
+                        case "Triangle":
+                            triPath.moveTo(p1.x, p1.y); // Starting point as mid-point
+                            float pref_w = p2.x - p1.x;
+                            triPath.lineTo(p2.x - (2 * pref_w), p2.y);
+                            triPath.lineTo(p2.x, p2.y); // Ending point finish point
+                            triPath.closePath();
+                            wrapper = new ShapeWrapper(triPath, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Text":
-                        // TODO:
-                        break;
+                        case "Text":
+                            // TODO:
+                            break;
 
-                    case "FreeH":
-                        // Send out update only when user release mouse
-                        sendCanvasUpdate();
-                        break;
+                        case "FreeH":
+                            // Send out update only when user release mouse
+                            sendCanvasUpdate();
+                            break;
 
+                    }
                 }
             }
         });
@@ -507,7 +511,7 @@ public class ClientGUI extends JFrame {
                 btnServer.setEnabled(true);
                 btnSend.setEnabled(false);
                 txtUsers.setVisible(false);
-                pnlCanvas.setVisible(false);
+                pnlCanvas.setEnabled(false);
                 break;
             case USER:
                 btnJoin.setEnabled(false);
@@ -522,7 +526,7 @@ public class ClientGUI extends JFrame {
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(false);
-                pnlCanvas.setVisible(true);
+                pnlCanvas.setEnabled(true);
                 break;
             case MGR:
                 btnJoin.setEnabled(false);
@@ -541,7 +545,7 @@ public class ClientGUI extends JFrame {
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(true);
-                pnlCanvas.setVisible(true);
+                pnlCanvas.setEnabled(true);
                 break;
         }
     }
