@@ -272,19 +272,20 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+                if (e.getComponent().isEnabled()) {
+                    if (brush.equals("FreeH")) {
+                        if (p2.x != 0 && p2.y != 0) {
+                            p1.x = p2.x;
+                            p1.y = p2.y;
+                        }
+                        p2.setLocation(e.getX(), e.getY());
+                        Line2D.Float line2D = new Line2D.Float(p1, p2);
+                        ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
+                        graphicsBuffer.add(wrapper);
+                        graphicsFinal.add(wrapper);
+                        repaint(); // Call paint(g)
 
-                if (brush.equals("FreeH")) {
-                    if (p2.x != 0 && p2.y != 0) {
-                        p1.x = p2.x;
-                        p1.y = p2.y;
                     }
-                    p2.setLocation(e.getX(), e.getY());
-                    Line2D.Float line2D = new Line2D.Float(p1, p2);
-                    ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
-                    graphicsBuffer.add(wrapper);
-                    graphicsFinal.add(wrapper);
-                    repaint(); // Call paint(g)
-
                 }
             }
         });
@@ -326,28 +327,32 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Enter name of the remote whiteboard to join:");
-                if (result!=null) {
-                    wbName = result.toString();
-                    sendJoinRequest();
-                };
+                if (e.getComponent().isEnabled()) {
+                    JFrame userInput = new JFrame();
+                    Object result = JOptionPane.showInputDialog(userInput, "Enter name of the remote whiteboard to join:");
+                    if (result != null) {
+                        wbName = result.toString();
+                        sendJoinRequest();
+                    };
+                }
             }
         });
         btnLeave.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to leave");
-                switch (result) {
-                    case JOptionPane.YES_OPTION:
-                        sendLeave();
-                        setState(ClientState.NONE);
-                        break;
-                    case JOptionPane.NO_OPTION:
-                    case JOptionPane.CANCEL_OPTION:
-                    case JOptionPane.CLOSED_OPTION:
-                        break;
+                if (e.getComponent().isEnabled()) {
+                    int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to leave");
+                    switch (result) {
+                        case JOptionPane.YES_OPTION:
+                            sendLeave();
+                            setState(ClientState.NONE);
+                            break;
+                        case JOptionPane.NO_OPTION:
+                        case JOptionPane.CANCEL_OPTION:
+                        case JOptionPane.CLOSED_OPTION:
+                            break;
+                    }
                 }
             }
         });
@@ -355,72 +360,84 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Enter the name of the file to open:");
-                if (result!=null) {
-                    String fileName = result.toString();
-                    openFile(fileName);
-                };
+                if (e.getComponent().isEnabled()) {
+                    JFrame userInput = new JFrame();
+                    Object result = JOptionPane.showInputDialog(userInput, "Enter the name of the file to open:");
+                    if (result != null) {
+                        String fileName = result.toString();
+                        openFile(fileName);
+                    };
+                }
             }
         });
         btnNew.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Enter name of new whiteboard:");
-                if (result!=null) {
-                    buildNewWhiteboard(result.toString());
-                };
+                if (e.getComponent().isEnabled()) {
+                    JFrame userInput = new JFrame();
+                    Object result = JOptionPane.showInputDialog(userInput, "Enter name of new whiteboard:");
+                    if (result != null) {
+                        buildNewWhiteboard(result.toString());
+                    };
+                }
             }
         });
         btnSave.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                writeToFile(currentFileName);
+                if (e.getComponent().isEnabled()) {
+                    writeToFile(currentFileName);
+                }
             }
         });
         btnSaveAs.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Enter new file name:");
-                if (result!=null) {
-                    currentFileName = result.toString();
-                    writeToFile(currentFileName);
-                };
+                if (e.getComponent().isEnabled()) {
+                    JFrame userInput = new JFrame();
+                    Object result = JOptionPane.showInputDialog(userInput, "Enter new file name:");
+                    if (result != null) {
+                        currentFileName = result.toString();
+                        writeToFile(currentFileName);
+                    };
+                }
             }
         });
         btnBoot.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Enter name of user to boot from this whiteboard:");
-                if (result!=null) {
-                    String otherUserName = result.toString();
-                    sendBootUser(otherUserName);
-                };
+                if (e.getComponent().isEnabled()) {
+                    JFrame userInput = new JFrame();
+                    Object result = JOptionPane.showInputDialog(userInput, "Enter name of user to boot from this whiteboard:");
+                    if (result != null) {
+                        String otherUserName = result.toString();
+                        sendBootUser(otherUserName);
+                    };
+                }
             }
         });
         btnClose.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                int result = JOptionPane.showConfirmDialog(null, "Are sure you want to close this whiteboard?");
-                switch(result){
-                    case JOptionPane.YES_OPTION:
-                        sendCloseWhiteboard();
-                        closeCurrentWhiteboard();
-                        updateStatus(TAG + "Whiteboard closed.");
-                        break;
-                    case JOptionPane.NO_OPTION:
-                    case JOptionPane.CANCEL_OPTION:
-                    case JOptionPane.CLOSED_OPTION:
-                        System.out.println(TAG + "Continue.");
-                        break;
+                if (e.getComponent().isEnabled()) {
+                    int result = JOptionPane.showConfirmDialog(null, "Are sure you want to close this whiteboard?");
+                    switch (result) {
+                        case JOptionPane.YES_OPTION:
+                            sendCloseWhiteboard();
+                            closeCurrentWhiteboard();
+                            updateStatus(TAG + "Whiteboard closed.");
+                            break;
+                        case JOptionPane.NO_OPTION:
+                        case JOptionPane.CANCEL_OPTION:
+                        case JOptionPane.CLOSED_OPTION:
+                            System.out.println(TAG + "Continue.");
+                            break;
+                    }
                 }
             }
         });
@@ -428,28 +445,34 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Edit your username:", userName);
-                if (result!=null) {updateUserName(result.toString());};
+                if (e.getComponent().isEnabled()) {
+                    JFrame userInput = new JFrame();
+                    Object result = JOptionPane.showInputDialog(userInput, "Edit your username:", userName);
+                    if (result != null) {
+                        updateUserName(result.toString());
+                    };
+                }
             }
         });
         btnServer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JFrame userInput = new JFrame();
-                Object result = JOptionPane.showInputDialog(userInput, "Edit server address:",
-                        serverAddress.getAddress() + ":" + serverAddress.getPort());
-                if (result!=null) {
-                    String newServerAddress = result.toString();
-                    try {
-                        URI uri = new URI("my://" + newServerAddress);
-                        String host = uri.getHost();
-                        int port = uri.getPort();
-                        InetSocketAddress newAdd = new InetSocketAddress(host, port);
-                        updateServerAddress(newAdd);
-                    } catch (Exception ex) {
-                        updateStatus(TAG + "Failure to process new server address. Please check the address.");
+                if (e.getComponent().isEnabled()) {
+                    JFrame userInput = new JFrame();
+                    Object result = JOptionPane.showInputDialog(userInput, "Edit server address:",
+                            serverAddress.getAddress() + ":" + serverAddress.getPort());
+                    if (result != null) {
+                        String newServerAddress = result.toString();
+                        try {
+                            URI uri = new URI("my://" + newServerAddress);
+                            String host = uri.getHost();
+                            int port = uri.getPort();
+                            InetSocketAddress newAdd = new InetSocketAddress(host, port);
+                            updateServerAddress(newAdd);
+                        } catch (Exception ex) {
+                            updateStatus(TAG + "Failure to process new server address. Please check the address.");
+                        }
                     }
                 }
             }
@@ -458,14 +481,15 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                String chatText = txtChatIn.getText();
-                txtChat.append(userName + ": " + chatText + "\n");
-                sendChatUpdate(chatText);
-                txtChatIn.setText("");
+                if (e.getComponent().isEnabled()) {
+                    String chatText = txtChatIn.getText();
+                    txtChat.append(userName + ": " + chatText + "\n");
+                    sendChatUpdate(chatText);
+                    txtChatIn.setText("");
+                }
             }
         });
         //TODO: Add listener for when press ENTER whilst in Chat text box.
-
     }
 
     public void setState(ClientState state){
