@@ -12,6 +12,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class ClientGUI extends JFrame {
     private JButton btnServer;
     private JPanel pnlManage;
     private JToolBar barManage;
+    private String canvasStr;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
@@ -78,6 +80,7 @@ public class ClientGUI extends JFrame {
         activeUsers = new ArrayList<String>();
         guiConstructors();
         setMngButtonListeners();
+
     }
 
 //    public ClientGUI(String appName) {
@@ -175,8 +178,11 @@ public class ClientGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                JFrame canvasTextInput = new JFrame();
+                canvasStr = JOptionPane.showInputDialog(canvasTextInput, "Enter text for canvas:");
+                System.out.println(canvasStr);
                 brush = bntTextCanvas.getText();
-                System.out.println(brush); //debug
+                System.out.println(brush);
             }
         });
 
@@ -257,14 +263,27 @@ public class ClientGUI extends JFrame {
                             repaint();
                             break;
 
-                        case "Text":
-                            // TODO:
-                            break;
-
                         case "FreeH":
                             // Send out update only when user release mouse
                             sendCanvasUpdate();
                             break;
+
+                        case "Text":
+//                            BufferedImage image = new BufferedImage(200,100,BufferedImage.TYPE_4BYTE_ABGR);
+//                            Graphics2D canvasG2 = (Graphics2D) pnlCanvas.getGraphics();
+//
+//                            Rectangle2D rec2D = new Rectangle2D.Double(0,0,200,100);
+//                            canvasG2.setPaint(new TexturePaint(image, rec2D));
+//                            canvasG2.fill(rec2D);
+
+                            System.out.println("In");
+                            wrapper = new ShapeWrapper(canvasStr, colorHex, true, p2);
+                            System.out.println(wrapper.getColor());
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
+
+                            repaint();
 
                     }
                 }
@@ -310,9 +329,15 @@ public class ClientGUI extends JFrame {
         Graphics2D g2 = (Graphics2D) pnlCanvas.getGraphics();
 
         for (ShapeWrapper wrapper : graphicsFinal) {
-            g2.setColor(Color.decode(wrapper.getColor()));
-            g2.setStroke(new BasicStroke(5));
-            g2.draw(wrapper.getShape());
+            if (!wrapper.isText()) {
+                g2.setColor(Color.decode(wrapper.getColor()));
+                g2.setStroke(new BasicStroke(5));
+                g2.draw((Shape) wrapper.getShape());
+            } else {
+                g2.setColor(Color.decode(wrapper.getColor()));
+                Point2D temPoint = wrapper.getPoint();
+                g2.drawString((String) wrapper.getShape(), (int) temPoint.getX(), (int) temPoint.getY());
+            }
 
             //FIXME: for debug
             System.out.println("Buffer size: " + graphicsBuffer.size());

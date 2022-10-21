@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Troubleshooting Client GUI. Check client GUI operations in new layout format.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="fix:pnlCanvas display">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whiteboard/ShapeWrapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666262459652</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="fix:pnlCanvas display">
+      <created>1666341424818</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1666341424818</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -324,7 +331,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Set-up Message.java structure, interaction with JSON serialisation. Initial testing of send and receive Messages." />
     <MESSAGE value="Update protocol Client side message send, receive." />
     <MESSAGE value="Client send receive protocol, New WB request - reply." />
     <MESSAGE value="Canvas update request and reply protocol and implementation, at client and server side. New whiteboard implementation. Tie in to public gui methods (to populate seperately)." />
@@ -349,6 +355,7 @@
     <MESSAGE value="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function." />
     <MESSAGE value="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server." />
     <MESSAGE value="Troubleshooting Client GUI. Check client GUI operations in new layout format." />
-    <option name="LAST_COMMIT_MESSAGE" value="Troubleshooting Client GUI. Check client GUI operations in new layout format." />
+    <MESSAGE value="fix:pnlCanvas display" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix:pnlCanvas display" />
   </component>
 </project>
