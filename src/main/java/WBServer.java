@@ -30,7 +30,7 @@ public class WBServer {
 
         ServerSocketFactory factory = ServerSocketFactory.getDefault();
         try(ServerSocket serverSocket = factory.createServerSocket(serverPort)){
-            System.out.println("Listening for messages on port " + serverPort);
+            System.out.println("Listening for messages on port " + serverPort + "...");
             while(true){
                 Socket socket = serverSocket.accept();
                 ServerMsgProcessor processor =  new ServerMsgProcessor(socket, server);
