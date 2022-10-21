@@ -10,7 +10,8 @@ public class ShapeWrapper implements Serializable {
     private Object shape;
     private String color;
     private boolean isText;
-    private Point2D.Float pos;
+    private int posX;
+    private int posY;
 
 
     // Constructor
@@ -20,11 +21,12 @@ public class ShapeWrapper implements Serializable {
         this.isText = false;
     }
 
-    public ShapeWrapper(Object shape, String color, Boolean bool, Point2D.Float pos) {
+    public ShapeWrapper(Object shape, String color, Boolean bool, int x, int y) {
         this.shape = shape;
         this.color = color;
         this.isText = bool;
-        this.pos = pos;
+        this.posX = x;
+        this.posY = y;
     }
 
     public ShapeWrapper() {
@@ -39,8 +41,12 @@ public class ShapeWrapper implements Serializable {
         return this.color;
     }
 
-    public Point2D getPoint() {
-        return this.pos;
+    public int getX() {
+        return this.posX;
+    }
+
+    public int getY() {
+        return this.posY;
     }
 
 

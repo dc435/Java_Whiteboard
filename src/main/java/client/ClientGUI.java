@@ -271,9 +271,9 @@ public class ClientGUI extends JFrame {
 
                         case "Text":
 
-                            if (!canvasStr.isEmpty()) {
-                                wrapper = new ShapeWrapper(canvasStr, colorHex, true, p2);
-                                canvasStr = "";
+                            if (canvasStr != null) {
+                                wrapper = new ShapeWrapper(canvasStr, colorHex, true, (int) p2.x,(int) p2.y);
+                                canvasStr = null;
 
                                 graphicsFinal.add(wrapper);
                                 graphicsBuffer.add(wrapper);
@@ -282,11 +282,7 @@ public class ClientGUI extends JFrame {
                                 repaint();
 
                             }
-
                             break;
-
-
-
                     }
                 }
             }
@@ -341,18 +337,18 @@ public class ClientGUI extends JFrame {
 
             // Draw text
             } else {
-                String text = (String) wrapper.getShape();
-                g2.setColor(Color.decode(wrapper.getColor()));
-                System.out.println(temPoint);
-                temPoint.setLocation(wrapper.getPoint().getX(), wrapper.getPoint().getY()); //FIXME:
-                System.out.println(temPoint);
-                g2.drawString(text, temPoint.x, temPoint.y);
+                if (canvasStr == null) {
+                    String text = (String) wrapper.getShape();
+                    g2.setColor(Color.decode(wrapper.getColor()));
+                    g2.drawString(text, wrapper.getX(), wrapper.getY());
+                }
 
             }
 
-            //FIXME: for debug
-            //System.out.println("Buffer size: " + graphicsBuffer.size());
+
         }
+        //FIXME: for debug
+        System.out.println("Buffer size: " + graphicsBuffer.size());
         System.out.println("Final size: " + graphicsFinal.size());
 
     }
