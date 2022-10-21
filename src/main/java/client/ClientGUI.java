@@ -18,6 +18,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
@@ -40,14 +41,14 @@ public class ClientGUI extends JFrame {
     public final static HashMap<String, String> COLOR = new HashMap<>();
     private JPanel pnlMain;
     private JPanel pnlCanvas;
-    private JButton bntLine;
-    private JButton bntCircle;
-    private JButton bntRectangle;
-    private JButton bntFreeHand;
+    private JButton btnLine;
+    private JButton btnCircle;
+    private JButton btnRectangle;
+    private JButton btnFreeHand;
     private JComboBox<String> barColor;
-    private JButton bntTriangle;
+    private JButton btnTriangle;
     private JToolBar barShape;
-    private JButton bntTextCanvas;
+    private JButton btnTextCanvas;
     private JTextArea txtChat;
     private JTextField txtChatIn;
     private JButton btnSend;
@@ -66,9 +67,11 @@ public class ClientGUI extends JFrame {
     private JButton btnServer;
     private JPanel pnlManage;
     private JToolBar barManage;
+    private String canvasStr;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
     private Path2D triPath = new Path2D.Float();
+    ShapeWrapper wrapper = new ShapeWrapper();
     private ArrayList<ShapeWrapper> graphicsFinal = new ArrayList<>();
     private ArrayList<ShapeWrapper> graphicsBuffer = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
@@ -85,6 +88,7 @@ public class ClientGUI extends JFrame {
         activeUsers = new ArrayList<String>();
         guiConstructors();
         setMngButtonListeners();
+
     }
 
 //    public ClientGUI(String appName) {
@@ -133,57 +137,61 @@ public class ClientGUI extends JFrame {
         });
 
         // MouseListener for switching brushes
-        bntRectangle.addMouseListener(new MouseAdapter() {
+        btnRectangle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntRectangle.getText();
+                brush = btnRectangle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntLine.addMouseListener(new MouseAdapter() {
+        btnLine.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntLine.getText();
+                brush = btnLine.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntCircle.addMouseListener(new MouseAdapter() {
+        btnCircle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntCircle.getText();
+                brush = btnCircle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntTriangle.addMouseListener(new MouseAdapter() {
+        btnTriangle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntTriangle.getText();
+                brush = btnTriangle.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntFreeHand.addMouseListener(new MouseAdapter() {
+        btnFreeHand.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntFreeHand.getText();
+                brush = btnFreeHand.getText();
                 System.out.println(brush); //debug
             }
         });
 
-        bntTextCanvas.addMouseListener(new MouseAdapter() {
+        btnTextCanvas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                brush = bntTextCanvas.getText();
-                System.out.println(brush); //debug
+                if (e.getComponent().isEnabled()) {
+                    JFrame canvasTextInput = new JFrame();
+                    canvasStr = JOptionPane.showInputDialog(canvasTextInput, "Enter text for canvas:");
+                    brush = btnTextCanvas.getText();
+                    System.out.println(brush);
+                }
             }
         });
 
@@ -193,6 +201,11 @@ public class ClientGUI extends JFrame {
             // Starting point of the shape
             @Override
             public void mousePressed(MouseEvent e) {
+                if (pnlCanvas.isEnabled()) {
+                    p1.setLocation(0, 0);
+                    p2.setLocation(0, 0);
+                    p1.setLocation(e.getX(), e.getY());
+                }
                 p1.setLocation(0, 0);
                 p2.setLocation(0, 0);
                 p1.setLocation(e.getX(), e.getY());
@@ -201,77 +214,90 @@ public class ClientGUI extends JFrame {
             // Ending point of the shape
             @Override
             public void mouseReleased(MouseEvent e) {
-                p2.setLocation(e.getX(), e.getY());
+                if (pnlCanvas.isEnabled()) {
+                    p2.setLocation(e.getX(), e.getY());
 
-                switch (brush) {
+                    switch (brush) {
 
-                    case "Line":
-                        Line2D.Float line2D = new Line2D.Float(p1, p2);
-                        ShapeWrapper wrapper = new ShapeWrapper(line2D, colorHex);
+                        case "Line":
+                            Line2D.Float line2D = new Line2D.Float(p1, p2);
+                            wrapper = new ShapeWrapper(line2D, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Circle":
-                        float x = p1.x;
-                        float y = p1.y;
-                        float w = Math.abs(p2.x - p1.x);
-                        float h = Math.abs(p2.y - p1.y);
-                        Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
-                        wrapper = new ShapeWrapper(circle2D, colorHex);
+                        case "Circle":
+                            float x = p1.x;
+                            float y = p1.y;
+                            float w = Math.abs(p2.x - p1.x);
+                            float h = Math.abs(p2.y - p1.y);
+                            Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
+                            wrapper = new ShapeWrapper(circle2D, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Rectangle":
-                        float x1 = p1.x;
-                        float y1 = p1.y;
-                        float w1 = Math.abs(p2.x - p1.x);
-                        float h1 = Math.abs(p2.y - p1.y);
-                        Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
-                        wrapper = new ShapeWrapper(rectangle2D, colorHex);
+                        case "Rectangle":
+                            float x1 = p1.x;
+                            float y1 = p1.y;
+                            float w1 = Math.abs(p2.x - p1.x);
+                            float h1 = Math.abs(p2.y - p1.y);
+                            Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
+                            wrapper = new ShapeWrapper(rectangle2D, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Triangle":
-                        triPath.moveTo(p1.x, p1.y); // Starting point as mid-point
-                        float pref_w = p2.x - p1.x;
-                        triPath.lineTo(p2.x - (2 * pref_w), p2.y);
-                        triPath.lineTo(p2.x, p2.y); // Ending point finish point
-                        triPath.closePath();
-                        wrapper = new ShapeWrapper(triPath, colorHex);
+                        case "Triangle":
+                            triPath.moveTo(p1.x, p1.y); // Starting point as mid-point
+                            float pref_w = p2.x - p1.x;
+                            triPath.lineTo(p2.x - (2 * pref_w), p2.y);
+                            triPath.lineTo(p2.x, p2.y); // Ending point finish point
+                            triPath.closePath();
+                            wrapper = new ShapeWrapper(triPath, colorHex);
 
-                        graphicsFinal.add(wrapper);
-                        graphicsBuffer.add(wrapper);
-                        sendCanvasUpdate();
+                            graphicsFinal.add(wrapper);
+                            graphicsBuffer.add(wrapper);
+                            sendCanvasUpdate();
 
-                        repaint();
-                        break;
+                            repaint();
+                            break;
 
-                    case "Text":
-                        // TODO:
-                        break;
+                        case "FreeH":
+                            // Send out update only when user release mouse
+                            sendCanvasUpdate();
+                            break;
 
-                    case "FreeH":
-                        // Send out update only when user release mouse
-                        sendCanvasUpdate();
-                        break;
+                        case "Text":
 
+                            if (canvasStr != null) {
+                                wrapper = new ShapeWrapper(canvasStr, colorHex, true, (int) p2.x,(int) p2.y);
+                                canvasStr = null;
+
+                                graphicsFinal.add(wrapper);
+                                graphicsBuffer.add(wrapper);
+                                sendCanvasUpdate();
+
+                                repaint();
+
+                            }
+                            break;
+                    }
                 }
             }
+
         });
 
         pnlCanvas.addMouseMotionListener(new MouseAdapter() {
@@ -313,9 +339,28 @@ public class ClientGUI extends JFrame {
         Graphics2D g2 = (Graphics2D) pnlCanvas.getGraphics();
 
         for (ShapeWrapper wrapper : graphicsFinal) {
-            g2.setColor(Color.decode(wrapper.getColor()));
-            g2.setStroke(new BasicStroke(5));
-            g2.draw(wrapper.getShape());
+
+            // Normal Shapes
+            if (!wrapper.isText()) {
+                g2.setColor(Color.decode(wrapper.getColor()));
+                g2.setStroke(new BasicStroke(5));
+                g2.draw((Shape) wrapper.getShape());
+
+            // Draw text
+            } else {
+                if (canvasStr == null) {
+                    String text = (String) wrapper.getShape();
+                    g2.setColor(Color.decode(wrapper.getColor()));
+                    g2.drawString(text, wrapper.getX(), wrapper.getY());
+                }
+
+            }
+
+
+        }
+        //FIXME: for debug
+        System.out.println("Buffer size: " + graphicsBuffer.size());
+        System.out.println("Final size: " + graphicsFinal.size());
 
         }
     }
@@ -512,7 +557,8 @@ public class ClientGUI extends JFrame {
                 btnServer.setEnabled(true);
                 btnSend.setEnabled(false);
                 txtUsers.setVisible(false);
-                pnlCanvas.setVisible(false);
+                pnlCanvas.setEnabled(false);
+                btnTextCanvas.setEnabled(false);
                 break;
             case USER:
                 btnJoin.setEnabled(false);
@@ -527,7 +573,8 @@ public class ClientGUI extends JFrame {
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(false);
-                pnlCanvas.setVisible(true);
+                pnlCanvas.setEnabled(true);
+                btnTextCanvas.setEnabled(true);
                 break;
             case MGR:
                 btnJoin.setEnabled(false);
@@ -546,7 +593,8 @@ public class ClientGUI extends JFrame {
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
                 txtUsers.setVisible(true);
-                pnlCanvas.setVisible(true);
+                pnlCanvas.setEnabled(true);
+                btnTextCanvas.setEnabled(true);
                 break;
         }
     }
