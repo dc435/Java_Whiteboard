@@ -69,7 +69,6 @@ public class ClientGUI extends JFrame {
     private ArrayList<ShapeWrapper> graphicsBuffer = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
-    private Point2D.Float temPoint = new Point2D.Float();
 
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
