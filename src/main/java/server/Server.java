@@ -44,7 +44,7 @@ public class Server extends Thread {
         return whiteboards.get(wbName).getUserList();
     }
 
-    public boolean isUserNameUnique(String wbName, String userName) {
+    public boolean isUserNameClash(String wbName, String userName) {
         WhiteboardMgr whiteboardMgr = whiteboards.get(wbName);
         ArrayList<User> userList = whiteboardMgr.getUserList();
         boolean clash = false;
@@ -81,11 +81,7 @@ public class Server extends Thread {
     public boolean checkUser(String wbName, String userName) {
         if (whiteboards.containsKey(wbName)) {
             WhiteboardMgr wbMgr = whiteboards.get(wbName);
-            if (wbMgr.checkUser(userName)) {
-                return true;
-            } else {
-                return false;
-            }
+            return wbMgr.checkUser(userName);
         } else {
             return false;
         }

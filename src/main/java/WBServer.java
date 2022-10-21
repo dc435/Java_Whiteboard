@@ -14,7 +14,6 @@ public class WBServer {
 
     public static void main (String[] args) {
 
-        //process options (eg. -p port number)
         serverPort = DEFAULT_SERVER_PORT;
 
         System.out.println(WELCOME_MSG);

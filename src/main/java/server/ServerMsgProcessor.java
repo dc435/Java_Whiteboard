@@ -153,7 +153,7 @@ public class ServerMsgProcessor extends Thread {
         }
 
         //Check if username is unique to that whiteboard:
-        if (!server.isUserNameUnique(joinreq.getWbName(), joinreq.getUserName())){
+        if (server.isUserNameClash(joinreq.getWbName(), joinreq.getUserName())){
             BasicReply brep = new BasicReply(false, "Username (" + joinreq.getUserName() + ") is not unique to this whiteboard.");
             try {
                 out.writeUTF(brep.toString());
@@ -292,7 +292,7 @@ public class ServerMsgProcessor extends Thread {
         BootUserReply btuserrep;
         User manager = server.getManager(btuser.getWbName());
         //Check if mgr has authority, then action boot:
-        if (manager.address.getAddress() != socket.getInetAddress() || manager.username != btuser.getMgrName()) {
+        if (!manager.username.equals(btuser.getMgrName())) {
             btuserrep = new BootUserReply(false, btuser.getUserName());
             System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". No authority.");
         }
@@ -303,11 +303,11 @@ public class ServerMsgProcessor extends Thread {
         }
         // Otherwise delete user:
         else {
-            server.deleteUser(btuser.getWbName(), btuser.getUserName());
-            btuserrep = new BootUserReply(true, btuser.getUserName());
             User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
             ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
             sender.start();
+            server.deleteUser(btuser.getWbName(), btuser.getUserName());
+            btuserrep = new BootUserReply(true, btuser.getUserName());
             System.out.println(TAG + "Booted user " + btuser.getUserName() + " from " + btuser.getWbName());
         }
 

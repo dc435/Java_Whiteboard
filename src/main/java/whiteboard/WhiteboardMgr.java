@@ -23,7 +23,7 @@ public class WhiteboardMgr {
     public User getManager() {
         User manager = null;
         for (User u: userList) {
-            if (u.manager == true) {
+            if (u.manager) {
                 manager = u;
             }
         }
@@ -37,7 +37,7 @@ public class WhiteboardMgr {
     public User getUser(String userName) {
         User user = null;
         for (User u: userList) {
-            if (u.username == userName) {
+            if (u.username.equals(userName)) {
                 user = u;
             }
         }
@@ -45,16 +45,18 @@ public class WhiteboardMgr {
     }
 
     public void deleteUser(String userName) {
+        User toDelete = null;
         for (User u: userList) {
-            if (u.username == userName) {
-                userList.remove(u);
+            if (u.username.equals(userName)) {
+                toDelete = u;
             }
         }
+        userList.remove(toDelete);
     }
 
     public boolean checkUser(String userName) {
         for (User u: userList) {
-            if (u.username == userName) {
+            if (u.username.equals(userName)) {
                 return true;
             }
         }

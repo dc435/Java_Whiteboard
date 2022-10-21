@@ -317,16 +317,8 @@ public class ClientGUI extends JFrame {
             g2.setStroke(new BasicStroke(5));
             g2.draw(wrapper.getShape());
 
-            //FIXME: for debug
-            System.out.println("Buffer size: " + graphicsBuffer.size());
-            System.out.println("Final size: " + graphicsFinal.size());
         }
     }
-
-    //DC: For Testing:
-//    public void guiTester() {
-//        setMngButtonListeners();
-//    }
 
     private void setMngButtonListeners() {
 
@@ -354,7 +346,7 @@ public class ClientGUI extends JFrame {
                     switch (result) {
                         case JOptionPane.YES_OPTION:
                             sendLeave();
-                            setState(ClientState.NONE);
+                            leaveCurrentWhiteboard();
                             break;
                         case JOptionPane.NO_OPTION:
                         case JOptionPane.CANCEL_OPTION:
@@ -646,6 +638,15 @@ public class ClientGUI extends JFrame {
         txtChat.setText("");
     }
 
+    private void leaveCurrentWhiteboard() {
+        setState(ClientState.NONE);
+        wbName = DEFAULT_WB_NAME;
+        setTitle(wbName);
+        graphicsFinal = new ArrayList<ShapeWrapper>();
+        graphicsBuffer = new ArrayList<ShapeWrapper>();
+        txtChat.setText("");
+    }
+
     private void sendNewWhiteboard(String newWBName) {
         NewWhiteboard newwb = new NewWhiteboard(userName, newWBName, clientPort);
         ClientMsgSender sender = new ClientMsgSender(newwb, serverAddress, this);
@@ -726,8 +727,10 @@ public class ClientGUI extends JFrame {
         updateStatus(TAG + "Join request received from " + newUserName);
     }
 
-    public void incomingJoinDecision(String wbName, boolean approved, ArrayList<ShapeWrapper> graphics) {
+    public void incomingJoinDecision(String newWbName, boolean approved, ArrayList<ShapeWrapper> graphics) {
         if (approved) {
+            wbName = newWbName;
+            setTitle(wbName);
             updateStatus(TAG + "Your request to join " + wbName + " has been approved.");
             graphicsFinal.clear();
             graphicsBuffer.clear();
