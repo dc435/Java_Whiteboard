@@ -18,9 +18,7 @@ public class WBClient {
 
     public static void main (String[] args) {
 
-        //process options (eg. -p port number)
-        clientPort = DEFAULT_CLIENT_PORT;
-        serverAddress = DEFAULT_SERVER_ADDRESS;
+        parseCmdOption(args);
 
         System.out.println(WELCOME_MSG);
         ClientGUI gui = new ClientGUI(serverAddress, clientPort, APP_NAME);
@@ -29,6 +27,25 @@ public class WBClient {
         Thread t = new Thread(() -> startListening(gui));
         t.start();
 
+    }
+
+    private static void parseCmdOption(String[] args) {
+
+        serverAddress = DEFAULT_SERVER_ADDRESS;
+        clientPort = DEFAULT_CLIENT_PORT;
+
+        // Check if args[0] is valid client port number
+        if (args.length > 0) {
+            int portNo = 0;
+            try {
+                portNo = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                System.out.println("Port number not valid. Using default client port " + DEFAULT_CLIENT_PORT);
+            }
+            if (portNo > 100 && portNo < 65535) {
+                clientPort = portNo;
+            }
+        }
     }
 
     private static void startListening(ClientGUI gui) {

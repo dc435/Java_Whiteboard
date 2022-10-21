@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="client.ClientGUI">
-  <grid id="27dc6" binding="pnlMain" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="pnlMain" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="1398" height="699"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="2f975" binding="pnlCanvas" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-1"/>
           <enabled value="true"/>
           <toolTipText value="Canvas"/>
         </properties>
         <border type="line">
-          <font/>
+          <font size="10" style="1"/>
           <color color="-16777216"/>
         </border>
         <children/>
@@ -26,9 +29,11 @@
       <grid id="2037b" binding="pnlText" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1"/>
+        </properties>
         <border type="none"/>
         <children>
           <scrollpane id="b987">
@@ -41,8 +46,10 @@
               <component id="f6924" class="javax.swing.JTextArea" binding="txtChat">
                 <constraints/>
                 <properties>
-                  <background color="-1182465"/>
+                  <background color="-328961"/>
                   <enabled value="false"/>
+                  <font name="JetBrains Mono" size="12" style="1"/>
+                  <text value="CHAT:"/>
                 </properties>
               </component>
             </children>
@@ -57,19 +64,22 @@
               <component id="a9f91" class="javax.swing.JTextArea" binding="txtLog">
                 <constraints/>
                 <properties>
-                  <background color="-1182465"/>
+                  <background color="-328961"/>
                   <enabled value="false"/>
-                  <text value=""/>
+                  <font name="JetBrains Mono" size="12" style="0"/>
+                  <text value="LOG:"/>
                 </properties>
               </component>
             </children>
           </scrollpane>
-          <grid id="9af3f" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="9af3f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="a924e" class="javax.swing.JTextField" binding="txtChatIn">
@@ -79,15 +89,11 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <horizontalAlignment value="10"/>
                   <text value=""/>
                 </properties>
               </component>
-              <vspacer id="c86a1">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
               <component id="b9113" class="javax.swing.JButton" binding="btnSend">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="0" indent="1" use-parent-layout="false">
@@ -95,7 +101,8 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="Send"/>
+                  <font name="JetBrains Mono" size="12" style="1"/>
+                  <text value="Chat"/>
                 </properties>
               </component>
             </children>
@@ -105,9 +112,11 @@
       <grid id="2cece" binding="pnlManage" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1"/>
+        </properties>
         <border type="none"/>
         <children>
           <scrollpane id="d1b6a">
@@ -120,8 +129,9 @@
               <component id="50d96" class="javax.swing.JTextArea" binding="txtUsers">
                 <constraints/>
                 <properties>
-                  <background color="-1182465"/>
+                  <background color="-328961"/>
                   <enabled value="false"/>
+                  <font name="JetBrains Mono" size="11" style="0"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -140,67 +150,79 @@
               <component id="3ae33" class="javax.swing.JButton" binding="btnJoin">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Join"/>
                 </properties>
               </component>
               <component id="8f6f2" class="javax.swing.JButton" binding="btnLeave">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Leave"/>
                 </properties>
               </component>
               <component id="30120" class="javax.swing.JButton" binding="btnOpen">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Open"/>
                 </properties>
               </component>
               <component id="315b2" class="javax.swing.JButton" binding="btnNew">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="New"/>
                 </properties>
               </component>
               <component id="6799f" class="javax.swing.JButton" binding="btnSave">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Save"/>
                 </properties>
               </component>
               <component id="fcbfc" class="javax.swing.JButton" binding="btnSaveAs">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Save as"/>
                 </properties>
               </component>
               <component id="70e21" class="javax.swing.JButton" binding="btnBoot">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Boot User"/>
                 </properties>
               </component>
               <component id="9895e" class="javax.swing.JButton" binding="btnClose">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Close"/>
                 </properties>
               </component>
               <component id="6b232" class="javax.swing.JButton" binding="btnUserName">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Username"/>
                 </properties>
               </component>
               <component id="31d31" class="javax.swing.JButton" binding="btnServer">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Server"/>
                 </properties>
               </component>
               <grid id="36b8a" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints/>
-                <properties/>
+                <properties>
+                  <background color="-1"/>
+                </properties>
                 <border type="none"/>
                 <children/>
               </grid>
@@ -222,36 +244,42 @@
               <component id="ef21f" class="javax.swing.JButton" binding="btnTriangle">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Triangle"/>
                 </properties>
               </component>
               <component id="a7b78" class="javax.swing.JButton" binding="btnFreeHand">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="FreeH"/>
                 </properties>
               </component>
               <component id="e71ab" class="javax.swing.JButton" binding="btnRectangle">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Rectangle"/>
                 </properties>
               </component>
               <component id="f9c45" class="javax.swing.JButton" binding="btnCircle">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Circle"/>
                 </properties>
               </component>
               <component id="2e7b7" class="javax.swing.JButton" binding="btnLine">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Line"/>
                 </properties>
               </component>
               <component id="ad312" class="javax.swing.JButton" binding="btnTextCanvas">
                 <constraints/>
                 <properties>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <text value="Text"/>
                 </properties>
               </component>
@@ -259,6 +287,7 @@
                 <constraints/>
                 <properties>
                   <editable value="false"/>
+                  <font name="JetBrains Mono" size="12" style="1"/>
                   <model/>
                   <toolTipText value=""/>
                 </properties>
@@ -267,6 +296,15 @@
           </toolbar>
         </children>
       </grid>
+      <vspacer id="46606">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="1" use-parent-layout="false">
+            <minimum-size width="-1" height="1"/>
+            <preferred-size width="-1" height="1"/>
+            <maximum-size width="-1" height="1"/>
+          </grid>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>

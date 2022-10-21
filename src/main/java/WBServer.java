@@ -14,7 +14,6 @@ public class WBServer {
 
     public static void main (String[] args) {
 
-        //process options (eg. -p port number)
         serverPort = DEFAULT_SERVER_PORT;
 
         System.out.println(WELCOME_MSG);
@@ -30,7 +29,7 @@ public class WBServer {
 
         ServerSocketFactory factory = ServerSocketFactory.getDefault();
         try(ServerSocket serverSocket = factory.createServerSocket(serverPort)){
-            System.out.println("Listening for messages on port " + serverPort);
+            System.out.println("Listening for messages on port " + serverPort + "...");
             while(true){
                 Socket socket = serverSocket.accept();
                 ServerMsgProcessor processor =  new ServerMsgProcessor(socket, server);

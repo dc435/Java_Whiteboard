@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="fix:btnTextCanvas state control">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="GUI font and format changes.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="damian" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,11 +48,11 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "398",
-    "last_opened_file_path": "/Users/yicp3ng/Developer/COMP90015-Whiteboard",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "321",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propGUI"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -295,49 +297,35 @@
       <option name="project" value="LOCAL" />
       <updated>1666262459652</updated>
     </task>
-    <task id="LOCAL-00027" summary="fix:pnlCanvas display">
-      <created>1666341424818</created>
+    <task id="LOCAL-00027" summary="POM updates.">
+      <created>1666344979849</created>
       <option name="number" value="00027" />
       <option name="presentableId" value="LOCAL-00027" />
       <option name="project" value="LOCAL" />
-      <updated>1666341424818</updated>
+      <updated>1666344979849</updated>
     </task>
-    <task id="LOCAL-00028" summary="feat:draw text">
-      <created>1666344559934</created>
+    <task id="LOCAL-00028" summary="Parse command line arguments.">
+      <created>1666346478439</created>
       <option name="number" value="00028" />
       <option name="presentableId" value="LOCAL-00028" />
       <option name="project" value="LOCAL" />
-      <updated>1666344559934</updated>
+      <updated>1666346478439</updated>
     </task>
-    <task id="LOCAL-00029" summary="fix:draw text">
-      <created>1666348415374</created>
+    <task id="LOCAL-00029" summary="Further pom changes and auto-code creation for Maven compile.">
+      <created>1666348183785</created>
       <option name="number" value="00029" />
       <option name="presentableId" value="LOCAL-00029" />
       <option name="project" value="LOCAL" />
-      <updated>1666348415374</updated>
+      <updated>1666348183785</updated>
     </task>
-    <task id="LOCAL-00030" summary="fix:text relocated issue">
-      <created>1666350657418</created>
+    <task id="LOCAL-00030" summary="Merge new pom and GUI code with GUI updates, fix ClientGUI. More bug fixing with of gui updates when leave and boot user. Small changes to GUI layout and fonts.">
+      <created>1666392294159</created>
       <option name="number" value="00030" />
       <option name="presentableId" value="LOCAL-00030" />
       <option name="project" value="LOCAL" />
-      <updated>1666350657418</updated>
+      <updated>1666392294159</updated>
     </task>
-    <task id="LOCAL-00031" summary="minor">
-      <created>1666350682858</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1666350682858</updated>
-    </task>
-    <task id="LOCAL-00032" summary="fix:btnTextCanvas state control">
-      <created>1666350883479</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1666350883479</updated>
-    </task>
-    <option name="localTasksCounter" value="33" />
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -351,7 +339,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="YC" />
+                        <option value="damian_secondMerge" />
                       </list>
                     </value>
                   </entry>
@@ -364,6 +352,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Chat updaterequest protocol added. Make 'echoMsg' generic functionality in server." />
     <MESSAGE value="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods." />
     <MESSAGE value="debug:freeH" />
     <MESSAGE value="feat:Color" />
@@ -383,12 +372,11 @@
     <MESSAGE value="Continue update GUI functions and interactions with buttons and canvas. Update output formatting and TAGs. Embed chat function." />
     <MESSAGE value="Close message and server logic. Various troubleshooting include serialize shapewrapper; update to server update messages; various logic changes in client and server." />
     <MESSAGE value="Troubleshooting Client GUI. Check client GUI operations in new layout format." />
-    <MESSAGE value="fix:pnlCanvas display" />
-    <MESSAGE value="feat:draw text" />
-    <MESSAGE value="fix:draw text" />
-    <MESSAGE value="fix:text relocated issue" />
-    <MESSAGE value="minor" />
-    <MESSAGE value="fix:btnTextCanvas state control" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix:btnTextCanvas state control" />
+    <MESSAGE value="POM updates." />
+    <MESSAGE value="Parse command line arguments." />
+    <MESSAGE value="Further pom changes and auto-code creation for Maven compile." />
+    <MESSAGE value="Merge new pom and GUI code with GUI updates, fix ClientGUI. More bug fixing with of gui updates when leave and boot user. Small changes to GUI layout and fonts." />
+    <MESSAGE value="GUI font and format changes." />
+    <option name="LAST_COMMIT_MESSAGE" value="GUI font and format changes." />
   </component>
 </project>
