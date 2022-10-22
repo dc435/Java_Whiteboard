@@ -221,11 +221,7 @@ public class ClientGUI extends JFrame {
                             Line2D.Float line2D = new Line2D.Float(p1, p2);
                             wrapper = new ShapeWrapper(line2D, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "Circle":
@@ -236,11 +232,7 @@ public class ClientGUI extends JFrame {
                             Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
                             wrapper = new ShapeWrapper(circle2D, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "Rectangle":
@@ -251,11 +243,7 @@ public class ClientGUI extends JFrame {
                             Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
                             wrapper = new ShapeWrapper(rectangle2D, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "Triangle":
@@ -266,11 +254,7 @@ public class ClientGUI extends JFrame {
                             triPath.closePath();
                             wrapper = new ShapeWrapper(triPath, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "FreeH":
@@ -284,11 +268,7 @@ public class ClientGUI extends JFrame {
                                 wrapper = new ShapeWrapper(canvasStr, colorHex, true, (int) p2.x, (int) p2.y);
                                 canvasStr = null;
 
-                                graphicsFinal.add(wrapper);
-                                graphicsBuffer.add(wrapper);
-                                sendCanvasUpdate();
-
-                                repaint();
+                                sendNPaint();
 
                             }
                             break;
@@ -350,6 +330,14 @@ public class ClientGUI extends JFrame {
 
         }
 
+    }
+
+    private void sendNPaint() {
+        graphicsFinal.add(wrapper);
+        graphicsBuffer.add(wrapper);
+        sendCanvasUpdate();
+
+        repaint();
     }
 
     // Initialise mouse and button listeners for all non-canvas / draw gui components:
