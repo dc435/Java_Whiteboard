@@ -562,7 +562,7 @@ public class ClientGUI extends JFrame {
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
-                txtUsers.setVisible(false);
+                txtUsers.setVisible(true);
                 txtChatIn.setEnabled(true);
                 pnlCanvas.setEnabled(true);
                 btnTextCanvas.setEnabled(true);
