@@ -1,7 +1,6 @@
 package whiteboard;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.io.Serializable;
 
 public class ShapeWrapper implements Serializable {
