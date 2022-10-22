@@ -70,8 +70,8 @@ public class ClientGUI extends JFrame {
     private String canvasStr;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
-    private Path2D triPath = new Path2D.Float();
-    ShapeWrapper wrapper = new ShapeWrapper();
+    private Path2D triPath;
+    private ShapeWrapper wrapper = new ShapeWrapper();
     private ArrayList<ShapeWrapper> graphicsFinal = new ArrayList<>();
     private ArrayList<ShapeWrapper> graphicsBuffer = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
@@ -247,6 +247,7 @@ public class ClientGUI extends JFrame {
                             break;
 
                         case "Triangle":
+                            triPath = new Path2D.Float();
                             triPath.moveTo(p1.x, p1.y); // Starting point as mid-point
                             float pref_w = p2.x - p1.x;
                             triPath.lineTo(p2.x - (2 * pref_w), p2.y);
@@ -549,7 +550,7 @@ public class ClientGUI extends JFrame {
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
-                txtUsers.setVisible(false);
+                txtUsers.setVisible(true);
                 txtChatIn.setEnabled(true);
                 pnlCanvas.setEnabled(true);
                 btnTextCanvas.setEnabled(true);
