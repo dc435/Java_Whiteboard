@@ -101,38 +101,7 @@ public class ClientGUI extends JFrame {
         this.setPreferredSize(new Dimension(1500, 800));
 
         // Color Bar
-        barColor.addItem("Black");
-        COLOR.put("Black", "#000000");
-        barColor.addItem("Red");
-        COLOR.put("Red", "#FF0000");
-        barColor.addItem("Maroon");
-        COLOR.put("Maroon", "#800000");
-        barColor.addItem("Yellow");
-        COLOR.put("Yellow", "#FFFF00");
-        barColor.addItem("Olive");
-        COLOR.put("Olive", "#808000");
-        barColor.addItem("Green");
-        COLOR.put("Green", "#008000");
-        barColor.addItem("Blue");
-        COLOR.put("Blue", "#0000FF");
-        barColor.addItem("Purple");
-        COLOR.put("Purple", "#800080");
-        barColor.addItem("Navy");
-        COLOR.put("Navy", "#000080");
-        barColor.addItem("Aqua");
-        COLOR.put("Aqua", "#00FFFF");
-        barColor.addItem("Fuchsia");
-        COLOR.put("Fuchsia", "#FF00FF");
-        barColor.addItem("Brown"); // 12
-        COLOR.put("Brown", "#A52A2A");
-        barColor.addItem("Gray");
-        COLOR.put("Gray", "#808080");
-        barColor.addItem("Amber");
-        COLOR.put("Amber", "#FFBF00");
-        barColor.addItem("Amaranth");
-        COLOR.put("Amaranth", "#9F2B68");
-        barColor.addItem("Pear");
-        COLOR.put("Pear", "#C9CC3F");
+        this.setBarColor();
 
         // Color Bar listener
         barColor.addItemListener(new ItemListener() {
@@ -331,6 +300,41 @@ public class ClientGUI extends JFrame {
 
         }
 
+    }
+
+    private void setBarColor() {
+        barColor.addItem("Black");
+        COLOR.put("Black", "#000000");
+        barColor.addItem("Red");
+        COLOR.put("Red", "#FF0000");
+        barColor.addItem("Maroon");
+        COLOR.put("Maroon", "#800000");
+        barColor.addItem("Yellow");
+        COLOR.put("Yellow", "#FFFF00");
+        barColor.addItem("Olive");
+        COLOR.put("Olive", "#808000");
+        barColor.addItem("Green");
+        COLOR.put("Green", "#008000");
+        barColor.addItem("Blue");
+        COLOR.put("Blue", "#0000FF");
+        barColor.addItem("Purple");
+        COLOR.put("Purple", "#800080");
+        barColor.addItem("Navy");
+        COLOR.put("Navy", "#000080");
+        barColor.addItem("Aqua");
+        COLOR.put("Aqua", "#00FFFF");
+        barColor.addItem("Fuchsia");
+        COLOR.put("Fuchsia", "#FF00FF");
+        barColor.addItem("Brown"); // 12
+        COLOR.put("Brown", "#A52A2A");
+        barColor.addItem("Gray");
+        COLOR.put("Gray", "#808080");
+        barColor.addItem("Amber");
+        COLOR.put("Amber", "#FFBF00");
+        barColor.addItem("Amaranth");
+        COLOR.put("Amaranth", "#9F2B68");
+        barColor.addItem("Pear");
+        COLOR.put("Pear", "#C9CC3F");
     }
 
     private void sendNPaint() {
