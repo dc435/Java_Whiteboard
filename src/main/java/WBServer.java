@@ -14,7 +14,7 @@ public class WBServer {
 
     public static void main (String[] args) {
 
-        serverPort = DEFAULT_SERVER_PORT;
+        parseCmdOption(args);
 
         System.out.println(WELCOME_MSG);
 
@@ -23,6 +23,24 @@ public class WBServer {
         Thread t = new Thread(() -> startListening(server));
         t.start();
 
+    }
+
+    private static void parseCmdOption(String[] args) {
+
+        serverPort = DEFAULT_SERVER_PORT;
+
+        // Check if args[0] is valid client port number
+        if (args.length > 0) {
+            int portNo = 0;
+            try {
+                portNo = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                System.out.println("Port number not valid. Using default client port " + DEFAULT_SERVER_PORT);
+            }
+            if (portNo > 100 && portNo < 65535) {
+                serverPort = portNo;
+            }
+        }
     }
 
     private static void startListening(Server server) {
