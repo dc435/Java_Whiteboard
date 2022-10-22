@@ -120,6 +120,16 @@ public class ClientGUI extends JFrame {
         COLOR.put("Aqua", "#00FFFF");
         barColor.addItem("Fuchsia");
         COLOR.put("Fuchsia", "#FF00FF");
+        barColor.addItem("Brown"); // 12
+        COLOR.put("Brown", "#A52A2A");
+        barColor.addItem("Gray");
+        COLOR.put("Gray", "#808080");
+        barColor.addItem("Amber");
+        COLOR.put("Amber", "#FFBF00");
+        barColor.addItem("Amaranth");
+        COLOR.put("Amaranth", "#9F2B68");
+        barColor.addItem("Pear");
+        COLOR.put("Pear", "#C9CC3F");
 
         // Color Bar listener
         barColor.addItemListener(new ItemListener() {
