@@ -10,9 +10,9 @@ import java.net.Socket;
 
 public class WBClient {
 
-    private static final int DEFAULT_CLIENT_PORT = 3211;
-    private static final InetSocketAddress DEFAULT_SERVER_ADDRESS = new InetSocketAddress("localhost", 4210);
-    private static final String WELCOME_MSG = "Welcome to the COMP90015 Whiteboard Client, by D Curran & Y Peng.";
+    private static final int DEFAULT_CLIENT_PORT = 3210;
+    private static final InetSocketAddress DEFAULT_SERVER_ADDRESS = new InetSocketAddress("localhost", 3200);
+    private static final String WELCOME_MSG = "Welcome to the COMP90015 Whiteboard Client, by D Curran & Y Peng (Group 29).";
     private static final String APP_NAME = "WHITEBOARD";
     private static int clientPort;
     private static InetSocketAddress serverAddress;

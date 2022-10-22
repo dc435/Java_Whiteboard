@@ -312,6 +312,10 @@ public class ServerMsgProcessor extends Thread {
         else if (!server.checkUser(btuser.getWbName(), btuser.getUserName())) {
             btuserrep = new BootUserReply(false, btuser.getUserName());
             System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". User not on list.");
+        // Check if manager booting themselves
+        } else if (server.getManager(btuser.getWbName()).username.equals(btuser.getUserName())) {
+            btuserrep = new BootUserReply(false, btuser.getUserName());
+            System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". Manager cannot boot themself.");
         }
         // If the do exist, delete user
         else {
