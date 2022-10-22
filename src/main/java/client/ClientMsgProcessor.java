@@ -90,7 +90,7 @@ public class ClientMsgProcessor extends Thread {
         }
 
         //send basic approval reply to server:
-        BasicReply brep = new BasicReply(true, "Updated canvas graphics received.");
+        BasicReply brep = new BasicReply(true, "Updated canvas graphics received by " + gui.getUserName());
         try {
             out.writeUTF(brep.toString());
             out.flush();
@@ -104,11 +104,30 @@ public class ClientMsgProcessor extends Thread {
     // Incoming chat message from other user
     private void processChatUpdate(ChatUpdate chatup) {
         gui.incomingChatUpdate(chatup.getUserName(), chatup.getChat());
+
+        //send basic acknowledgment reply to server:
+        BasicReply brep = new BasicReply(true, "Chat update received by " + gui.getUserName());
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Error sending confirmation of canvas update to server.");
+        }
     }
 
     // Incoming join request to wb manager for approval
     private void processJoinRequest(JoinRequest joinreq) {
         gui.incomingJoinRequest(joinreq.getWbName(), joinreq.getUserName());
+
+        //send basic acknowledgment reply to server:
+        BasicReply brep = new BasicReply(true, "Join request received by "
+                + gui.getUserName() + ". Approval pending");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Error sending confirmation of canvas update to server.");
+        }
     }
 
     // Incoming join decision from manager, to user who previously submitted a join request

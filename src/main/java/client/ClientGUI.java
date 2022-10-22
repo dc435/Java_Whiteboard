@@ -340,7 +340,7 @@ public class ClientGUI extends JFrame {
                 g2.setStroke(new BasicStroke(5));
                 g2.draw((Shape) wrapper.getShape());
 
-            // Draw text
+                // Draw text
             } else {
                 if (canvasStr == null) {
                     String text = (String) wrapper.getShape();
@@ -651,6 +651,10 @@ public class ClientGUI extends JFrame {
     // Add user to user list (helper method)
     private void addUser(String otherUserName) {
         activeUsers.add(otherUserName);
+    }
+
+    public String getUserName() {
+        return this.userName;
     }
 
     // Refresh user list (when new user joins / leaves whiteboard being managed in MGR state)

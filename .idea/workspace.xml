@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Comment code in ClientGUI. Remove println's and other debugs.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Comment code in other client and server classes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgSender.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +69,7 @@
       <command value="mvn assembly clean compile" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.WBClient">
+  <component name="RunManager" selected="Application.WBServer">
     <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.ClientGUI" />
       <module name="whiteboard" />
@@ -104,8 +99,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
+        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.ClientGUI" />
         <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
@@ -345,7 +340,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666408719722</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Comment code in other client and server classes.">
+      <created>1666410914691</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1666410914691</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,7 +374,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug:freeH" />
     <MESSAGE value="feat:Color" />
     <MESSAGE value="Triangle" />
     <MESSAGE value="feat:Triangle" />
@@ -397,6 +398,7 @@
     <MESSAGE value="GUI font and format changes." />
     <MESSAGE value="Minor changes" />
     <MESSAGE value="Comment code in ClientGUI. Remove println's and other debugs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Comment code in ClientGUI. Remove println's and other debugs." />
+    <MESSAGE value="Comment code in other client and server classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment code in other client and server classes." />
   </component>
 </project>

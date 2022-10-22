@@ -141,6 +141,8 @@ public class ServerMsgProcessor extends Thread {
 
     // Process request from new user to join a whiteboard
     private void processJoinRequest(JoinRequest joinreq) {
+
+        System.out.println(TAG + "Join Request from " + joinreq.getUserName() + " for " + joinreq.getWbName() + " received.");
         // Check if server is managing a whiteboard with that name:
         if (!server.isManagingWhiteboard(joinreq.getWbName())){
             BasicReply brep = new BasicReply(false, "No whiteboard named " + joinreq.getWbName());
@@ -178,6 +180,7 @@ public class ServerMsgProcessor extends Thread {
         User manager = server.getManager(joinreq.getWbName());
         ServerMsgSender sender = new ServerMsgSender(joinreq, manager.address);
         sender.start();
+        System.out.println(TAG + "Join Request for " + joinreq.getWbName() + " sent to manager " + manager.username);
 
         //Send reply to original sender:
         BasicReply brep = new BasicReply(true, "Join Request sent to " + joinreq.getWbName() + " manager. Request pending.");
@@ -187,6 +190,7 @@ public class ServerMsgProcessor extends Thread {
         } catch (IOException e) {
             System.out.println(TAG + "Error send confirmation reply to user following process join request.");
         }
+
     }
 
     // Process a manager decision in reply to a new user join request
