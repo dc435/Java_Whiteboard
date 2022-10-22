@@ -70,8 +70,8 @@ public class ClientGUI extends JFrame {
     private String canvasStr;
     private String colorHex = "#000000"; // default black
     private String brush = "Line"; // default line brush
-    private Path2D triPath = new Path2D.Float();
-    ShapeWrapper wrapper = new ShapeWrapper();
+    private Path2D triPath;
+    private ShapeWrapper wrapper = new ShapeWrapper();
     private ArrayList<ShapeWrapper> graphicsFinal = new ArrayList<>();
     private ArrayList<ShapeWrapper> graphicsBuffer = new ArrayList<>();
     private Point2D.Float p1 = new Point2D.Float();
@@ -101,38 +101,7 @@ public class ClientGUI extends JFrame {
         this.setPreferredSize(new Dimension(1500, 800));
 
         // Color Bar
-        barColor.addItem("Black");
-        COLOR.put("Black", "#000000");
-        barColor.addItem("Red");
-        COLOR.put("Red", "#FF0000");
-        barColor.addItem("Maroon");
-        COLOR.put("Maroon", "#800000");
-        barColor.addItem("Yellow");
-        COLOR.put("Yellow", "#FFFF00");
-        barColor.addItem("Olive");
-        COLOR.put("Olive", "#808000");
-        barColor.addItem("Green");
-        COLOR.put("Green", "#008000");
-        barColor.addItem("Blue");
-        COLOR.put("Blue", "#0000FF");
-        barColor.addItem("Purple");
-        COLOR.put("Purple", "#800080");
-        barColor.addItem("Navy");
-        COLOR.put("Navy", "#000080");
-        barColor.addItem("Aqua");
-        COLOR.put("Aqua", "#00FFFF");
-        barColor.addItem("Fuchsia");
-        COLOR.put("Fuchsia", "#FF00FF");
-        barColor.addItem("Brown"); // 12
-        COLOR.put("Brown", "#A52A2A");
-        barColor.addItem("Gray");
-        COLOR.put("Gray", "#808080");
-        barColor.addItem("Amber");
-        COLOR.put("Amber", "#FFBF00");
-        barColor.addItem("Amaranth");
-        COLOR.put("Amaranth", "#9F2B68");
-        barColor.addItem("Pear");
-        COLOR.put("Pear", "#C9CC3F");
+        this.setBarColor();
 
         // Color Bar listener
         barColor.addItemListener(new ItemListener() {
@@ -221,11 +190,7 @@ public class ClientGUI extends JFrame {
                             Line2D.Float line2D = new Line2D.Float(p1, p2);
                             wrapper = new ShapeWrapper(line2D, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "Circle":
@@ -236,11 +201,7 @@ public class ClientGUI extends JFrame {
                             Ellipse2D.Float circle2D = new Ellipse2D.Float(x, y, w, h);
                             wrapper = new ShapeWrapper(circle2D, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "Rectangle":
@@ -251,14 +212,11 @@ public class ClientGUI extends JFrame {
                             Rectangle2D.Float rectangle2D = new Rectangle2D.Float(x1, y1, w1, h1);
                             wrapper = new ShapeWrapper(rectangle2D, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "Triangle":
+                            triPath = new Path2D.Float();
                             triPath.moveTo(p1.x, p1.y); // Starting point as mid-point
                             float pref_w = p2.x - p1.x;
                             triPath.lineTo(p2.x - (2 * pref_w), p2.y);
@@ -266,11 +224,7 @@ public class ClientGUI extends JFrame {
                             triPath.closePath();
                             wrapper = new ShapeWrapper(triPath, colorHex);
 
-                            graphicsFinal.add(wrapper);
-                            graphicsBuffer.add(wrapper);
-                            sendCanvasUpdate();
-
-                            repaint();
+                            sendNPaint();
                             break;
 
                         case "FreeH":
@@ -284,11 +238,7 @@ public class ClientGUI extends JFrame {
                                 wrapper = new ShapeWrapper(canvasStr, colorHex, true, (int) p2.x, (int) p2.y);
                                 canvasStr = null;
 
-                                graphicsFinal.add(wrapper);
-                                graphicsBuffer.add(wrapper);
-                                sendCanvasUpdate();
-
-                                repaint();
+                                sendNPaint();
 
                             }
                             break;
@@ -350,6 +300,49 @@ public class ClientGUI extends JFrame {
 
         }
 
+    }
+
+    private void setBarColor() {
+        barColor.addItem("Black");
+        COLOR.put("Black", "#000000");
+        barColor.addItem("Red");
+        COLOR.put("Red", "#FF0000");
+        barColor.addItem("Maroon");
+        COLOR.put("Maroon", "#800000");
+        barColor.addItem("Yellow");
+        COLOR.put("Yellow", "#FFFF00");
+        barColor.addItem("Olive");
+        COLOR.put("Olive", "#808000");
+        barColor.addItem("Green");
+        COLOR.put("Green", "#008000");
+        barColor.addItem("Blue");
+        COLOR.put("Blue", "#0000FF");
+        barColor.addItem("Purple");
+        COLOR.put("Purple", "#800080");
+        barColor.addItem("Navy");
+        COLOR.put("Navy", "#000080");
+        barColor.addItem("Aqua");
+        COLOR.put("Aqua", "#00FFFF");
+        barColor.addItem("Fuchsia");
+        COLOR.put("Fuchsia", "#FF00FF");
+        barColor.addItem("Brown"); // 12
+        COLOR.put("Brown", "#A52A2A");
+        barColor.addItem("Gray");
+        COLOR.put("Gray", "#808080");
+        barColor.addItem("Amber");
+        COLOR.put("Amber", "#FFBF00");
+        barColor.addItem("Amaranth");
+        COLOR.put("Amaranth", "#9F2B68");
+        barColor.addItem("Pear");
+        COLOR.put("Pear", "#C9CC3F");
+    }
+
+    private void sendNPaint() {
+        graphicsFinal.add(wrapper);
+        graphicsBuffer.add(wrapper);
+        sendCanvasUpdate();
+
+        repaint();
     }
 
     // Initialise mouse and button listeners for all non-canvas / draw gui components:
@@ -561,7 +554,7 @@ public class ClientGUI extends JFrame {
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
-                txtUsers.setVisible(false);
+                txtUsers.setVisible(true);
                 txtChatIn.setEnabled(true);
                 pnlCanvas.setEnabled(true);
                 btnTextCanvas.setEnabled(true);
