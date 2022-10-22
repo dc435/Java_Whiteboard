@@ -12,6 +12,7 @@ public class WBServer {
     private static final String WELCOME_MSG = "Welcome to the COMP90015 Whiteboard Server, by D Curran & Y Peng.";
     private static int serverPort;
 
+    // WBServer is entry point into application for all server-side components
     public static void main (String[] args) {
 
         parseCmdOption(args);
@@ -25,6 +26,7 @@ public class WBServer {
 
     }
 
+    // Parse optional command line of server port number
     private static void parseCmdOption(String[] args) {
 
         serverPort = DEFAULT_SERVER_PORT;
@@ -43,6 +45,7 @@ public class WBServer {
         }
     }
 
+    // Start listener on new thread
     private static void startListening(Server server) {
 
         ServerSocketFactory factory = ServerSocketFactory.getDefault();

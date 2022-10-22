@@ -76,7 +76,8 @@ public class ClientGUI extends JFrame {
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
-    // Constructor for ClientGUI
+    // ClientGUI is central class for all client/user-side logic and variables
+    // Constructor builds initial state as "NONE" (ie. no whiteboard loaded) and sets associated GUI elements
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
         this.serverAddress = serverAddress;
@@ -521,7 +522,7 @@ public class ClientGUI extends JFrame {
                 super.mouseClicked(e);
                 if (e.getComponent().isEnabled()) {
                     String chatText = txtChatIn.getText();
-                    txtChat.append(userName + ": " + chatText + "\n");
+                    txtChat.append("\n" + userName + ": " + chatText);
                     sendChatUpdate(chatText);
                     txtChatIn.setText("");
                 }

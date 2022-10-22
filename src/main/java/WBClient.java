@@ -7,6 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 public class WBClient {
 
     private static final int DEFAULT_CLIENT_PORT = 3211;
@@ -16,8 +17,10 @@ public class WBClient {
     private static int clientPort;
     private static InetSocketAddress serverAddress;
 
+    // WBClient class is entry point into application for all client-side users
     public static void main (String[] args) {
 
+        serverAddress = DEFAULT_SERVER_ADDRESS;
         parseCmdOption(args);
 
         System.out.println(WELCOME_MSG);
@@ -29,9 +32,9 @@ public class WBClient {
 
     }
 
+    // Parse command line option of client port (optional)
     private static void parseCmdOption(String[] args) {
 
-        serverAddress = DEFAULT_SERVER_ADDRESS;
         clientPort = DEFAULT_CLIENT_PORT;
 
         // Check if args[0] is valid client port number
@@ -48,6 +51,7 @@ public class WBClient {
         }
     }
 
+    // Start listener on new thread
     private static void startListening(ClientGUI gui) {
 
         ServerSocketFactory factory = ServerSocketFactory.getDefault();
