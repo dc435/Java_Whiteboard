@@ -76,7 +76,8 @@ public class ClientGUI extends JFrame {
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
-    // Constructor for ClientGUI
+    // ClientGUI is central class for all client/user-side logic and variables
+    // Constructor builds initial state as "NONE" (ie. no whiteboard loaded) and sets associated GUI elements
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
         this.serverAddress = serverAddress;
@@ -138,7 +139,6 @@ public class ClientGUI extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 String color = (String) e.getItem();
                 colorHex = COLOR.get(color);
-                System.out.println(colorHex);
             }
         });
 
@@ -148,7 +148,6 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 brush = btnRectangle.getText();
-                System.out.println(brush); //debug
             }
         });
 
@@ -157,7 +156,6 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 brush = btnLine.getText();
-                System.out.println(brush); //debug
             }
         });
 
@@ -166,7 +164,6 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 brush = btnCircle.getText();
-                System.out.println(brush); //debug
             }
         });
 
@@ -175,7 +172,6 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 brush = btnTriangle.getText();
-                System.out.println(brush); //debug
             }
         });
 
@@ -184,7 +180,6 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 brush = btnFreeHand.getText();
-                System.out.println(brush); //debug
             }
         });
 
@@ -196,7 +191,6 @@ public class ClientGUI extends JFrame {
                     JFrame canvasTextInput = new JFrame();
                     canvasStr = JOptionPane.showInputDialog(canvasTextInput, "Enter text for canvas, then click to place:");
                     brush = btnTextCanvas.getText();
-                    System.out.println(brush);
                 }
             }
         });
@@ -360,6 +354,7 @@ public class ClientGUI extends JFrame {
 
     }
 
+    // Initialise mouse and button listeners for all non-canvas / draw gui components:
     private void setMngButtonListeners() {
 
         btnJoin.addMouseListener(new MouseAdapter() {
@@ -479,7 +474,6 @@ public class ClientGUI extends JFrame {
                         case JOptionPane.NO_OPTION:
                         case JOptionPane.CANCEL_OPTION:
                         case JOptionPane.CLOSED_OPTION:
-                            System.out.println(TAG + "Continue.");
                             break;
                     }
                 }
@@ -528,15 +522,16 @@ public class ClientGUI extends JFrame {
                 super.mouseClicked(e);
                 if (e.getComponent().isEnabled()) {
                     String chatText = txtChatIn.getText();
-                    txtChat.append(userName + ": " + chatText + "\n");
+                    txtChat.append("\n" + userName + ": " + chatText);
                     sendChatUpdate(chatText);
                     txtChatIn.setText("");
                 }
             }
         });
-        //TODO: Add listener for when press ENTER whilst in Chat text box.
     }
 
+    // Switch the 'state' of the GUI (NONE =  no whiteboard loaded; USER = Joined another whiteboard; MGR = Started own whiteboard as manager)
+    // The method enables/disables GUI elements to match the appropriate state.
     public void setState(ClientState state) {
         switch (state) {
             case NONE:
@@ -597,6 +592,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    // Build Whiteboard object and write to binary file
     private void writeToFile(String fileName) {
         Whiteboard wb = new Whiteboard(wbName, graphicsFinal);
         ObjectOutputStream outputStream = null;
@@ -612,6 +608,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    // Open Whiteboard object from binary file, and load into GUI
     private void openFile(String fileName) {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName));
@@ -634,24 +631,33 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    // Update user name (helper method)
     private void updateUserName(String newUserName) {
         userName = newUserName;
         updateStatus(TAG + "Updated username to " + userName);
     }
 
+    // Update server address (helper method)
     private void updateServerAddress(InetSocketAddress newAdd) {
         serverAddress = newAdd;
         updateStatus(TAG + "Updated server address to " + serverAddress.toString());
     }
 
+    // Remove user from user list (helper method)
     private void removeUser(String otherUserName) {
         activeUsers.remove(otherUserName);
     }
 
+    // Add user to user list (helper method)
     private void addUser(String otherUserName) {
         activeUsers.add(otherUserName);
     }
 
+    public String getUserName() {
+        return this.userName;
+    }
+
+    // Refresh user list (when new user joins / leaves whiteboard being managed in MGR state)
     private void refreshUserList() {
         txtUsers.setText("");
         txtUsers.append("ACTIVE USERS:\n");
@@ -661,6 +667,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    // Create new whiteboard and update relevant GUI elements
     private void buildNewWhiteboard(String newWBName) {
         setState(ClientState.MGR);
         wbName = newWBName;
@@ -674,6 +681,7 @@ public class ClientGUI extends JFrame {
         updateStatus(TAG + "New whiteboard " + newWBName + " created. Switch to manager state.");
     }
 
+    // Close current whiteboard and change relevant GUI elements
     private void closeCurrentWhiteboard() {
         setState(ClientState.NONE);
         wbName = DEFAULT_WB_NAME;
@@ -686,6 +694,7 @@ public class ClientGUI extends JFrame {
 
     }
 
+    // Leave current whiteboard and update GUI elements
     private void leaveCurrentWhiteboard() {
         setState(ClientState.NONE);
         wbName = DEFAULT_WB_NAME;
@@ -695,18 +704,21 @@ public class ClientGUI extends JFrame {
         graphicsBuffer = new ArrayList<ShapeWrapper>();
     }
 
+    // Start new MsgSender thread, send NewWhiteboard message to server
     private void sendNewWhiteboard(String newWBName) {
         NewWhiteboard newwb = new NewWhiteboard(userName, newWBName, clientPort);
         ClientMsgSender sender = new ClientMsgSender(newwb, serverAddress, this);
         sender.start();
     }
 
+    // Start new MsgSender thread, send Close message to server
     private void sendCloseWhiteboard() {
         Close close = new Close(wbName, userName);
         ClientMsgSender sender = new ClientMsgSender(close, serverAddress, this);
         sender.start();
     }
 
+    // Start new MsgSender thread, send canvas update to server
     private void sendCanvasUpdate() {
         CanvasUpdate canup = new CanvasUpdate(wbName, userName);
         ArrayList<ShapeWrapper> graphicsToSend = makeCopy(graphicsBuffer);
@@ -715,47 +727,55 @@ public class ClientGUI extends JFrame {
         graphicsBuffer.clear();
     }
 
+    // Start new MsgSender thread, send chat update to server
     private void sendChatUpdate(String chat) {
         ChatUpdate chatup = new ChatUpdate(wbName, userName, chat);
         ClientMsgSender sender = new ClientMsgSender(chatup, serverAddress, this);
         sender.start();
     }
 
+    // Start new MsgSender thread, send Join request to server
     private void sendJoinRequest() {
         JoinRequest joinreq = new JoinRequest(wbName, userName, clientPort);
         ClientMsgSender sender = new ClientMsgSender(joinreq, serverAddress, this);
         sender.start();
     }
 
+    // Start new MsgSender thread, send Leave notice to server
     private void sendLeave() {
         Leave leave = new Leave(wbName, userName);
         ClientMsgSender sender = new ClientMsgSender(leave, serverAddress, this);
         sender.start();
     }
 
+    // Start new MsgSender thread, send Join Decision to server (ie. the response from the Manager)
     private void sendJoinDecision(String otherUserName, boolean accepted) {
         JoinDecision joindec = new JoinDecision(wbName, otherUserName, accepted);
         ClientMsgSender sender = new ClientMsgSender(joindec, serverAddress, this, graphicsFinal);
         sender.start();
     }
 
+    // Start new MsgSender thread, send Boot User to server (from manager)
     private void sendBootUser(String otherUserName) {
         BootUser btuser = new BootUser(wbName, userName, otherUserName);
         ClientMsgSender sender = new ClientMsgSender(btuser, serverAddress, this);
         sender.start();
     }
 
+    // Update canvas based on ShapeWrapper array received from other users
     public void incomingCanvasUpdate(ArrayList<ShapeWrapper> graphicsNew, String otherUserName) {
         graphicsFinal.addAll(graphicsNew);
         repaint();
         updateStatus(TAG + "Canvas update received from " + otherUserName);
     }
 
+    // Update chat received from other users
     public void incomingChatUpdate(String otherUserName, String chat) {
         txtChat.append(otherUserName + ": " + chat + "\n");
         updateStatus(TAG + "Chat update received from " + otherUserName);
     }
 
+    // Notify manager and ask for approval when other user asks to join
     public void incomingJoinRequest(String wbName, String newUserName) {
         JFrame userInput = new JFrame();
         int result = JOptionPane.showConfirmDialog(null, "The user "
@@ -775,6 +795,7 @@ public class ClientGUI extends JFrame {
         updateStatus(TAG + "Join request received from " + newUserName);
     }
 
+    // When new user receives a join decision from remote manager, and, if approved, updates full canvas
     public void incomingJoinDecision(String newWbName, boolean approved, ArrayList<ShapeWrapper> graphics) {
         if (approved) {
             wbName = newWbName;
@@ -791,6 +812,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    // When user has been booted by manager, clears canvas and switch to NONE state
     public void incomingBootUser(String oldWbName, String mgrName) {
         graphicsFinal.clear();
         graphicsBuffer.clear();
@@ -802,13 +824,14 @@ public class ClientGUI extends JFrame {
         updateStatus(TAG + "You have been booted from this whiteboard by " + mgrName);
     }
 
+    // Notification to manager that another user has left. Update userlist display:
     public void incomingLeave(String otherUserName) {
-        //Manager receives confirmation that another user has left:
         removeUser(otherUserName);
         refreshUserList();
         updateStatus(TAG + otherUserName + " has left the whiteboard.");
     }
 
+    // Notification to manager of whether the boot request was successful
     public void incomingBootUserReply(boolean success, String otherUserName) {
         if (success) {
             removeUser(otherUserName);
@@ -819,6 +842,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    // Incoming notice that manager has closed the whiteboard. Call method to clear current canvas and chat, and switch to NONE state
     public void incomingClose(Close close) {
         if (close.getWbName().equals(wbName)) {
             closeCurrentWhiteboard();
@@ -826,6 +850,7 @@ public class ClientGUI extends JFrame {
         }
     }
 
+    // Makes deep copy of graphics array to send to new thread (for outgoing canvas update) prior to clearing graphicsBuffer
     private ArrayList<ShapeWrapper> makeCopy(ArrayList<ShapeWrapper> arrayIN) {
         ArrayList<ShapeWrapper> arrayOUT = new ArrayList<ShapeWrapper>();
         for (ShapeWrapper sw : arrayIN) {
@@ -834,6 +859,7 @@ public class ClientGUI extends JFrame {
         return arrayOUT;
     }
 
+    // Generic output method to Log screen of GUI
     public void updateStatus(String update) {
         txtLog.append("\n" + update);
         repaint();

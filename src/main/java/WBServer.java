@@ -12,9 +12,10 @@ public class WBServer {
     private static final String WELCOME_MSG = "Welcome to the COMP90015 Whiteboard Server, by D Curran & Y Peng.";
     private static int serverPort;
 
+    // WBServer is entry point into application for all server-side components
     public static void main (String[] args) {
 
-        serverPort = DEFAULT_SERVER_PORT;
+        parseCmdOption(args);
 
         System.out.println(WELCOME_MSG);
 
@@ -25,6 +26,26 @@ public class WBServer {
 
     }
 
+    // Parse optional command line of server port number
+    private static void parseCmdOption(String[] args) {
+
+        serverPort = DEFAULT_SERVER_PORT;
+
+        // Check if args[0] is valid client port number
+        if (args.length > 0) {
+            int portNo = 0;
+            try {
+                portNo = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                System.out.println("Port number not valid. Using default client port " + DEFAULT_SERVER_PORT);
+            }
+            if (portNo > 100 && portNo < 65535) {
+                serverPort = portNo;
+            }
+        }
+    }
+
+    // Start listener on new thread
     private static void startListening(Server server) {
 
         ServerSocketFactory factory = ServerSocketFactory.getDefault();

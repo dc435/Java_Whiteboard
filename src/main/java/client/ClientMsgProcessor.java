@@ -22,12 +22,14 @@ public class ClientMsgProcessor extends Thread {
     private DataOutputStream out;
     private ObjectInputStream inObj;
 
+    // ClientMsgProcessor class creates new thread to process inbound connection requests to the Client
     public ClientMsgProcessor(Socket socket, ClientGUI gui) {
         this.socket = socket;
         this.gui = gui;
     }
 
     public void run() {
+        // Send out initial JSON message type
         try {
             JSONParser parser = new JSONParser();
             in = new DataInputStream(socket.getInputStream());
@@ -41,6 +43,7 @@ public class ClientMsgProcessor extends Thread {
         }
     }
 
+    // Process incoming JSON message depending on message type
     private void processJSON(JSONObject js) {
 
         String jsType = (String) js.get("_type");
@@ -76,6 +79,7 @@ public class ClientMsgProcessor extends Thread {
         }
     }
 
+    // Logic for inbound canvas update from other user
     private void processCanvasUpdate(CanvasUpdate canup) {
         ArrayList<ShapeWrapper> graphicsNew = null;
         // If approved, listen for wb array from server:
@@ -86,7 +90,7 @@ public class ClientMsgProcessor extends Thread {
         }
 
         //send basic approval reply to server:
-        BasicReply brep = new BasicReply(true, "Updated canvas graphics received.");
+        BasicReply brep = new BasicReply(true, "Updated canvas graphics received by " + gui.getUserName());
         try {
             out.writeUTF(brep.toString());
             out.flush();
@@ -97,17 +101,39 @@ public class ClientMsgProcessor extends Thread {
         gui.incomingCanvasUpdate(graphicsNew, canup.getUserName());
     }
 
+    // Incoming chat message from other user
     private void processChatUpdate(ChatUpdate chatup) {
         gui.incomingChatUpdate(chatup.getUserName(), chatup.getChat());
+
+        //send basic acknowledgment reply to server:
+        BasicReply brep = new BasicReply(true, "Chat update received by " + gui.getUserName());
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Error sending confirmation of canvas update to server.");
+        }
     }
 
+    // Incoming join request to wb manager for approval
     private void processJoinRequest(JoinRequest joinreq) {
         gui.incomingJoinRequest(joinreq.getWbName(), joinreq.getUserName());
+
+        //send basic acknowledgment reply to server:
+        BasicReply brep = new BasicReply(true, "Join request received by "
+                + gui.getUserName() + ". Approval pending");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Error sending confirmation of canvas update to server.");
+        }
     }
 
+    // Incoming join decision from manager, to user who previously submitted a join request
     private void processJoinDecision(JoinDecision joindec) {
         ArrayList<ShapeWrapper> graphics = null;
-        // If approved, listen for wb array from server:
+        // If approved, listen for wb graphics array which will be following the initial JSON message from server:
         if (joindec.getApproved()) {
             try {
                 graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
@@ -115,7 +141,7 @@ public class ClientMsgProcessor extends Thread {
                 gui.updateStatus(TAG + "Error reading graphics after approved join decision.");
             }
         }
-        //send basic approval reply to server:
+        // Send basic approval reply to server:
         BasicReply brep = new BasicReply(true, "Join decision and update whiteboard received.");
         try {
             out.writeUTF(brep.toString());
@@ -123,17 +149,19 @@ public class ClientMsgProcessor extends Thread {
         } catch (IOException e) {
             gui.updateStatus(TAG + "Error sending confirmation reply to server after join decision received.");
         }
-        //update gui:
+        // Update gui:
         gui.incomingJoinDecision(joindec.getWbName(), joindec.getApproved(), graphics);
     }
 
+    // Incoming boot user notice from manager, booting this user from whiteboard
     private void processBootUser(BootUser btuser) {
         gui.incomingBootUser(btuser.getWbName(), btuser.getMgrName());
     }
 
+    // Incoming leave notification from other user to manager
     private void processLeave(Leave leave) {
         gui.incomingLeave(leave.getUserName());
-        //send basic approval reply to server:
+        // Send basic approval reply to server:
         BasicReply brep = new BasicReply(true, "Leave message received.");
         try {
             out.writeUTF(brep.toString());
@@ -143,6 +171,7 @@ public class ClientMsgProcessor extends Thread {
         }
     }
 
+    // Incoming close notification from manager to other user
     private void processClose(Close close) {
         gui.incomingClose(close);
         BasicReply brep = new BasicReply(true, "Close message received.");

@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="GUI font and format changes.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Comment code in other client and server classes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientMsgProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ServerMsgProcessor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,20 +42,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "321",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propGUI"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;false&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;321&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propGUI&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -68,7 +69,7 @@
       <command value="mvn assembly clean compile" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.WBClient">
+  <component name="RunManager" selected="Application.WBServer">
     <configuration name="ClientGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.ClientGUI" />
       <module name="whiteboard" />
@@ -98,8 +99,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
+        <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.ClientGUI" />
         <item itemvalue="Application.WBClient" />
         <item itemvalue="Application.WBServer" />
@@ -325,7 +326,28 @@
       <option name="project" value="LOCAL" />
       <updated>1666392294159</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Minor changes">
+      <created>1666393330540</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1666393330540</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Comment code in ClientGUI. Remove println's and other debugs.">
+      <created>1666408719722</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1666408719722</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Comment code in other client and server classes.">
+      <created>1666410914691</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1666410914691</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,7 +361,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="damian_secondMerge" />
+                        <option value="damian" />
                       </list>
                     </value>
                   </entry>
@@ -352,9 +374,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chat updaterequest protocol added. Make 'echoMsg' generic functionality in server." />
-    <MESSAGE value="Added protocols for sending ArrayList&lt;Shapes&gt; in join requests and join decision, including message objects. Added associated gui methods." />
-    <MESSAGE value="debug:freeH" />
     <MESSAGE value="feat:Color" />
     <MESSAGE value="Triangle" />
     <MESSAGE value="feat:Triangle" />
@@ -377,6 +396,9 @@
     <MESSAGE value="Further pom changes and auto-code creation for Maven compile." />
     <MESSAGE value="Merge new pom and GUI code with GUI updates, fix ClientGUI. More bug fixing with of gui updates when leave and boot user. Small changes to GUI layout and fonts." />
     <MESSAGE value="GUI font and format changes." />
-    <option name="LAST_COMMIT_MESSAGE" value="GUI font and format changes." />
+    <MESSAGE value="Minor changes" />
+    <MESSAGE value="Comment code in ClientGUI. Remove println's and other debugs." />
+    <MESSAGE value="Comment code in other client and server classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment code in other client and server classes." />
   </component>
 </project>

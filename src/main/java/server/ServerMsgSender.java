@@ -29,12 +29,16 @@ public class ServerMsgSender extends Thread {
     private ArrayList<ShapeWrapper> graphics;
     private ObjectOutputStream outObj;
 
+    // ServerMsgSender class creates a new thread to process outbound messages to managers and clients
+
+    // Constructor where no graphics are being sent (JSON messages only)
     public ServerMsgSender(Message message, InetSocketAddress target) {
         this.message = message;
         this.target = target;
         this.parser = new JSONParser();
     }
 
+    // Constructor where graphics are being sent
     public ServerMsgSender(Message message, InetSocketAddress target, ArrayList<ShapeWrapper> graphics) {
         this.message = message;
         this.target = target;
@@ -44,6 +48,7 @@ public class ServerMsgSender extends Thread {
 
     public void run() {
 
+        // Process original JSON message
         try {
             Socket socket = new Socket(target.getAddress(), target.getPort());
             out = new DataOutputStream(socket.getOutputStream());
@@ -56,6 +61,7 @@ public class ServerMsgSender extends Thread {
             return;
         }
 
+        // Process next step in protocol depending on message type
         String type = message.getType();
         switch(type) {
             case "JoinRequest":
@@ -67,7 +73,7 @@ public class ServerMsgSender extends Thread {
             case "CanvasUpdate":
                 ProcessCanvasUpdate();
                 break;
-            case "BootUser": //Send notification to booted user that they have been booted.
+            case "BootUser":
                 ListenForBasicReply();
                 break;
             case "Leave":
@@ -79,6 +85,7 @@ public class ServerMsgSender extends Thread {
         }
     }
 
+    // Process basic reply protocol
     private void ListenForBasicReply() {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
@@ -91,6 +98,7 @@ public class ServerMsgSender extends Thread {
         }
     }
 
+    // Process sending join decision (and graphics object) from manager to new user
     private void ProcessJoinDecision() {
         JoinDecision joindec = (JoinDecision) message;
         if (joindec.getApproved()) {
@@ -104,6 +112,7 @@ public class ServerMsgSender extends Thread {
         ListenForBasicReply();
     }
 
+    // Process sending canvas update received from one user to new user, and sending graphics object containing update
     private void ProcessCanvasUpdate() {
         CanvasUpdate canup = (CanvasUpdate) message;
         try {

@@ -26,6 +26,9 @@ public class ClientMsgSender extends Thread {
     private ArrayList<ShapeWrapper> graphics;
     private ObjectOutputStream outObj;
 
+    // ClientMsgSender class creates new thread to process and send outgoing message to the server
+
+    // Constructor where no graphics are being transmitted
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui) {
         this.message = message;
         this.target = target;
@@ -33,6 +36,7 @@ public class ClientMsgSender extends Thread {
         this.parser = new JSONParser();
     }
 
+    // Constructor used where graphics array is being transmitted
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui, ArrayList<ShapeWrapper> graphics) {
         this.message = message;
         this.target = target;
@@ -43,6 +47,7 @@ public class ClientMsgSender extends Thread {
 
     public void run() {
 
+        // Send initial JSON message type
         try {
             Socket socket = new Socket(target.getAddress(), target.getPort());
             out = new DataOutputStream(socket.getOutputStream());
@@ -55,6 +60,7 @@ public class ClientMsgSender extends Thread {
             return;
         }
 
+        // Process next steps in protocol depending on message type
         String type = message.getType();
         switch(type) {
             case "JoinRequest":
@@ -81,6 +87,7 @@ public class ClientMsgSender extends Thread {
         }
     }
 
+    // Generic method for listening for basic reply from server
     private void ListenForBasicReply() {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());
@@ -93,8 +100,10 @@ public class ClientMsgSender extends Thread {
         }
     }
 
+    // Complete the protocol for manager sending a join decision
     private void CompleteJoinDecision() {
         JoinDecision joindec = (JoinDecision) message;
+        // Send graphics object (if the join decision was an approval):
         if (joindec.getApproved()) {
             try {
                 outObj.writeObject(graphics);
@@ -106,7 +115,9 @@ public class ClientMsgSender extends Thread {
         ListenForBasicReply();
     }
 
+    // Complete the protocol for user sending out canvas update
     private void CompleteCanvasUpdate() {
+        // Send graphics object:
         try {
             outObj.writeObject(graphics);
             out.flush();
@@ -116,6 +127,7 @@ public class ClientMsgSender extends Thread {
         ListenForBasicReply();
     }
 
+    // Complete the protocol for manager booting a user from whiteboard
     private void CompleteBootUser() {
         try {
             JSONObject js = (JSONObject) parser.parse(in.readUTF());

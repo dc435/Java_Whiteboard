@@ -21,12 +21,14 @@ public class ServerMsgProcessor extends Thread {
     private DataOutputStream out;
     private ObjectInputStream inObj;
 
+    // ServerMsgProcessor class creates a new thread to process inbound connection requests to the server
     public ServerMsgProcessor(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
     }
 
     public void run() {
+        // Process initial JSON message
         try {
             JSONParser parser = new JSONParser();
             in = new DataInputStream(socket.getInputStream());
@@ -40,6 +42,7 @@ public class ServerMsgProcessor extends Thread {
         }
     }
 
+    // Process next steps in protocol depending on message type
     private void processJSON(JSONObject js) {
 
         String jsType = (String) js.get("_type");
@@ -76,12 +79,10 @@ public class ServerMsgProcessor extends Thread {
                 Close close = new Close(js);
                 processClose(close);
                 break;
-
-
         }
-
     }
 
+    // Process new whiteboard request
     private void processNewWhiteboard(NewWhiteboard newwb) {
         InetSocketAddress mgrAddress = new InetSocketAddress(socket.getInetAddress(), newwb.getPort());
         boolean success = server.addWhiteboardMgr(newwb, mgrAddress);
@@ -99,6 +100,7 @@ public class ServerMsgProcessor extends Thread {
         }
     }
 
+    // Process chat update request
     private void processChatUpdate(ChatUpdate chatup) {
 
         // Check if server is managing a whiteboard with that name:
@@ -116,7 +118,7 @@ public class ServerMsgProcessor extends Thread {
         // Get User list:
         ArrayList<User> userList = server.getUserList(chatup.getWbName());
 
-        // Forward the cup to each user in the userList (except for the original sender):
+        // Forward the chatup to each user in the userList (except for the original sender):
         int count = 0;
         for (User u : userList) {
             if (!u.username.equals(chatup.getUserName())) {
@@ -137,7 +139,10 @@ public class ServerMsgProcessor extends Thread {
         }
     }
 
+    // Process request from new user to join a whiteboard
     private void processJoinRequest(JoinRequest joinreq) {
+
+        System.out.println(TAG + "Join Request from " + joinreq.getUserName() + " for " + joinreq.getWbName() + " received.");
         // Check if server is managing a whiteboard with that name:
         if (!server.isManagingWhiteboard(joinreq.getWbName())){
             BasicReply brep = new BasicReply(false, "No whiteboard named " + joinreq.getWbName());
@@ -175,6 +180,7 @@ public class ServerMsgProcessor extends Thread {
         User manager = server.getManager(joinreq.getWbName());
         ServerMsgSender sender = new ServerMsgSender(joinreq, manager.address);
         sender.start();
+        System.out.println(TAG + "Join Request for " + joinreq.getWbName() + " sent to manager " + manager.username);
 
         //Send reply to original sender:
         BasicReply brep = new BasicReply(true, "Join Request sent to " + joinreq.getWbName() + " manager. Request pending.");
@@ -184,13 +190,16 @@ public class ServerMsgProcessor extends Thread {
         } catch (IOException e) {
             System.out.println(TAG + "Error send confirmation reply to user following process join request.");
         }
+
     }
 
+    // Process a manager decision in reply to a new user join request
     private void processJoinDecision(JoinDecision joindec) {
 
         //Get otherUser details from wb manager:
         User otherUser = server.getUser(joindec.getWbName(), joindec.getUserName());
 
+        // Check if the manager's decision was approved / not, and treat accordingly
         if (joindec.getApproved()) {
 
             otherUser.approved = true;
@@ -211,7 +220,7 @@ public class ServerMsgProcessor extends Thread {
             } catch (IOException e) {
                 System.out.println(TAG + "Error writing confirmation reply during approved join decision.");
             }
-
+        // If manager did not approve join request:
         } else {
 
             otherUser.approved = false;
@@ -232,9 +241,10 @@ public class ServerMsgProcessor extends Thread {
 
     }
 
+    // Process a canvas update from any user
     private void processCanvasUpdate(CanvasUpdate canup) {
 
-        //Get graphics object from stream:
+        //Get graphics object containing full canvas from input stream
         ArrayList<ShapeWrapper> graphics = null;
         try {
             graphics = (ArrayList<ShapeWrapper>) inObj.readObject();
@@ -242,10 +252,10 @@ public class ServerMsgProcessor extends Thread {
             System.out.println(TAG + "Error reading in graphics during canvas update.");
         }
 
-        // Get User list:
+        // Get User list for this whiteboard
         ArrayList<User> userList = server.getUserList(canup.getWbName());
 
-        // Forward the canup and graphics to each user in the userList (except for the original sender):
+        // Forward the canvas update and graphics to each user in the userList (except for the original sender):
         int count = 0;
         for (User u : userList) {
             if (!u.username.equals(canup.getUserName())) {
@@ -267,6 +277,7 @@ public class ServerMsgProcessor extends Thread {
 
     }
 
+    // Process leave notification from a user
     private void processLeave(Leave leave) {
         BasicReply brep;
         if (server.checkUser(leave.getWbName(), leave.getUserName())) {
@@ -287,21 +298,22 @@ public class ServerMsgProcessor extends Thread {
         }
     }
 
+    // Process a boot user message from a manager
     private void processBootUser(BootUser btuser) {
 
         BootUserReply btuserrep;
         User manager = server.getManager(btuser.getWbName());
-        //Check if mgr has authority, then action boot:
+        // Check if mgr has authority, then action boot
         if (!manager.username.equals(btuser.getMgrName())) {
             btuserrep = new BootUserReply(false, btuser.getUserName());
             System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". No authority.");
         }
-        // Check if user exists on this wb:
+        // Check if user exists on this wb
         else if (!server.checkUser(btuser.getWbName(), btuser.getUserName())) {
             btuserrep = new BootUserReply(false, btuser.getUserName());
             System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". User not on list.");
         }
-        // Otherwise delete user:
+        // If the do exist, delete user
         else {
             User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
             ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
@@ -320,12 +332,13 @@ public class ServerMsgProcessor extends Thread {
         }
     }
 
+    // Process a close notification from manager
     private void processClose(Close close) {
 
         // Get User list:
         ArrayList<User> userList = server.getUserList(close.getWbName());
 
-        // Forward the close to each user in the userList (except for the manager):
+        // Forward the close to each user in the userList (except for the manager)
         int count = 0;
         for (User u : userList) {
             if (!u.username.equals(close.getMgrName())) {
@@ -336,11 +349,11 @@ public class ServerMsgProcessor extends Thread {
         }
         System.out.println(TAG + "Sent close notification to " + count + " other users.");
 
-        //Delete whiteboard from whiteboards:
+        //Delete whiteboard from whiteboards
         server.deleteWhiteboard(close.getWbName());
         System.out.println(TAG + "Whiteboard " + close.getWbName() + " closed.");
 
-        //Send reply to original sender:
+        //Send reply to original sender
         BasicReply brep = new BasicReply(true, "Close notification sent to " + count + " other users.");
         try {
             out.writeUTF(brep.toString());
