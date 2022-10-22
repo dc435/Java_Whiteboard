@@ -213,9 +213,6 @@ public class ClientGUI extends JFrame {
                     p2.setLocation(0, 0);
                     p1.setLocation(e.getX(), e.getY());
                 }
-                p1.setLocation(0, 0);
-                p2.setLocation(0, 0);
-                p1.setLocation(e.getX(), e.getY());
             }
 
             // Ending point of the shape
