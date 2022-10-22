@@ -1,0 +1,26 @@
+This file documents all the discovered faults in order to fix them
+
+1. Scenario: Two users connect to server and using WB1 to draw. Both clients have drawn something on the WB1. Manager boots user2
+   issue: After user2 create a new wb, it demonstrates the old graphics he drew on WB1
+
+   NOTE: Investigation needed.
+
+2. Save button is not activated in all states
+3. Open and New buttons are only for manager according to spec. (New, Open, Save, SaveAs, Close)
+4. Is the user identified uniquely on the server side? by unique id or unique name?
+
+   NOTE: Just want to double check this. Current implementation is by name from my test.
+
+5. Exception in thread "Appkit thread" java.lang.NoSuchMethodError: accessibilityHitTest appears when I create third user
+
+   NOTE: This is a BIG BOSS. I think this is from GUI and will cause some functions to crash.
+   Such as user name not displayed for users, previous graphics change color when a new triangle is drawn.
+
+   Understanding: From stack overflow (https://stackoverflow.com/questions/70112706/java-lang-nosuchmethoderror-accessibilityhittest)
+   This seems to be a macbook issue, but they should have patched it. This was also an issue when I first started making GUI.
+   Magically, it disappeared when I finished most of the functionalities in GUI?!! MORE TEST NEEDED.
+
+   Issues after above exception shown:
+    5.1 user name doesn't appear
+    5.2 color changes
+
