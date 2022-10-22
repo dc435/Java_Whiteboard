@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 public class ShapeWrapper implements Serializable {
 
-    //TODO: YP
     private Object shape;
     private String color;
     private boolean isText;
@@ -14,7 +13,7 @@ public class ShapeWrapper implements Serializable {
     private int posY;
 
 
-    // Constructor
+    // Constructors
     public ShapeWrapper(Shape shape, String color) {
         this.shape = shape;
         this.color = color;
@@ -48,7 +47,6 @@ public class ShapeWrapper implements Serializable {
     public int getY() {
         return this.posY;
     }
-
 
     public Boolean isText() {
         return this.isText;

@@ -18,7 +18,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
@@ -77,6 +76,7 @@ public class ClientGUI extends JFrame {
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
+    // Constructor for ClientGUI
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
         this.serverAddress = serverAddress;
@@ -85,12 +85,13 @@ public class ClientGUI extends JFrame {
         this.userName = DEFAULT_USER_NAME;
         setState(ClientState.NONE);
         setTitle(wbName);
-        activeUsers = new ArrayList<String>();
+        activeUsers = new ArrayList<>();
         guiConstructors();
         setMngButtonListeners();
 
     }
 
+    // Constructor used to constructor JFrame and components
     private void guiConstructors() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
