@@ -3,6 +3,9 @@ package whiteboard;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Wrapper class for saving whiteboards to file
+ */
 public class Whiteboard implements Serializable {
 
     private String wbName;

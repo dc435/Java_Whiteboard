@@ -2,6 +2,9 @@ package whiteboard;
 
 import java.util.ArrayList;
 
+/**
+ * Server side object for managing a single whiteboard
+ */
 public class WhiteboardMgr {
 
     private ArrayList<User> userList;

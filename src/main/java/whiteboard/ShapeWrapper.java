@@ -3,6 +3,9 @@ package whiteboard;
 import java.awt.*;
 import java.io.Serializable;
 
+/**
+ * Wrapper class for objects existing on the drawable canvas
+ */
 public class ShapeWrapper implements Serializable {
 
     private Object shape;
@@ -10,7 +13,6 @@ public class ShapeWrapper implements Serializable {
     private boolean isText;
     private int posX;
     private int posY;
-
 
     // Constructors
     public ShapeWrapper(Shape shape, String color) {
