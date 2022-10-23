@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Server MsgProcessor fix to protect where server switched off / loses state.">
+    <list default="true" id="a54947d5-c188-464e-8e9b-92aeb64c407b" name="Changes" comment="Add socket timeout for both server and client. Add vertical spacer on GUI.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/WBServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/WBServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -362,7 +359,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666483320945</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Add socket timeout for both server and client. Add vertical spacer on GUI.">
+      <created>1666484184211</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1666484184211</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -389,7 +393,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat:Triangle" />
     <MESSAGE value="ShapeWrapper_v1" />
     <MESSAGE value="doing:textPane" />
     <MESSAGE value="feat:implement wrapper" />
@@ -414,6 +417,7 @@
     <MESSAGE value="Comment code in other client and server classes." />
     <MESSAGE value="Update default server port to 3200. Fix bug where manager could boot themself." />
     <MESSAGE value="Server MsgProcessor fix to protect where server switched off / loses state." />
-    <option name="LAST_COMMIT_MESSAGE" value="Server MsgProcessor fix to protect where server switched off / loses state." />
+    <MESSAGE value="Add socket timeout for both server and client. Add vertical spacer on GUI." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add socket timeout for both server and client. Add vertical spacer on GUI." />
   </component>
 </project>

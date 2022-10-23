@@ -455,14 +455,31 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (e.getComponent().isEnabled()) {
-                    int result = JOptionPane.showConfirmDialog(null, "Are sure you want to close this whiteboard?");
+                    int result = JOptionPane.showConfirmDialog(null, "Do you want to save whiteboard before closing?");
                     switch (result) {
                         case JOptionPane.YES_OPTION:
+                            if (currentFileName != null) {
+                                writeToFile(currentFileName);
+                            } else {
+                                JFrame userInput = new JFrame();
+                                Object fileNameObj = JOptionPane.showInputDialog(userInput, "Enter new file name:");
+                                if (fileNameObj != null) {
+                                    currentFileName = fileNameObj.toString();
+                                    writeToFile(currentFileName);
+                                } else {
+                                    currentFileName = DEFAULT_WB_NAME;
+                                    writeToFile(currentFileName);
+                                }
+                            }
                             sendCloseWhiteboard();
                             closeCurrentWhiteboard();
                             updateStatus(TAG + "Whiteboard closed.");
                             break;
                         case JOptionPane.NO_OPTION:
+                            sendCloseWhiteboard();
+                            closeCurrentWhiteboard();
+                            updateStatus(TAG + "Whiteboard closed.");
+                            break;
                         case JOptionPane.CANCEL_OPTION:
                         case JOptionPane.CLOSED_OPTION:
                             break;
