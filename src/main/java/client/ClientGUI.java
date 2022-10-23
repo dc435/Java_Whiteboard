@@ -536,7 +536,7 @@ public class ClientGUI extends JFrame {
                 super.mouseClicked(e);
                 if (e.getComponent().isEnabled()) {
                     String chatText = txtChatIn.getText();
-                    txtChat.append("\n" + userName + ": " + chatText);
+                    txtChat.append(userName + ": " + chatText + "\n");
                     sendChatUpdate(chatText);
                     txtChatIn.setText("");
                 }
@@ -577,7 +577,7 @@ public class ClientGUI extends JFrame {
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
-                txtUsers.setVisible(true);
+                txtUsers.setVisible(false);
                 txtChatIn.setEnabled(true);
                 pnlCanvas.setEnabled(true);
                 btnTextCanvas.setEnabled(true);
@@ -700,7 +700,7 @@ public class ClientGUI extends JFrame {
         setState(ClientState.NONE);
         wbName = DEFAULT_WB_NAME;
         setTitle(wbName);
-        txtChat.setText("CHAT:");
+        txtChat.setText("CHAT:\n");
         graphicsFinal = new ArrayList<ShapeWrapper>();
         graphicsBuffer = new ArrayList<ShapeWrapper>();
         activeUsers.clear();
@@ -713,7 +713,7 @@ public class ClientGUI extends JFrame {
         setState(ClientState.NONE);
         wbName = DEFAULT_WB_NAME;
         setTitle(wbName);
-        txtChat.setText("CHAT:");
+        txtChat.setText("CHAT:\n");
         graphicsFinal = new ArrayList<ShapeWrapper>();
         graphicsBuffer = new ArrayList<ShapeWrapper>();
     }
@@ -832,7 +832,7 @@ public class ClientGUI extends JFrame {
         graphicsBuffer.clear();
         wbName = DEFAULT_WB_NAME;
         setTitle(wbName);
-        txtChat.setText("CHAT:");
+        txtChat.setText("CHAT:\n");
         repaint();
         setState(ClientState.NONE);
         updateStatus(TAG + "You have been booted from this whiteboard by " + mgrName);
