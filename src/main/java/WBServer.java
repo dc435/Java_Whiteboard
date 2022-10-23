@@ -8,8 +8,9 @@ import java.net.Socket;
 
 public class WBServer {
 
-    private static final int DEFAULT_SERVER_PORT = 4210;
-    private static final String WELCOME_MSG = "Welcome to the COMP90015 Whiteboard Server, by D Curran & Y Peng.";
+    private static final int DEFAULT_SERVER_PORT = 3200;
+    private static final String WELCOME_MSG = "Welcome to the COMP90015 Whiteboard Server, by D Curran & Y Peng (Group 29).";
+    private static final int TIMEOUT = 1000;
     private static int serverPort;
 
     // WBServer is entry point into application for all server-side components
@@ -53,11 +54,12 @@ public class WBServer {
             System.out.println("Listening for messages on port " + serverPort + "...");
             while(true){
                 Socket socket = serverSocket.accept();
+                socket.setSoTimeout(TIMEOUT);
                 ServerMsgProcessor processor =  new ServerMsgProcessor(socket, server);
                 processor.start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error in server listen thread whilst accepting and processing new socket connection.");
         }
     }
 

@@ -455,14 +455,31 @@ public class ClientGUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (e.getComponent().isEnabled()) {
-                    int result = JOptionPane.showConfirmDialog(null, "Are sure you want to close this whiteboard?");
+                    int result = JOptionPane.showConfirmDialog(null, "Do you want to save whiteboard before closing?");
                     switch (result) {
                         case JOptionPane.YES_OPTION:
+                            if (currentFileName != null) {
+                                writeToFile(currentFileName);
+                            } else {
+                                JFrame userInput = new JFrame();
+                                Object fileNameObj = JOptionPane.showInputDialog(userInput, "Enter new file name:");
+                                if (fileNameObj != null) {
+                                    currentFileName = fileNameObj.toString();
+                                    writeToFile(currentFileName);
+                                } else {
+                                    currentFileName = DEFAULT_WB_NAME;
+                                    writeToFile(currentFileName);
+                                }
+                            }
                             sendCloseWhiteboard();
                             closeCurrentWhiteboard();
                             updateStatus(TAG + "Whiteboard closed.");
                             break;
                         case JOptionPane.NO_OPTION:
+                            sendCloseWhiteboard();
+                            closeCurrentWhiteboard();
+                            updateStatus(TAG + "Whiteboard closed.");
+                            break;
                         case JOptionPane.CANCEL_OPTION:
                         case JOptionPane.CLOSED_OPTION:
                             break;
@@ -882,11 +899,11 @@ public class ClientGUI extends JFrame {
         pnlMain.add(pnlCanvas, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         pnlCanvas.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(-16777216)), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, this.$$$getFont$$$(null, Font.BOLD, 10, pnlCanvas.getFont()), null));
         pnlText = new JPanel();
-        pnlText.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        pnlText.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
         pnlText.setBackground(new Color(-1));
         pnlMain.add(pnlText, new GridConstraints(0, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        pnlText.add(scrollPane1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        pnlText.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         txtChat = new JTextArea();
         txtChat.setBackground(new Color(-328961));
         txtChat.setEnabled(false);
@@ -895,7 +912,7 @@ public class ClientGUI extends JFrame {
         txtChat.setText("CHAT:");
         scrollPane1.setViewportView(txtChat);
         final JScrollPane scrollPane2 = new JScrollPane();
-        pnlText.add(scrollPane2, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        pnlText.add(scrollPane2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         txtLog = new JTextArea();
         txtLog.setBackground(new Color(-328961));
         txtLog.setEnabled(false);
@@ -906,7 +923,7 @@ public class ClientGUI extends JFrame {
         pnlTxtInput = new JPanel();
         pnlTxtInput.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         pnlTxtInput.setBackground(new Color(-1));
-        pnlText.add(pnlTxtInput, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        pnlText.add(pnlTxtInput, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         txtChatIn = new JTextField();
         Font txtChatInFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 12, txtChatIn.getFont());
         if (txtChatInFont != null) txtChatIn.setFont(txtChatInFont);
@@ -918,12 +935,14 @@ public class ClientGUI extends JFrame {
         if (btnSendFont != null) btnSend.setFont(btnSendFont);
         btnSend.setText("Chat");
         pnlTxtInput.add(btnSend, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(98, 21), null, 1, false));
+        final Spacer spacer1 = new Spacer();
+        pnlText.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         pnlManage = new JPanel();
-        pnlManage.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        pnlManage.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         pnlManage.setBackground(new Color(-1));
         pnlMain.add(pnlManage, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JScrollPane scrollPane3 = new JScrollPane();
-        pnlManage.add(scrollPane3, new GridConstraints(0, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        pnlManage.add(scrollPane3, new GridConstraints(1, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         txtUsers = new JTextArea();
         txtUsers.setBackground(new Color(-328961));
         txtUsers.setEnabled(false);
@@ -934,7 +953,7 @@ public class ClientGUI extends JFrame {
         barManage = new JToolBar();
         barManage.setFloatable(false);
         barManage.setOrientation(0);
-        pnlManage.add(barManage, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        pnlManage.add(barManage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnJoin = new JButton();
         Font btnJoinFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 12, btnJoin.getFont());
         if (btnJoinFont != null) btnJoin.setFont(btnJoinFont);
@@ -989,7 +1008,7 @@ public class ClientGUI extends JFrame {
         barShape.setFloatable(false);
         barShape.setRollover(false);
         barShape.putClientProperty("JToolBar.isRollover", Boolean.FALSE);
-        pnlManage.add(barShape, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        pnlManage.add(barShape, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnTriangle = new JButton();
         Font btnTriangleFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 12, btnTriangle.getFont());
         if (btnTriangleFont != null) btnTriangle.setFont(btnTriangleFont);
@@ -1028,6 +1047,8 @@ public class ClientGUI extends JFrame {
         barColor.setModel(defaultComboBoxModel1);
         barColor.setToolTipText("");
         barShape.add(barColor);
+        final Spacer spacer2 = new Spacer();
+        pnlManage.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 1), new Dimension(-1, 1), null, 0, false));
     }
 
     /**

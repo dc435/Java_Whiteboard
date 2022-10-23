@@ -292,7 +292,10 @@
           </toolbar>
           <vspacer id="ae93">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="1"/>
+                <preferred-size width="-1" height="1"/>
+              </grid>
             </constraints>
           </vspacer>
         </children>
