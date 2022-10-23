@@ -2,6 +2,9 @@ package whiteboard;
 
 import java.net.InetSocketAddress;
 
+/**
+ * Object containing all attrbitues of an individual client (user or manager)
+ */
 public class User {
 
     public String username;

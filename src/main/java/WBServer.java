@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Entry point into application for server
+ */
 public class WBServer {
 
     private static final int DEFAULT_SERVER_PORT = 3200;

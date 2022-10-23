@@ -25,7 +25,9 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Locale;
 
-
+/**
+ * Central class for all client/user-side logic and variables
+ */
 public class ClientGUI extends JFrame {
 
     private final String DEFAULT_WB_NAME = "My New Whiteboard";
@@ -77,8 +79,12 @@ public class ClientGUI extends JFrame {
     private Point2D.Float p1 = new Point2D.Float();
     private Point2D.Float p2 = new Point2D.Float();
 
-    // ClientGUI is central class for all client/user-side logic and variables
-    // Constructor builds initial state as "NONE" (ie. no whiteboard loaded) and sets associated GUI elements
+    /**
+     * Constructor builds initial state as "NONE" (ie. no whiteboard loaded) and sets associated GUI elements
+     * @param serverAddress server target
+     * @param clientPort where client listening
+     * @param APP_NAME header for gui
+     */
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
         this.serverAddress = serverAddress;

@@ -12,6 +12,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Creates a new thread to process inbound connection requests to the server
+ */
 public class ServerMsgProcessor extends Thread {
 
     private final String TAG = "(SERVER MSGPROCESS):";
@@ -21,7 +24,11 @@ public class ServerMsgProcessor extends Thread {
     private DataOutputStream out;
     private ObjectInputStream inObj;
 
-    // ServerMsgProcessor class creates a new thread to process inbound connection requests to the server
+    /**
+     * Builds new thread for inbound connections to server
+     * @param socket incoming socket
+     * @param server Server object
+     */
     public ServerMsgProcessor(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;

@@ -8,13 +8,15 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Central class for all server-side logic and variables
+ * Server maintains a list of all whiteboards that it manages, each of which contain their own user list
+ */
 public class Server extends Thread {
 
     private final String TAG = "(SERVER):";
     private HashMap<String,WhiteboardMgr> whiteboards;
 
-    // Server class is central class for all server-side logic and variables
-    // It maintains a list of all whiteboards that it manages, each of which contain their own user list
     public Server() {
         whiteboards = new HashMap<String,WhiteboardMgr>();
     }

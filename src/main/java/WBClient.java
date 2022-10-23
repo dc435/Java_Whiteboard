@@ -7,7 +7,9 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
+/**
+ * Entry point into application for all client-side users
+ */
 public class WBClient {
 
     private static final int DEFAULT_CLIENT_PORT = 3210;

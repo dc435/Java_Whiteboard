@@ -13,6 +13,9 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Creates new thread to process inbound connection requests to the Client
+ */
 public class ClientMsgProcessor extends Thread {
 
     private final String TAG = "(CLIENT MSGPROCESS): ";
@@ -22,7 +25,11 @@ public class ClientMsgProcessor extends Thread {
     private DataOutputStream out;
     private ObjectInputStream inObj;
 
-    // ClientMsgProcessor class creates new thread to process inbound connection requests to the Client
+    /**
+     * Constructor
+     * @param socket Socket
+     * @param gui ClientGUI
+     */
     public ClientMsgProcessor(Socket socket, ClientGUI gui) {
         this.socket = socket;
         this.gui = gui;

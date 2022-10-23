@@ -2,6 +2,9 @@ package message;
 
 import org.json.simple.JSONObject;
 
+/**
+ * Parent class for all inherited message types transmitted between clients and server
+ */
 public class Message {
 
     JSONObject json;

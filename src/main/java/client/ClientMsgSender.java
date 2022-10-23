@@ -14,6 +14,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Creates new thread to process outbound messages from the Client
+ */
 public class ClientMsgSender extends Thread {
 
     private final String TAG = "(CLIENT MSGSEND): ";
@@ -28,7 +31,12 @@ public class ClientMsgSender extends Thread {
 
     // ClientMsgSender class creates new thread to process and send outgoing message to the server
 
-    // Constructor where no graphics are being transmitted
+    /**
+     * Constructor where no graphics are being transmitted
+     * @param message Outbound message object
+     * @param target Server address
+     * @param gui Clientgui
+     */
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui) {
         this.message = message;
         this.target = target;
@@ -36,7 +44,13 @@ public class ClientMsgSender extends Thread {
         this.parser = new JSONParser();
     }
 
-    // Constructor used where graphics array is being transmitted
+    /**
+     * Constructor where graphics array is being transmitted
+     * @param message Outbound message object
+     * @param target Server address
+     * @param gui Clientgui
+     * @param graphics arraylist of ShapeWrapper objects
+     */
     public ClientMsgSender(Message message, InetSocketAddress target, ClientGUI gui, ArrayList<ShapeWrapper> graphics) {
         this.message = message;
         this.target = target;

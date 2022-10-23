@@ -18,6 +18,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Creates a new thread to process outbound connections from the server
+ */
 public class ServerMsgSender extends Thread {
 
     private final String TAG = "(SERVER MSGSEND): ";
@@ -29,9 +32,11 @@ public class ServerMsgSender extends Thread {
     private ArrayList<ShapeWrapper> graphics;
     private ObjectOutputStream outObj;
 
-    // ServerMsgSender class creates a new thread to process outbound messages to managers and clients
-
-    // Constructor where no graphics are being sent (JSON messages only)
+    /**
+     * Constructor where no graphics are being sent (JSON messages only)
+     * @param message outgoing message
+     * @param target inet address of recipient
+     */
     public ServerMsgSender(Message message, InetSocketAddress target) {
         this.message = message;
         this.target = target;
