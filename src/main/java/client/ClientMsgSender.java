@@ -84,6 +84,9 @@ public class ClientMsgSender extends Thread {
             case "BootUser":
                 CompleteBootUser();
                 break;
+            case "Close":
+                ListenForBasicReply();
+                break;
         }
     }
 

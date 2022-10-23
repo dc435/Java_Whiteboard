@@ -196,8 +196,21 @@ public class ServerMsgProcessor extends Thread {
     // Process a manager decision in reply to a new user join request
     private void processJoinDecision(JoinDecision joindec) {
 
-        //Get otherUser details from wb manager:
-        User otherUser = server.getUser(joindec.getWbName(), joindec.getUserName());
+        User otherUser;
+
+        //Check if otherUser is still on wb manager list:
+        if (server.checkUser(joindec.getWbName(), joindec.getUserName())) {
+            otherUser = server.getUser(joindec.getWbName(), joindec.getUserName());
+        } else {
+            BasicReply brep = new BasicReply(false, "Cannot process join decision. User or whiteboard no longer available.");
+            try {
+                out.writeUTF(brep.toString());
+                out.flush();
+            } catch (IOException e) {
+                System.out.println(TAG + "Error sending reply process join decision.");
+            }
+            return;
+        }
 
         // Check if the manager's decision was approved / not, and treat accordingly
         if (joindec.getApproved()) {
@@ -252,27 +265,41 @@ public class ServerMsgProcessor extends Thread {
             System.out.println(TAG + "Error reading in graphics during canvas update.");
         }
 
-        // Get User list for this whiteboard
-        ArrayList<User> userList = server.getUserList(canup.getWbName());
+        // Check if server has record of wb, if so, process:
+        if (server.isManagingWhiteboard(canup.getWbName())) {
 
-        // Forward the canvas update and graphics to each user in the userList (except for the original sender):
-        int count = 0;
-        for (User u : userList) {
-            if (!u.username.equals(canup.getUserName())) {
-                ServerMsgSender sender = new ServerMsgSender(canup, u.address, graphics);
-                sender.start();
-                count++;
+            // Get User list for this whiteboard
+            ArrayList<User> userList = server.getUserList(canup.getWbName());
+
+            // Forward the canvas update and graphics to each user in the userList (except for the original sender):
+            int count = 0;
+            for (User u : userList) {
+                if (!u.username.equals(canup.getUserName())) {
+                    ServerMsgSender sender = new ServerMsgSender(canup, u.address, graphics);
+                    sender.start();
+                    count++;
+                }
             }
-        }
-        System.out.println(TAG + "Sent canvas update to " + count + " other users.");
+            System.out.println(TAG + "Sent canvas update to " + count + " other users.");
 
-        // Send reply to original sender:
-        BasicReply brep = new BasicReply(true, "Sent canvas update to " + count + " other users.");
-        try {
-            out.writeUTF(brep.toString());
-            out.flush();
-        } catch (IOException e) {
-            System.out.println(TAG + "Error sending confirmation reply during canvas update.");
+            // Send reply to original sender:
+            BasicReply brep = new BasicReply(true, "Sent canvas update to " + count + " other users.");
+            try {
+                out.writeUTF(brep.toString());
+                out.flush();
+            } catch (IOException e) {
+                System.out.println(TAG + "Error sending confirmation reply during canvas update.");
+            }
+        } else {
+            // Send reply to original sender:
+            BasicReply brep = new BasicReply(false, "Could not process canvas update for " + canup.getWbName() + ". Not managing wb.");
+            try {
+                out.writeUTF(brep.toString());
+                out.flush();
+            } catch (IOException e) {
+                System.out.println(TAG + "Error sending negative reply during canvas update.");
+            }
+
         }
 
     }
@@ -302,29 +329,35 @@ public class ServerMsgProcessor extends Thread {
     private void processBootUser(BootUser btuser) {
 
         BootUserReply btuserrep;
-        User manager = server.getManager(btuser.getWbName());
-        // Check if mgr has authority, then action boot
-        if (!manager.username.equals(btuser.getMgrName())) {
+
+        // Check if manager still managing wb, then action:
+        if (server.checkUser(btuser.getWbName(), btuser.getMgrName())) {
+            User manager = server.getManager(btuser.getWbName());
+            // Check if mgr has authority, then action boot
+            if (!manager.username.equals(btuser.getMgrName())) {
+                btuserrep = new BootUserReply(false, btuser.getUserName());
+                System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". No authority.");
+            }
+            // Check if user exists on this wb
+            else if (!server.checkUser(btuser.getWbName(), btuser.getUserName())) {
+                btuserrep = new BootUserReply(false, btuser.getUserName());
+                System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". User not on list.");
+                // Check if manager booting themselves
+            } else if (server.getManager(btuser.getWbName()).username.equals(btuser.getUserName())) {
+                btuserrep = new BootUserReply(false, btuser.getUserName());
+                System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". Manager cannot boot themself.");
+            }
+            // If the do exist, delete user
+            else {
+                User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
+                ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
+                sender.start();
+                server.deleteUser(btuser.getWbName(), btuser.getUserName());
+                btuserrep = new BootUserReply(true, btuser.getUserName());
+                System.out.println(TAG + "Booted user " + btuser.getUserName() + " from " + btuser.getWbName());
+            }
+        } else {
             btuserrep = new BootUserReply(false, btuser.getUserName());
-            System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". No authority.");
-        }
-        // Check if user exists on this wb
-        else if (!server.checkUser(btuser.getWbName(), btuser.getUserName())) {
-            btuserrep = new BootUserReply(false, btuser.getUserName());
-            System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". User not on list.");
-        // Check if manager booting themselves
-        } else if (server.getManager(btuser.getWbName()).username.equals(btuser.getUserName())) {
-            btuserrep = new BootUserReply(false, btuser.getUserName());
-            System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". Manager cannot boot themself.");
-        }
-        // If the do exist, delete user
-        else {
-            User bootedUser = server.getUser(btuser.getWbName(), btuser.getUserName());
-            ServerMsgSender sender = new ServerMsgSender(btuser, bootedUser.address);
-            sender.start();
-            server.deleteUser(btuser.getWbName(), btuser.getUserName());
-            btuserrep = new BootUserReply(true, btuser.getUserName());
-            System.out.println(TAG + "Booted user " + btuser.getUserName() + " from " + btuser.getWbName());
         }
 
         //Send boot user reply to manager:
@@ -339,26 +372,37 @@ public class ServerMsgProcessor extends Thread {
     // Process a close notification from manager
     private void processClose(Close close) {
 
-        // Get User list:
-        ArrayList<User> userList = server.getUserList(close.getWbName());
+        BasicReply brep;
 
-        // Forward the close to each user in the userList (except for the manager)
-        int count = 0;
-        for (User u : userList) {
-            if (!u.username.equals(close.getMgrName())) {
-                ServerMsgSender sender = new ServerMsgSender(close, u.address);
-                sender.start();
-                count++;
+        if (server.isManagingWhiteboard(close.getWbName())) {
+            // Get User list:
+            ArrayList<User> userList = server.getUserList(close.getWbName());
+
+            // Forward the close to each user in the userList (except for the manager)
+            int count = 0;
+            for (User u : userList) {
+                if (!u.username.equals(close.getMgrName())) {
+                    ServerMsgSender sender = new ServerMsgSender(close, u.address);
+                    sender.start();
+                    count++;
+                }
             }
+            System.out.println(TAG + "Sent close notification to " + count + " other users.");
+
+            //Delete whiteboard from whiteboards
+            server.deleteWhiteboard(close.getWbName());
+            System.out.println(TAG + "Whiteboard " + close.getWbName() + " closed.");
+
+            //Set reply for original sender
+            brep = new BasicReply(true, "Close notification sent to " + count + " other users.");
+
+        } else {
+            brep = new BasicReply(false, "Server not managing whiteboard name " + close.getWbName());
+            System.out.println(TAG + "Received close request for " + close.getWbName() + ". Could not close. Server not managing that whiteboard.");
+
         }
-        System.out.println(TAG + "Sent close notification to " + count + " other users.");
 
-        //Delete whiteboard from whiteboards
-        server.deleteWhiteboard(close.getWbName());
-        System.out.println(TAG + "Whiteboard " + close.getWbName() + " closed.");
-
-        //Send reply to original sender
-        BasicReply brep = new BasicReply(true, "Close notification sent to " + count + " other users.");
+        // Send reply to original sender
         try {
             out.writeUTF(brep.toString());
             out.flush();
