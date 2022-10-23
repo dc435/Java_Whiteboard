@@ -1031,7 +1031,7 @@ public class ClientGUI extends JFrame {
         barColor.setToolTipText("");
         barShape.add(barColor);
         final Spacer spacer2 = new Spacer();
-        pnlManage.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        pnlManage.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 1), new Dimension(-1, 1), null, 0, false));
     }
 
     /**
