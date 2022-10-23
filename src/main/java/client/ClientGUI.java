@@ -31,13 +31,14 @@ public class ClientGUI extends JFrame {
     private final String DEFAULT_WB_NAME = "My New Whiteboard";
     private final String DEFAULT_USER_NAME = "New User";
     private final String TAG = "(CLIENT GUI): ";
+    public final static HashMap<String, String> COLOR = new HashMap<>();
     private InetSocketAddress serverAddress;
     private int clientPort;
     private String wbName;
     private String userName;
     private String currentFileName;
     private ArrayList<String> activeUsers;
-    public final static HashMap<String, String> COLOR = new HashMap<>();
+
     private JPanel pnlMain;
     private JPanel pnlCanvas;
     private JButton btnLine;
@@ -68,14 +69,14 @@ public class ClientGUI extends JFrame {
     private JToolBar barManage;
     private JPanel pnlTxtInput;
     private String canvasStr;
-    private String colorHex = "#000000"; // default black
-    private String brush = "Line"; // default line brush
+    private String colorHex; // default black
+    private String brush; // default line brush
     private Path2D triPath;
-    private ShapeWrapper wrapper = new ShapeWrapper();
-    private ArrayList<ShapeWrapper> graphicsFinal = new ArrayList<>();
-    private ArrayList<ShapeWrapper> graphicsBuffer = new ArrayList<>();
-    private Point2D.Float p1 = new Point2D.Float();
-    private Point2D.Float p2 = new Point2D.Float();
+    private ShapeWrapper wrapper;
+    private ArrayList<ShapeWrapper> graphicsFinal;
+    private ArrayList<ShapeWrapper> graphicsBuffer;
+    private Point2D.Float p1;
+    private Point2D.Float p2;
 
     // ClientGUI is central class for all client/user-side logic and variables
     // Constructor builds initial state as "NONE" (ie. no whiteboard loaded) and sets associated GUI elements
@@ -87,7 +88,14 @@ public class ClientGUI extends JFrame {
         this.userName = DEFAULT_USER_NAME;
         setState(ClientState.NONE);
         setTitle(wbName);
+        colorHex = "#000000";
+        brush = "Line";
         activeUsers = new ArrayList<>();
+        wrapper = new ShapeWrapper();
+        graphicsFinal = new ArrayList<>();
+        graphicsBuffer = new ArrayList<>();
+        p1 = new Point2D.Float();
+        p2 = new Point2D.Float();
         guiConstructors();
         setMngButtonListeners();
 
