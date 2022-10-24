@@ -27,6 +27,7 @@ public class WBClient {
         parseCmdOption(args);
 
         System.out.println(WELCOME_MSG);
+        System.out.println("Launching GUI...");
         ClientGUI gui = new ClientGUI(serverAddress, clientPort, APP_NAME);
         gui.setVisible(true);
 

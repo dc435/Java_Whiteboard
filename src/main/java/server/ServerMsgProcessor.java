@@ -96,6 +96,8 @@ public class ServerMsgProcessor extends Thread {
         BasicReply brep;
         if (success) {
             brep = new BasicReply(success, "Successfully added whiteboard named " + newwb.getWbName());
+            // Update user list:
+            sendUserListUpdate(newwb.getWbName());
         } else {
             brep = new BasicReply(success, "Could not add whiteboard named " + newwb.getWbName() + ". Try a different name.");
         }
@@ -240,6 +242,9 @@ public class ServerMsgProcessor extends Thread {
             } catch (IOException e) {
                 System.out.println(TAG + "Error writing confirmation reply during approved join decision.");
             }
+            // Update user list for all users:
+            sendUserListUpdate(joindec.getWbName());
+
         // If manager did not approve join request:
         } else {
 
@@ -320,6 +325,8 @@ public class ServerMsgProcessor extends Thread {
             User manager = server.getManager(leave.getWbName());
             ServerMsgSender sender = new ServerMsgSender(leave, manager.address);
             sender.start();
+            // Update user list for all users:
+            sendUserListUpdate(leave.getWbName());
         } else {
             brep = new BasicReply(false, "Error removing user from " + leave.getWbName() + ".");
         }
@@ -330,6 +337,7 @@ public class ServerMsgProcessor extends Thread {
         } catch (IOException e) {
             System.out.println(TAG + "Error sending error message to user during leave processing.");
         }
+
     }
 
     // Process a boot user message from a manager
@@ -349,7 +357,7 @@ public class ServerMsgProcessor extends Thread {
             else if (!server.checkUser(btuser.getWbName(), btuser.getUserName())) {
                 btuserrep = new BootUserReply(false, btuser.getUserName());
                 System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". User not on list.");
-                // Check if manager booting themselves
+            // Check if manager booting themselves
             } else if (server.getManager(btuser.getWbName()).username.equals(btuser.getUserName())) {
                 btuserrep = new BootUserReply(false, btuser.getUserName());
                 System.out.println(TAG + "Could not boot user " + btuser.getUserName() + ". Manager cannot boot themself.");
@@ -363,6 +371,8 @@ public class ServerMsgProcessor extends Thread {
                 btuserrep = new BootUserReply(true, btuser.getUserName());
                 System.out.println(TAG + "Booted user " + btuser.getUserName() + " from " + btuser.getWbName());
             }
+            // Update user list for all users:
+            sendUserListUpdate(btuser.getWbName());
         } else {
             btuserrep = new BootUserReply(false, btuser.getUserName());
         }
@@ -416,5 +426,22 @@ public class ServerMsgProcessor extends Thread {
         } catch (IOException e) {
             System.out.println(TAG + "Error send confirmation of close.");
         }
+    }
+
+    private void sendUserListUpdate(String wbName) {
+        //Build user list update:
+        ArrayList<String> simpleUserList = server.getSimpleUserList(wbName);
+        UserListUpdate ulup = new UserListUpdate(wbName, simpleUserList);
+
+        // Forward UserListUpdate to each user on the wb:
+        ArrayList<User> userList = server.getUserList(wbName);
+        int count = 0;
+        for (User u : userList) {
+            ServerMsgSender sender = new ServerMsgSender(ulup, u.address);
+            sender.start();
+            count++;
+        }
+        System.out.println(TAG + "Sent user list update to " + count + " users.");
+
     }
 }

@@ -87,6 +87,9 @@ public class ServerMsgSender extends Thread {
             case "Close":
                 ListenForBasicReply();
                 break;
+            case "UserListUpdate":
+                ListenForBasicReply();
+                break;
         }
     }
 

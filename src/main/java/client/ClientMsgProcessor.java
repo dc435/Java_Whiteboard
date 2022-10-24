@@ -83,6 +83,10 @@ public class ClientMsgProcessor extends Thread {
                 Close close = new Close(js);
                 processClose(close);
                 break;
+            case "UserListUpdate":
+                UserListUpdate ulup = new UserListUpdate(js);
+                processUserListUpdate(ulup);
+                break;
         }
     }
 
@@ -187,6 +191,17 @@ public class ClientMsgProcessor extends Thread {
             out.flush();
         } catch (IOException e) {
             gui.updateStatus(TAG + "Error sending confirmation reply for close message.");
+        }
+    }
+
+    private void processUserListUpdate(UserListUpdate ulup) {
+        gui.incomingUserListUpdate(ulup);
+        BasicReply brep = new BasicReply(true, "User List Update received.");
+        try {
+            out.writeUTF(brep.toString());
+            out.flush();
+        } catch (IOException e) {
+            gui.updateStatus(TAG + "Error sending confirmation reply for user list update message.");
         }
     }
 
