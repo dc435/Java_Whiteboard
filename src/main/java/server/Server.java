@@ -105,4 +105,17 @@ public class Server extends Thread {
         whiteboards.remove(wbName);
     }
 
+    public ArrayList<String> getSimpleUserList(String wbName) {
+        ArrayList<String> simpleUserList = new ArrayList<String>();
+        ArrayList<User> fullUserList = whiteboards.get(wbName).getUserList();
+        for (User u: fullUserList) {
+            if (u.manager) {
+                simpleUserList.add(u.username + " (MGR)");
+            } else {
+                simpleUserList.add(u.username);
+            }
+        }
+        return simpleUserList;
+    }
+
 }

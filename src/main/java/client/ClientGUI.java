@@ -81,9 +81,10 @@ public class ClientGUI extends JFrame {
 
     /**
      * Constructor builds initial state as "NONE" (ie. no whiteboard loaded) and sets associated GUI elements
+     *
      * @param serverAddress server target
-     * @param clientPort where client listening
-     * @param APP_NAME header for gui
+     * @param clientPort    where client listening
+     * @param APP_NAME      header for gui
      */
     public ClientGUI(InetSocketAddress serverAddress, int clientPort, String APP_NAME) {
         super(APP_NAME);
@@ -564,6 +565,7 @@ public class ClientGUI extends JFrame {
                 txtChatIn.setEnabled(false);
                 pnlCanvas.setEnabled(false);
                 btnTextCanvas.setEnabled(false);
+                txtChat.setText("CHAT:\n");
                 break;
             case USER:
                 btnJoin.setEnabled(false);
@@ -577,7 +579,7 @@ public class ClientGUI extends JFrame {
                 btnUserName.setEnabled(false);
                 btnServer.setEnabled(false);
                 btnSend.setEnabled(true);
-                txtUsers.setVisible(false);
+                txtUsers.setVisible(true);
                 txtChatIn.setEnabled(true);
                 pnlCanvas.setEnabled(true);
                 btnTextCanvas.setEnabled(true);
@@ -657,16 +659,6 @@ public class ClientGUI extends JFrame {
         updateStatus(TAG + "Updated server address to " + serverAddress.toString());
     }
 
-    // Remove user from user list (helper method)
-    private void removeUser(String otherUserName) {
-        activeUsers.remove(otherUserName);
-    }
-
-    // Add user to user list (helper method)
-    private void addUser(String otherUserName) {
-        activeUsers.add(otherUserName);
-    }
-
     public String getUserName() {
         return this.userName;
     }
@@ -675,9 +667,8 @@ public class ClientGUI extends JFrame {
     private void refreshUserList() {
         txtUsers.setText("");
         txtUsers.append("ACTIVE USERS:\n");
-        txtUsers.append(userName + " (mgr)\n");
-        for (String u : activeUsers) {
-            txtUsers.append(u + "\n");
+        for (String name : activeUsers) {
+            txtUsers.append(name + "\n");
         }
     }
 
@@ -797,8 +788,6 @@ public class ClientGUI extends JFrame {
         switch (result) {
             case JOptionPane.YES_OPTION:
                 sendJoinDecision(newUserName, true);
-                addUser(newUserName);
-                refreshUserList();
                 break;
             case JOptionPane.NO_OPTION:
             case JOptionPane.CANCEL_OPTION:
@@ -840,16 +829,12 @@ public class ClientGUI extends JFrame {
 
     // Notification to manager that another user has left. Update userlist display:
     public void incomingLeave(String otherUserName) {
-        removeUser(otherUserName);
-        refreshUserList();
         updateStatus(TAG + otherUserName + " has left the whiteboard.");
     }
 
     // Notification to manager of whether the boot request was successful
     public void incomingBootUserReply(boolean success, String otherUserName) {
         if (success) {
-            removeUser(otherUserName);
-            refreshUserList();
             updateStatus(TAG + otherUserName + " has been removed from the whiteboard.");
         } else {
             updateStatus(TAG + "Could not remove user '" + otherUserName + "'. Check the user name.");
@@ -862,6 +847,12 @@ public class ClientGUI extends JFrame {
             closeCurrentWhiteboard();
             updateStatus(TAG + "Whiteboard closed by manager " + close.getMgrName());
         }
+    }
+
+    public void incomingUserListUpdate(UserListUpdate ulup) {
+        activeUsers = ulup.getList();
+        refreshUserList();
+        updateStatus(TAG + "User list updated.");
     }
 
     // Makes deep copy of graphics array to send to new thread (for outgoing canvas update) prior to clearing graphicsBuffer
@@ -915,7 +906,7 @@ public class ClientGUI extends JFrame {
         txtChat.setEnabled(false);
         Font txtChatFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 12, txtChat.getFont());
         if (txtChatFont != null) txtChat.setFont(txtChatFont);
-        txtChat.setText("CHAT:");
+        txtChat.setText("");
         scrollPane1.setViewportView(txtChat);
         final JScrollPane scrollPane2 = new JScrollPane();
         pnlText.add(scrollPane2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
