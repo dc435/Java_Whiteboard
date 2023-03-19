@@ -1,4 +1,4 @@
-Remote whiteboard using Java and Websockets
+## Remote whiteboard using Java and Websockets
 
 D Curran, Y Peng (2022)
 
