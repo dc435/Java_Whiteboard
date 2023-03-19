@@ -1,5 +1,6 @@
-# COMP90015-Whiteboard
-COMP90015, Assignment 2, Sem 2, 2022. D Curran, Y Peng.
+Remote whiteboard using Java and Websockets
+
+D Curran, Y Peng (2022)
 
 The code can compiled by running the pom.xml file with Maven. It produces 2 jar files with all dependencies, called:
 client-jar-with-dependencies.jar
