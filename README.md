@@ -1,6 +1,14 @@
-## Remote whiteboard using Java and Websockets
+# Remote whiteboard using Java and Websockets
 
-D Curran, Y Peng (2022)
+## Overview
+
+A shared canvas which can be edited simultaneously by multiple remote users. 
+
+Built in Java using websockets as part of a university distributed systems course (2022).
+
+Author coded the communication logic and web socket protocols. Contributing author Y Peng coded GUI. Other codebase shared.
+
+## Set-up
 
 The code can compiled by running the pom.xml file with Maven. It produces 2 jar files with all dependencies, called:
 client-jar-with-dependencies.jar
